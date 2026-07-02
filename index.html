@@ -1193,13 +1193,43 @@
             document.getElementById('modalDefaultActions').classList.remove('hidden');
         }
 
+        function isDateValidForEvent(dateObj, giorniEffettivi) {
+            if (!giorniEffettivi) return true;
+            const text = giorniEffettivi.toLowerCase();
+            const day = dateObj.getDay(); // 0=Dom, 1=Lun, ..., 6=Sab
+            
+            if (text.includes("tutti i giorni")) return true;
+
+            const isWeekend = text.includes("weekend") || text.includes("fine settimana") || text.includes("ven-dom") || text.includes("venerdì alla domenica");
+            const isGioDom = text.includes("giovedì alla domenica") || text.includes("gio-dom");
+
+            if (isGioDom) {
+                if (day !== 4 && day !== 5 && day !== 6 && day !== 0) return false;
+            } else if (isWeekend) {
+                if (day !== 5 && day !== 6 && day !== 0) return false;
+            }
+            
+            return true;
+        }
+
         function confirmCalendar() {
             const selectedDate = document.getElementById('calendarDateSelect').value;
             if (!selectedDate) {
                 showToast("Seleziona una data valida", "error");
                 return;
             }
+            
             const parts = selectedDate.split('-');
+            const dateObj = new Date(parts[0], parts[1] - 1, parts[2]);
+            const giorniEffettivi = activeModalEvent["Giorni Effettivi"] || "";
+            
+            if (!isDateValidForEvent(dateObj, giorniEffettivi)) {
+                const dayNames = ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"];
+                const dayName = dayNames[dateObj.getDay()];
+                showToast(`Impossibile selezionare ${dayName}: l'evento non è aperto in questa data.`, "error");
+                return;
+            }
+
             const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
             executeCalendarAdd(formattedDate);
             
