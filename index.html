@@ -787,7 +787,8 @@
             }
 
             const div = document.createElement('div');
-            div.className = "group bg-white rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 border border-maremma-100/40 hover:border-maremma-300 transition-all duration-300 flex flex-col overflow-hidden animate-fade-in-up";
+            div.className = "group bg-white rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 border border-maremma-100/40 hover:border-maremma-300 transition-all duration-300 flex flex-col overflow-hidden animate-fade-in-up cursor-pointer";
+            div.onclick = () => openModal(ev.id);
             
             div.innerHTML = `
                 <!-- Top Header banner decorative background -->
@@ -809,7 +810,7 @@
                         </div>
 
                         <!-- Sagra Main details -->
-                        <h3 onclick="openModal(${ev.id})" class="text-lg font-bold font-serif text-slate-800 hover:text-maremma-700 cursor-pointer transition-colors leading-snug break-words">
+                        <h3 class="text-lg font-bold font-serif text-slate-800 group-hover:text-maremma-700 transition-colors leading-snug break-words">
                             ${name}
                         </h3>
 
@@ -853,7 +854,8 @@
             const category = getEventCategory(name, desc);
 
             const div = document.createElement('div');
-            div.className = "bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-maremma-300 hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 animate-fade-in-up";
+            div.className = "group bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-maremma-300 hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 animate-fade-in-up cursor-pointer";
+            div.onclick = () => openModal(ev.id);
             
             div.innerHTML = `
                 <div class="flex items-start md:items-center gap-3 flex-1 min-w-0">
@@ -862,7 +864,7 @@
                     </div>
                     <div class="min-w-0 flex-1">
                         <div class="flex flex-wrap items-center gap-2 mb-1">
-                            <h3 onclick="openModal(${ev.id})" class="text-sm font-bold text-slate-800 hover:text-maremma-700 cursor-pointer transition-colors truncate">
+                            <h3 class="text-sm font-bold text-slate-800 group-hover:text-maremma-700 transition-colors truncate">
                                 ${name}
                             </h3>
                             <span class="text-[10px] bg-slate-50 border px-1.5 py-0.2 rounded text-slate-500 font-medium">${category.label}</span>
@@ -893,7 +895,7 @@
                         <button onclick="toggleFavorite(event, ${ev.id})" class="p-1.5 rounded text-slate-300 hover:text-rose-500 transition-colors">
                             <i class="${isFav ? 'fa-solid fa-heart text-rose-500' : 'fa-regular fa-heart'}"></i>
                         </button>
-                        <button onclick="openModal(${ev.id})" class="p-1.5 rounded text-maremma-600 hover:bg-maremma-50 transition-all">
+                        <button class="p-1.5 rounded text-maremma-600 group-hover:bg-maremma-50 transition-all">
                             <i class="fa-solid fa-chevron-right"></i>
                         </button>
                     </div>
