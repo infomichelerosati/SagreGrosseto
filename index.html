@@ -384,16 +384,28 @@
             </div>
 
             <!-- Modal Footer -->
-            <div class="p-4 bg-slate-50 border-t border-slate-100 flex gap-3">
-                <button id="modalFavBtn" class="px-3 py-2.5 rounded-xl border border-slate-200 text-rose-500 hover:bg-rose-50 font-medium text-xs transition-all flex items-center gap-1.5 justify-center">
-                    <i class="fa-regular fa-heart"></i> <span class="hidden xs:inline">Pref.</span>
-                </button>
-                <button onclick="shareEvent()" class="px-3 py-2.5 rounded-xl border border-slate-200 text-slate-500 hover:bg-slate-100 hover:text-slate-700 font-medium text-xs transition-all flex items-center justify-center" title="Condividi evento">
-                    <i class="fa-solid fa-share-nodes"></i>
-                </button>
-                <button onclick="simulateCalendar()" class="flex-1 px-3 py-2.5 rounded-xl bg-maremma-600 hover:bg-maremma-700 text-white font-medium text-xs transition-all flex items-center gap-2 justify-center shadow-sm">
-                    <i class="fa-solid fa-calendar-plus"></i> <span class="truncate">Calendario</span>
-                </button>
+            <div class="p-4 bg-slate-50 border-t border-slate-100 flex flex-col gap-3">
+                <div id="modalDefaultActions" class="flex gap-3 w-full">
+                    <button id="modalFavBtn" class="px-3 py-2.5 rounded-xl border border-slate-200 text-rose-500 hover:bg-rose-50 font-medium text-xs transition-all flex items-center gap-1.5 justify-center">
+                        <i class="fa-regular fa-heart"></i> <span class="hidden xs:inline">Pref.</span>
+                    </button>
+                    <button onclick="shareEvent()" class="px-3 py-2.5 rounded-xl border border-slate-200 text-slate-500 hover:bg-slate-100 hover:text-slate-700 font-medium text-xs transition-all flex items-center justify-center" title="Condividi evento">
+                        <i class="fa-solid fa-share-nodes"></i>
+                    </button>
+                    <button onclick="triggerCalendarAction()" class="flex-1 px-3 py-2.5 rounded-xl bg-maremma-600 hover:bg-maremma-700 text-white font-medium text-xs transition-all flex items-center gap-2 justify-center shadow-sm">
+                        <i class="fa-solid fa-calendar-plus"></i> <span class="truncate">Calendario</span>
+                    </button>
+                </div>
+                
+                <!-- Hidden Calendar Picker -->
+                <div id="modalCalendarPicker" class="hidden w-full bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-2">
+                    <p class="text-xs text-slate-600 font-medium">L'evento dura più giorni. Quando vuoi andare?</p>
+                    <div class="flex gap-2">
+                        <input type="date" id="calendarDateSelect" class="flex-1 text-sm border border-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-maremma-500 text-slate-700 bg-slate-50">
+                        <button onclick="confirmCalendar()" class="bg-maremma-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-maremma-700 transition-colors">Salva</button>
+                        <button onclick="cancelCalendarPicker()" class="bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-300 transition-colors"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1152,11 +1164,61 @@
             renderEvents();
         }
 
-        function simulateCalendar() {
+        function triggerCalendarAction() {
+            if (!activeModalEvent) return;
+            const start = activeModalEvent["Data Inizio"];
+            const end = activeModalEvent["Data Fine"];
+            
+            if (start && end && start !== end) {
+                // Show date picker
+                const startDateParts = start.split('/');
+                const endDateParts = end.split('/');
+                const minDate = `${startDateParts[2]}-${startDateParts[1]}-${startDateParts[0]}`;
+                const maxDate = `${endDateParts[2]}-${endDateParts[1]}-${endDateParts[0]}`;
+                
+                const dateInput = document.getElementById('calendarDateSelect');
+                dateInput.min = minDate;
+                dateInput.max = maxDate;
+                dateInput.value = minDate;
+                
+                document.getElementById('modalDefaultActions').classList.add('hidden');
+                document.getElementById('modalCalendarPicker').classList.remove('hidden');
+            } else {
+                executeCalendarAdd(null);
+            }
+        }
+
+        function cancelCalendarPicker() {
+            document.getElementById('modalCalendarPicker').classList.add('hidden');
+            document.getElementById('modalDefaultActions').classList.remove('hidden');
+        }
+
+        function confirmCalendar() {
+            const selectedDate = document.getElementById('calendarDateSelect').value;
+            if (!selectedDate) {
+                showToast("Seleziona una data valida", "error");
+                return;
+            }
+            const parts = selectedDate.split('-');
+            const formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+            executeCalendarAdd(formattedDate);
+            
+            // Reset UI
+            cancelCalendarPicker();
+        }
+
+        function executeCalendarAdd(specificDate) {
             if (!activeModalEvent) return;
             const title = encodeURIComponent(activeModalEvent["Nome Evento"] || "");
             const location = encodeURIComponent(((activeModalEvent["Luogo Esatto"] || "") + ", " + (activeModalEvent["Comune / Frazione"] || "")).trim().replace(/^,|,$/g, ''));
-            const desc = encodeURIComponent(activeModalEvent["Descrizione dell'Evento"] || "");
+            
+            // Aggiungiamo i "Giorni Effettivi" alla descrizione
+            let rawDesc = activeModalEvent["Descrizione dell'Evento"] || "";
+            const giorniEffettivi = activeModalEvent["Giorni Effettivi"] || "";
+            if (giorniEffettivi.trim() !== "") {
+                rawDesc = `[NOTA: ${giorniEffettivi}]\n\n` + rawDesc;
+            }
+            const desc = encodeURIComponent(rawDesc);
             
             // Format date to YYYYMMDD
             const formatGCalDate = (dateStr) => {
@@ -1168,21 +1230,29 @@
                 return `${year}${month}${day}`;
             };
 
-            const startStr = formatGCalDate(activeModalEvent["Data Inizio"]);
-            
-            // For all-day events, Google Calendar end date is exclusive (we add 1 day)
-            let endStr = startStr;
-            const endDate = parseDateString(activeModalEvent["Data Fine"]);
-            if (endDate) {
-                endDate.setDate(endDate.getDate() + 1); 
-                const year = endDate.getFullYear();
-                const month = String(endDate.getMonth() + 1).padStart(2, '0');
-                const day = String(endDate.getDate()).padStart(2, '0');
-                endStr = `${year}${month}${day}`;
-            } else if (startStr) {
-                const d = parseDateString(activeModalEvent["Data Inizio"]);
+            let startStr = "";
+            let endStr = "";
+
+            if (specificDate) {
+                startStr = formatGCalDate(specificDate);
+                const d = parseDateString(specificDate);
                 d.setDate(d.getDate() + 1);
                 endStr = `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
+            } else {
+                startStr = formatGCalDate(activeModalEvent["Data Inizio"]);
+                endStr = startStr;
+                const endDate = parseDateString(activeModalEvent["Data Fine"]);
+                if (endDate) {
+                    endDate.setDate(endDate.getDate() + 1); 
+                    const year = endDate.getFullYear();
+                    const month = String(endDate.getMonth() + 1).padStart(2, '0');
+                    const day = String(endDate.getDate()).padStart(2, '0');
+                    endStr = `${year}${month}${day}`;
+                } else if (startStr) {
+                    const d = parseDateString(activeModalEvent["Data Inizio"]);
+                    d.setDate(d.getDate() + 1);
+                    endStr = `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
+                }
             }
 
             let datesParam = "";
