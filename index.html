@@ -1053,14 +1053,14 @@
             let html = `<ul class="space-y-3">`;
             sorted.forEach((ev, i) => {
                 html += `<li onclick="closeListModal(); openModal(${ev.id})" class="flex items-center justify-between p-3 bg-slate-50 rounded-xl hover:bg-amber-50 cursor-pointer transition-colors border border-transparent hover:border-amber-200">
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-3 flex-1 min-w-0 pr-3">
                         <div class="w-8 h-8 shrink-0 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-sm">#${i+1}</div>
-                        <div class="min-w-0">
-                            <h4 class="font-bold text-slate-800 text-sm truncate">${ev["Nome Evento"]}</h4>
-                            <p class="text-xs text-slate-500 truncate">${ev["Comune / Frazione"]}</p>
+                        <div class="min-w-0 flex-1">
+                            <h4 class="font-bold text-slate-800 text-sm break-words leading-snug">${ev["Nome Evento"]}</h4>
+                            <p class="text-xs text-slate-500 break-words leading-tight mt-0.5">${ev["Comune / Frazione"]}</p>
                         </div>
                     </div>
-                    <div class="font-bold text-amber-500 text-sm shrink-0">⭐ ${extractRatingNumber(ev["Valutazione"]).toFixed(1)}</div>
+                    <div class="font-bold text-amber-500 text-sm shrink-0 whitespace-nowrap">⭐ ${extractRatingNumber(ev["Valutazione"]).toFixed(1)}</div>
                 </li>`;
             });
             html += `</ul>`;
@@ -1077,11 +1077,11 @@
             let html = `<ul class="space-y-3">`;
             sorted.forEach((item, i) => {
                 html += `<li onclick="closeListModal(); document.getElementById('searchInput').value='${item[0]}'; renderEvents();" class="flex items-center justify-between p-3 bg-slate-50 rounded-xl hover:bg-olive-50 cursor-pointer transition-colors border border-transparent hover:border-olive-200">
-                    <div class="flex items-center gap-3 min-w-0">
+                    <div class="flex items-center gap-3 flex-1 min-w-0 pr-3">
                         <div class="w-8 h-8 shrink-0 rounded-full bg-olive-100 flex items-center justify-center text-olive-600 font-bold text-sm">#${i+1}</div>
-                        <h4 class="font-bold text-slate-800 text-sm truncate">${item[0]}</h4>
+                        <h4 class="font-bold text-slate-800 text-sm break-words leading-snug flex-1 min-w-0">${item[0]}</h4>
                     </div>
-                    <div class="font-bold text-olive-600 text-xs bg-olive-100 px-2.5 py-1 rounded-lg shrink-0">${item[1]} eventi</div>
+                    <div class="font-bold text-olive-600 text-xs bg-olive-100 px-2.5 py-1 rounded-lg shrink-0 whitespace-nowrap">${item[1]} eventi</div>
                 </li>`;
             });
             html += `</ul>`;
