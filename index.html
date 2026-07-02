@@ -16,6 +16,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- PapaParse for robust CSV parsing -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <!-- Flatpickr for Date Picker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/it.js"></script>
 
     <script>
         tailwind.config = {
@@ -401,7 +405,7 @@
                 <div id="modalCalendarPicker" class="hidden w-full bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-2">
                     <p class="text-xs text-slate-600 font-medium">L'evento dura più giorni. Quando vuoi andare?</p>
                     <div class="flex gap-2">
-                        <input type="date" id="calendarDateSelect" class="flex-1 text-sm border border-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-maremma-500 text-slate-700 bg-slate-50">
+                        <input type="text" id="calendarDateSelect" placeholder="Scegli data..." class="flex-1 text-sm border border-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-maremma-500 text-slate-700 bg-slate-50 cursor-pointer">
                         <button onclick="confirmCalendar()" class="bg-maremma-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-maremma-700 transition-colors">Salva</button>
                         <button onclick="cancelCalendarPicker()" class="bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-300 transition-colors"><i class="fa-solid fa-xmark"></i></button>
                     </div>
@@ -1164,6 +1168,8 @@
             renderEvents();
         }
 
+        let fpInstance = null;
+
         function triggerCalendarAction() {
             if (!activeModalEvent) return;
             const start = activeModalEvent["Data Inizio"];
@@ -1177,12 +1183,25 @@
                 const maxDate = `${endDateParts[2]}-${endDateParts[1]}-${endDateParts[0]}`;
                 
                 const dateInput = document.getElementById('calendarDateSelect');
-                dateInput.min = minDate;
-                dateInput.max = maxDate;
-                dateInput.value = minDate;
                 
                 document.getElementById('modalDefaultActions').classList.add('hidden');
                 document.getElementById('modalCalendarPicker').classList.remove('hidden');
+                
+                if (fpInstance) {
+                    fpInstance.destroy();
+                }
+
+                fpInstance = flatpickr(dateInput, {
+                    minDate: minDate,
+                    maxDate: maxDate,
+                    defaultDate: minDate,
+                    locale: "it",
+                    disable: [
+                        function(date) {
+                            return !isDateValidForEvent(date, activeModalEvent["Giorni Effettivi"] || "");
+                        }
+                    ]
+                });
             } else {
                 executeCalendarAdd(null);
             }
@@ -1191,6 +1210,10 @@
         function cancelCalendarPicker() {
             document.getElementById('modalCalendarPicker').classList.add('hidden');
             document.getElementById('modalDefaultActions').classList.remove('hidden');
+            if (fpInstance) {
+                fpInstance.destroy();
+                fpInstance = null;
+            }
         }
 
         function isDateValidForEvent(dateObj, giorniEffettivi) {
