@@ -154,7 +154,7 @@
                     <h3 id="statTotal" class="text-lg md:text-xl font-bold text-slate-800 truncate">0</h3>
                 </div>
             </div>
-            <div class="bg-white p-3 md:p-4 rounded-xl shadow-sm border border-maremma-100/50 flex items-center gap-3">
+            <div id="activeStatsCard" onclick="toggleActiveFilter()" class="bg-white p-3 md:p-4 rounded-xl shadow-sm border border-maremma-100/50 flex items-center gap-3 cursor-pointer hover:shadow-md hover:border-emerald-300 transition-all">
                 <div class="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
                     <i class="fa-solid fa-circle-check text-lg"></i>
                 </div>
@@ -163,7 +163,7 @@
                     <h3 id="statActive" class="text-lg md:text-xl font-bold text-slate-800 truncate">0</h3>
                 </div>
             </div>
-            <div class="bg-white p-3 md:p-4 rounded-xl shadow-sm border border-maremma-100/50 flex items-center gap-3">
+            <div onclick="showTopRatingModal()" class="bg-white p-3 md:p-4 rounded-xl shadow-sm border border-maremma-100/50 flex items-center gap-3 cursor-pointer hover:shadow-md hover:border-amber-300 transition-all">
                 <div class="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center text-amber-500 shrink-0">
                     <i class="fa-solid fa-star text-lg"></i>
                 </div>
@@ -172,7 +172,7 @@
                     <h3 id="statTopRating" class="text-sm md:text-base font-bold text-slate-800 truncate">-</h3>
                 </div>
             </div>
-            <div class="bg-white p-3 md:p-4 rounded-xl shadow-sm border border-maremma-100/50 flex items-center gap-3">
+            <div onclick="showTopComuneModal()" class="bg-white p-3 md:p-4 rounded-xl shadow-sm border border-maremma-100/50 flex items-center gap-3 cursor-pointer hover:shadow-md hover:border-olive-300 transition-all">
                 <div class="w-10 h-10 rounded-lg bg-olive-100 flex items-center justify-center text-olive-600 shrink-0">
                     <i class="fa-solid fa-map-location-dot text-lg"></i>
                 </div>
@@ -386,6 +386,22 @@
         </div>
     </div>
 
+    <!-- List Modal (for Top Ratings and Top Comuni) -->
+    <div id="listModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh] transform scale-95 transition-transform duration-300">
+            <!-- Header -->
+            <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+                <h2 id="listModalTitle" class="text-lg font-bold font-serif text-slate-800">Top 5</h2>
+                <button onclick="closeListModal()" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 text-slate-600 hover:bg-rose-100 hover:text-rose-600 transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <!-- Body -->
+            <div id="listModalContent" class="p-5 overflow-y-auto">
+            </div>
+        </div>
+    </div>
+
     <!-- Alert / Toast Notifications container -->
     <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm pointer-events-none"></div>
 
@@ -399,6 +415,7 @@
         let currentFilterSpecialty = 'all';
         let showFavoritesOnly = false;
         let showConcluded = false; // Hide concluded by default
+        let showActiveOnly = false; // Filter active events
         let activeView = 'grid'; // 'grid' or 'list'
 
         // --- ON PAGE LOAD ---
@@ -528,6 +545,17 @@
             renderEvents();
         }
 
+        function toggleActiveFilter() {
+            showActiveOnly = !showActiveOnly;
+            const card = document.getElementById('activeStatsCard');
+            if (showActiveOnly) {
+                card.classList.add('ring-2', 'ring-emerald-400', 'bg-emerald-50/50');
+            } else {
+                card.classList.remove('ring-2', 'ring-emerald-400', 'bg-emerald-50/50');
+            }
+            renderEvents();
+        }
+
         function resetAllFilters() {
             document.getElementById('searchInput').value = '';
             document.getElementById('sortSelect').selectedIndex = 0;
@@ -535,12 +563,16 @@
             document.getElementById('monthFilter').value = 'all';
             showFavoritesOnly = false;
             showConcluded = false;
+            showActiveOnly = false;
             
             const btnFav = document.getElementById('favoriteToggleBtn');
             btnFav.classList.remove('bg-rose-50', 'text-rose-600', 'border-rose-200');
 
             const btnConc = document.getElementById('concludedToggleBtn');
             btnConc.classList.remove('bg-slate-100', 'border-slate-300', 'text-slate-800');
+
+            const activeCard = document.getElementById('activeStatsCard');
+            activeCard.classList.remove('ring-2', 'ring-emerald-400', 'bg-emerald-50/50');
 
             setSpecialtyFilter('all');
             renderEvents();
@@ -711,7 +743,19 @@
                     }
                 }
 
-                return matchesSearch && matchesComune && matchesMonth && matchesSpecialty && matchesFav && matchesConcluded;
+                // Active filter
+                let matchesActive = true;
+                if (showActiveOnly) {
+                    const today = new Date();
+                    today.setHours(0,0,0,0);
+                    const start = parseDateString(ev["Data Inizio"]);
+                    const end = parseDateString(ev["Data Fine"]);
+                    if (!start || !end || today < start || today > end) {
+                        matchesActive = false;
+                    }
+                }
+
+                return matchesSearch && matchesComune && matchesMonth && matchesSpecialty && matchesFav && matchesConcluded && matchesActive;
             });
 
             // Sorting logic
@@ -981,6 +1025,67 @@
             setTimeout(() => {
                 modal.classList.add('hidden');
             }, 300);
+        }
+
+        // --- LIST MODAL ---
+        function showListModal(title, htmlContent) {
+            document.getElementById('listModalTitle').textContent = title;
+            document.getElementById('listModalContent').innerHTML = htmlContent;
+            const modal = document.getElementById('listModal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.firstElementChild.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeListModal() {
+            const modal = document.getElementById('listModal');
+            modal.classList.add('opacity-0');
+            modal.firstElementChild.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function showTopRatingModal() {
+            const sorted = [...events].sort((a,b) => extractRatingNumber(b["Valutazione"]) - extractRatingNumber(a["Valutazione"])).slice(0, 5);
+            let html = `<ul class="space-y-3">`;
+            sorted.forEach((ev, i) => {
+                html += `<li onclick="closeListModal(); openModal(${ev.id})" class="flex items-center justify-between p-3 bg-slate-50 rounded-xl hover:bg-amber-50 cursor-pointer transition-colors border border-transparent hover:border-amber-200">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 shrink-0 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-sm">#${i+1}</div>
+                        <div class="min-w-0">
+                            <h4 class="font-bold text-slate-800 text-sm truncate">${ev["Nome Evento"]}</h4>
+                            <p class="text-xs text-slate-500 truncate">${ev["Comune / Frazione"]}</p>
+                        </div>
+                    </div>
+                    <div class="font-bold text-amber-500 text-sm shrink-0">⭐ ${extractRatingNumber(ev["Valutazione"]).toFixed(1)}</div>
+                </li>`;
+            });
+            html += `</ul>`;
+            showListModal("I 5 Eventi Più Votati", html);
+        }
+
+        function showTopComuneModal() {
+            const counts = {};
+            events.forEach(e => {
+                const c = e["Comune / Frazione"] || "Grosseto";
+                counts[c] = (counts[c] || 0) + 1;
+            });
+            const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]).slice(0, 5);
+            let html = `<ul class="space-y-3">`;
+            sorted.forEach((item, i) => {
+                html += `<li onclick="closeListModal(); document.getElementById('searchInput').value='${item[0]}'; renderEvents();" class="flex items-center justify-between p-3 bg-slate-50 rounded-xl hover:bg-olive-50 cursor-pointer transition-colors border border-transparent hover:border-olive-200">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="w-8 h-8 shrink-0 rounded-full bg-olive-100 flex items-center justify-center text-olive-600 font-bold text-sm">#${i+1}</div>
+                        <h4 class="font-bold text-slate-800 text-sm truncate">${item[0]}</h4>
+                    </div>
+                    <div class="font-bold text-olive-600 text-xs bg-olive-100 px-2.5 py-1 rounded-lg shrink-0">${item[1]} eventi</div>
+                </li>`;
+            });
+            html += `</ul>`;
+            showListModal("I 5 Comuni Più Attivi", html);
         }
 
         function toggleFavoriteFromModal(id) {
