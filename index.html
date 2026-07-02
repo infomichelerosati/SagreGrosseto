@@ -1158,7 +1158,12 @@
 
             const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${desc}&location=${location}${datesParam}`;
 
-            window.open(gcalUrl, '_blank');
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            if (isMobile) {
+                window.location.href = gcalUrl;
+            } else {
+                window.open(gcalUrl, '_blank');
+            }
             showToast("Apertura in Google Calendar...", "success");
         }
 
