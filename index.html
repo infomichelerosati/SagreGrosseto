@@ -1071,7 +1071,10 @@
             document.getElementById('modalMapComune').textContent = ev["Comune / Frazione"] || "Maremma, Toscana";
 
             // Map link
-            const mapQuery = encodeURIComponent(`${ev["Luogo Esatto"] || ''}, ${ev["Comune / Frazione"] || 'Grosseto'}`);
+            // Miglioriamo la precisione per Google Maps aggiungendo Provincia, Regione e gestendo le frazioni
+            let comuneForMap = (ev["Comune / Frazione"] || 'Grosseto').replace(/\(Fraz\.\s*([^)]+)\)/gi, 'Frazione $1');
+            let luogoForMap = ev["Luogo Esatto"] ? `${ev["Luogo Esatto"]}, ` : '';
+            const mapQuery = encodeURIComponent(`${luogoForMap}${comuneForMap}, Provincia di Grosseto, Toscana, Italia`);
             document.getElementById('modalMapLink').href = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
             // Favorite btn state
