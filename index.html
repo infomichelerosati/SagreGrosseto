@@ -708,19 +708,36 @@
         // Identify category type for tag & decorative theme
         function getEventCategory(name, desc) {
             const content = `${name} ${desc}`.toLowerCase();
-            if (content.includes('carnevale') || content.includes('sport') || content.includes('fiera')) {
-                return { label: 'Cultura & Sport', bg: 'bg-indigo-50 border-indigo-100 text-indigo-700', icon: 'fa-masks-theater', type: 'cultura' };
+            
+            if (content.includes('mostra') || content.includes('arte') || content.includes('pittura')) {
+                return { label: 'Mostra d\'Arte', bg: 'bg-purple-50 border-purple-200 text-purple-700', icon: 'fa-palette', type: 'cultura' };
             }
+            if (content.includes('musica') || content.includes('concerto') || content.includes('teatro') || content.includes('festival') || content.includes('ecofestival')) {
+                return { label: 'Musica & Spettacolo', bg: 'bg-fuchsia-50 border-fuchsia-200 text-fuchsia-700', icon: 'fa-music', type: 'cultura' };
+            }
+            if (content.includes('palio') || content.includes('storico') || content.includes('patrono') || content.includes('patronale') || content.includes('processione') || content.includes('rievocazione')) {
+                return { label: 'Evento Storico', bg: 'bg-orange-50 border-orange-200 text-orange-700', icon: 'fa-chess-rook', type: 'cultura' };
+            }
+            if (content.includes('carnevale') || content.includes('sport') || content.includes('fiera')) {
+                return { label: 'Fiera & Sport', bg: 'bg-indigo-50 border-indigo-200 text-indigo-700', icon: 'fa-masks-theater', type: 'cultura' };
+            }
+
             if (content.includes('tortello') || content.includes('maccherone') || content.includes('patata') || content.includes('acquacotta') || content.includes('polenta') || content.includes('fungo') || content.includes('castagna')) {
-                return { label: 'Sagra di Terra', bg: 'bg-amber-50 border-amber-100 text-amber-700', icon: 'fa-wheat-awn', type: 'vegetale' };
+                return { label: 'Sagra di Terra', bg: 'bg-amber-50 border-amber-200 text-amber-700', icon: 'fa-wheat-awn', type: 'vegetale' };
             }
             if (content.includes('polpo') || content.includes('pesce') || content.includes('pescatore') || content.includes('calamaro') || content.includes('marinara')) {
-                return { label: 'Specialità di Mare', bg: 'bg-sky-50 border-sky-100 text-sky-700', icon: 'fa-fish-fins', type: 'pesce' };
+                return { label: 'Specialità di Mare', bg: 'bg-sky-50 border-sky-200 text-sky-700', icon: 'fa-fish-fins', type: 'pesce' };
             }
-            if (content.includes('cinghiale') || content.includes('vacca') || content.includes('pollo') || content.includes('carne') || content.includes('brace')) {
-                return { label: 'Sagra di Carne', bg: 'bg-rose-50 border-rose-100 text-rose-700', icon: 'fa-drumstick-bite', type: 'carne' };
+            if (content.includes('cinghiale') || content.includes('vacca') || content.includes('pollo') || content.includes('carne') || content.includes('brace') || content.includes('pecora') || content.includes('maiale')) {
+                return { label: 'Sagra di Carne', bg: 'bg-rose-50 border-rose-200 text-rose-700', icon: 'fa-drumstick-bite', type: 'carne' };
             }
-            return { label: 'Sagra Tradizionale', bg: 'bg-olive-50 border-olive-100 text-olive-700', icon: 'fa-utensils', type: 'generico' };
+            
+            if (content.includes('sagra') || content.includes('fritti') || content.includes('gastronomica')) {
+                return { label: 'Sagra Tradizionale', bg: 'bg-olive-50 border-olive-200 text-olive-700', icon: 'fa-utensils', type: 'generico' };
+            }
+
+            // Generic fallback for any other unclassified event
+            return { label: 'Evento', bg: 'bg-slate-50 border-slate-200 text-slate-700', icon: 'fa-calendar-days', type: 'generico' };
         }
 
         // --- RENDER COMPONENT ---
