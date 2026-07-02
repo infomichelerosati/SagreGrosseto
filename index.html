@@ -376,11 +376,14 @@
 
             <!-- Modal Footer -->
             <div class="p-4 bg-slate-50 border-t border-slate-100 flex gap-3">
-                <button id="modalFavBtn" class="px-4 py-2.5 rounded-xl border border-slate-200 text-rose-500 hover:bg-rose-50 font-medium text-xs transition-all flex items-center gap-1.5 justify-center">
-                    <i class="fa-regular fa-heart"></i> Pref.
+                <button id="modalFavBtn" class="px-3 py-2.5 rounded-xl border border-slate-200 text-rose-500 hover:bg-rose-50 font-medium text-xs transition-all flex items-center gap-1.5 justify-center">
+                    <i class="fa-regular fa-heart"></i> <span class="hidden xs:inline">Pref.</span>
                 </button>
-                <button onclick="simulateCalendar()" class="flex-1 px-4 py-2.5 rounded-xl bg-maremma-600 hover:bg-maremma-700 text-white font-medium text-xs transition-all flex items-center gap-2 justify-center shadow-sm">
-                    <i class="fa-solid fa-calendar-plus"></i> Aggiungi al mio Calendario
+                <button onclick="shareEvent()" class="px-3 py-2.5 rounded-xl border border-slate-200 text-slate-500 hover:bg-slate-100 hover:text-slate-700 font-medium text-xs transition-all flex items-center justify-center" title="Condividi evento">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </button>
+                <button onclick="simulateCalendar()" class="flex-1 px-3 py-2.5 rounded-xl bg-maremma-600 hover:bg-maremma-700 text-white font-medium text-xs transition-all flex items-center gap-2 justify-center shadow-sm">
+                    <i class="fa-solid fa-calendar-plus"></i> <span class="truncate">Calendario</span>
                 </button>
             </div>
         </div>
@@ -1165,6 +1168,34 @@
                 window.open(gcalUrl, '_blank');
             }
             showToast("Apertura in Google Calendar...", "success");
+        }
+
+        function shareEvent() {
+            if (!activeModalEvent) return;
+            
+            const name = activeModalEvent["Nome Evento"] || "Sagra";
+            const comune = activeModalEvent["Comune / Frazione"] || "Grosseto";
+            const appUrl = window.location.href.split('#')[0].split('?')[0];
+            
+            const shareTitle = `${name} a ${comune}`;
+            const shareText = `Dai un'occhiata a questo evento: ${name} a ${comune}! Scopri tutte le info su Sagre Grosseto.`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: shareTitle,
+                    text: shareText,
+                    url: appUrl
+                }).then(() => {
+                    showToast("Evento condiviso con successo!", "success");
+                }).catch(err => {
+                    // Ignora errori se l'utente annulla la condivisione
+                });
+            } else {
+                // Fallback WhatsApp
+                const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + appUrl)}`;
+                window.open(waUrl, '_blank');
+                showToast("Apertura di WhatsApp...", "success");
+            }
         }
 
         // --- CUSTOM TOAST MESSAGES (No Browser Alerts!) ---
