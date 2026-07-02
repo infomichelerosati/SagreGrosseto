@@ -462,7 +462,7 @@
         function loadCSVData() {
             showToast("Caricamento eventi in corso...", "info");
             
-            Papa.parse("sagre.csv", {
+            Papa.parse("sagre.csv?v=" + new Date().getTime(), {
                 download: true,
                 header: true,
                 skipEmptyLines: true,
