@@ -77,9 +77,35 @@
         .animate-fade-in-up {
             animation: fadeInUp 0.5s ease-out forwards;
         }
+
+        @keyframes colorFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes subtlePulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.08); opacity: 1; }
+        }
+        .powered-by-text {
+            background: linear-gradient(270deg, #d96b27, #ec4899, #8b5cf6, #3b82f6, #10b981, #d96b27);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: colorFlow 4s ease infinite, subtlePulse 2s ease-in-out infinite;
+            font-size: 8px; /* Carattere molto piccolo come richiesto */
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body class="bg-maremma-50 text-slate-800 font-sans min-h-screen selection:bg-maremma-200">
+
+    <!-- Powered By Box -->
+    <div class="fixed top-2 left-2 z-[9999] bg-transparent border-transparent pointer-events-none select-none">
+        <div class="powered-by-text">Powered By Michele Rosati</div>
+    </div>
 
     <!-- Header / Hero Section -->
     <header class="relative bg-gradient-to-r from-olive-800 to-maremma-900 text-white overflow-hidden py-12 md:py-16 shadow-lg">
