@@ -949,31 +949,46 @@
 
         function simulateCalendar() {
             if (!activeModalEvent) return;
-            const title = activeModalEvent["Nome Evento"];
-            const location = activeModalEvent["Luogo Esatto"] + ", " + activeModalEvent["Comune / Frazione"];
-            const desc = activeModalEvent["Descrizione dell'Evento"];
+            const title = encodeURIComponent(activeModalEvent["Nome Evento"] || "");
+            const location = encodeURIComponent(((activeModalEvent["Luogo Esatto"] || "") + ", " + (activeModalEvent["Comune / Frazione"] || "")).trim().replace(/^,|,$/g, ''));
+            const desc = encodeURIComponent(activeModalEvent["Descrizione dell'Evento"] || "");
             
-            // Format to iCal format string
-            const url = `data:text/calendar;charset=utf-8,` + encodeURIComponent(
-                `BEGIN:VCALENDAR\n` +
-                `VERSION:2.0\n` +
-                `BEGIN:VEVENT\n` +
-                `SUMMARY:${title}\n` +
-                `LOCATION:${location}\n` +
-                `DESCRIPTION:${desc}\n` +
-                `STATUS:CONFIRMED\n` +
-                `END:VEVENT\n` +
-                `END:VCALENDAR`
-            );
+            // Format date to YYYYMMDD
+            const formatGCalDate = (dateStr) => {
+                const d = parseDateString(dateStr);
+                if (!d) return "";
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                return `${year}${month}${day}`;
+            };
 
-            const downloadLink = document.createElement("a");
-            downloadLink.href = url;
-            downloadLink.download = `${title.replace(/\s+/g, '_')}.ics`;
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
+            const startStr = formatGCalDate(activeModalEvent["Data Inizio"]);
+            
+            // For all-day events, Google Calendar end date is exclusive (we add 1 day)
+            let endStr = startStr;
+            const endDate = parseDateString(activeModalEvent["Data Fine"]);
+            if (endDate) {
+                endDate.setDate(endDate.getDate() + 1); 
+                const year = endDate.getFullYear();
+                const month = String(endDate.getMonth() + 1).padStart(2, '0');
+                const day = String(endDate.getDate()).padStart(2, '0');
+                endStr = `${year}${month}${day}`;
+            } else if (startStr) {
+                const d = parseDateString(activeModalEvent["Data Inizio"]);
+                d.setDate(d.getDate() + 1);
+                endStr = `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
+            }
 
-            showToast("Esportazione iCal (.ics) avviata con successo!", "success");
+            let datesParam = "";
+            if (startStr && endStr) {
+                datesParam = `&dates=${startStr}/${endStr}`;
+            }
+
+            const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${desc}&location=${location}${datesParam}`;
+
+            window.open(gcalUrl, '_blank');
+            showToast("Apertura in Google Calendar...", "success");
         }
 
         // --- CUSTOM TOAST MESSAGES (No Browser Alerts!) ---
