@@ -345,6 +345,15 @@
                     </div>
                 </div>
 
+                <!-- Giorni Effettivi -->
+                <div id="modalGiorniEffettiviContainer" class="hidden bg-blue-50/50 p-3 rounded-xl border border-blue-100 flex items-start gap-2">
+                    <i class="fa-regular fa-clock text-blue-500 mt-0.5"></i>
+                    <div>
+                        <p class="text-[10px] text-blue-600 uppercase font-bold tracking-wider">Giorni di Apertura</p>
+                        <p id="modalGiorniEffettivi" class="text-sm font-semibold text-blue-900 mt-0.5"></p>
+                    </div>
+                </div>
+
                 <!-- Exact Address -->
                 <div>
                     <p class="text-xs text-slate-400 uppercase font-semibold">Indirizzo / Luogo Esatto</p>
@@ -712,12 +721,14 @@
                 const desc = ev["Descrizione dell'Evento"] || "";
                 const comune = ev["Comune / Frazione"] || "";
                 const luogo = ev["Luogo Esatto"] || "";
+                const giorni = ev["Giorni Effettivi"] || "";
 
                 // Search query
                 const matchesSearch = name.toLowerCase().includes(searchVal) || 
                                       desc.toLowerCase().includes(searchVal) || 
                                       comune.toLowerCase().includes(searchVal) ||
-                                      luogo.toLowerCase().includes(searchVal);
+                                      luogo.toLowerCase().includes(searchVal) ||
+                                      giorni.toLowerCase().includes(searchVal);
 
                 // Comune filter
                 const matchesComune = comuneFilterVal === 'all' || comune.startsWith(comuneFilterVal);
@@ -820,6 +831,7 @@
             const startDateFormatted = formatDatePretty(ev["Data Inizio"]);
             const endDateFormatted = formatDatePretty(ev["Data Fine"]);
             const isFav = favorites.includes(name);
+            const giorniEffettivi = ev["Giorni Effettivi"] || "";
 
             const category = getEventCategory(name, desc);
 
@@ -878,8 +890,15 @@
                         </p>
                     </div>
 
+                    <!-- Giorni Effettivi badge (se presente) -->
+                    ${giorniEffettivi ? `
+                    <div class="mt-3 pt-3 border-t border-slate-100 flex items-center gap-1.5 text-xs text-blue-600 font-semibold">
+                        <i class="fa-regular fa-clock"></i> <span class="truncate">${giorniEffettivi}</span>
+                    </div>
+                    ` : ''}
+
                     <!-- Footer card info -->
-                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                    <div class="${giorniEffettivi ? 'mt-2' : 'mt-4 pt-4 border-t border-slate-100'} flex items-center justify-between text-xs">
                         <div class="text-slate-500">
                             <i class="fa-regular fa-calendar text-maremma-600 mr-1"></i>
                             <span class="font-semibold text-slate-700">${startDateFormatted.split(' ')[0]} ${startDateFormatted.split(' ')[1]}</span>
@@ -905,6 +924,7 @@
             const desc = ev["Descrizione dell'Evento"] || "";
             const isFav = favorites.includes(name);
             const category = getEventCategory(name, desc);
+            const giorniEffettivi = ev["Giorni Effettivi"] || "";
 
             const div = document.createElement('div');
             div.className = "group bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-maremma-300 hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 animate-fade-in-up cursor-pointer";
@@ -935,6 +955,7 @@
                         <p class="text-xs font-semibold text-slate-700 mt-0.5">
                             ${startDateFormatted.split(' ')[0]} ${startDateFormatted.split(' ')[1]} - ${endDateFormatted.split(' ')[0]} ${endDateFormatted.split(' ')[1]}
                         </p>
+                        ${giorniEffettivi ? `<p class="text-[10px] text-blue-600 font-semibold mt-0.5 flex items-center justify-end gap-1"><i class="fa-regular fa-clock"></i> ${giorniEffettivi}</p>` : ''}
                     </div>
                     <!-- Rating -->
                     <div class="text-center bg-amber-50 px-2.5 py-1 rounded-lg">
@@ -997,6 +1018,16 @@
             document.getElementById('modalRating').innerHTML = `⭐ ${extractRatingNumber(ev["Valutazione"]).toFixed(1)} <span class="text-slate-400 font-normal text-xs">/ 5.0</span>`;
             document.getElementById('modalStartDate').innerHTML = `<i class="fa-regular fa-calendar-check text-maremma-600 mr-1.5"></i> ${formatDatePretty(ev["Data Inizio"])}`;
             document.getElementById('modalEndDate').innerHTML = `<i class="fa-regular fa-calendar-xmark text-rose-600 mr-1.5"></i> ${formatDatePretty(ev["Data Fine"])}`;
+            
+            const giorniEffettivi = ev["Giorni Effettivi"] || "";
+            const giorniContainer = document.getElementById('modalGiorniEffettiviContainer');
+            if (giorniEffettivi.trim() !== "") {
+                document.getElementById('modalGiorniEffettivi').textContent = giorniEffettivi;
+                giorniContainer.classList.remove('hidden');
+            } else {
+                giorniContainer.classList.add('hidden');
+            }
+
             document.getElementById('modalExactAddress').textContent = ev["Luogo Esatto"] || "Centro Storico";
             document.getElementById('modalDesc').textContent = desc;
             document.getElementById('modalCategoryBadge').textContent = category.label;
