@@ -163,7 +163,7 @@
                 
                 <!-- Row 1: Search & Active Toggle -->
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 items-center">
-                    <div class="lg:col-span-6 relative">
+                    <div class="lg:col-span-5 relative">
                         <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
                         <input type="text" id="searchInput" placeholder="Cerca per nome, comune, descrizione..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-maremma-600/20 focus:border-maremma-600 text-sm transition-all">
                     </div>
@@ -177,12 +177,16 @@
                         </select>
                     </div>
 
-                    <div class="lg:col-span-3 flex items-center gap-2">
-                        <button id="favoriteToggleBtn" class="flex-1 py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 flex items-center justify-center gap-2 text-sm transition-all">
-                            <i class="fa-solid fa-heart text-rose-500"></i>
-                            <span>Solo Preferiti</span>
+                    <div class="lg:col-span-4 flex items-center gap-2">
+                        <button id="concludedToggleBtn" class="flex-1 py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 flex items-center justify-center gap-2 text-[11px] font-medium transition-all" title="Mostra eventi già conclusi">
+                            <i class="fa-solid fa-clock-rotate-left text-slate-400"></i>
+                            <span class="hidden xl:inline">Passate</span>
                         </button>
-                        <button id="resetFiltersBtn" class="p-2.5 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition-all" title="Resetta tutti i filtri">
+                        <button id="favoriteToggleBtn" class="flex-1 py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 flex items-center justify-center gap-2 text-[11px] font-medium transition-all">
+                            <i class="fa-solid fa-heart text-rose-500"></i>
+                            <span class="hidden xl:inline">Preferiti</span>
+                        </button>
+                        <button id="resetFiltersBtn" class="p-2.5 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition-all shrink-0" title="Resetta tutti i filtri">
                             <i class="fa-solid fa-arrow-rotate-left"></i>
                         </button>
                     </div>
@@ -368,6 +372,7 @@
         let favorites = JSON.parse(localStorage.getItem(`${appId}-favorites`)) || [];
         let currentFilterSpecialty = 'all';
         let showFavoritesOnly = false;
+        let showConcluded = false; // Hide concluded by default
         let activeView = 'grid'; // 'grid' or 'list'
 
         // --- ON PAGE LOAD ---
@@ -427,6 +432,7 @@
             document.getElementById('monthFilter').addEventListener('change', renderEvents);
             document.getElementById('resetFiltersBtn').addEventListener('click', resetAllFilters);
             document.getElementById('favoriteToggleBtn').addEventListener('click', toggleFavoritesFilter);
+            document.getElementById('concludedToggleBtn').addEventListener('click', toggleConcludedFilter);
 
             // View toggles
             document.getElementById('viewGridBtn').addEventListener('click', () => setView('grid'));
@@ -485,15 +491,30 @@
             renderEvents();
         }
 
+        function toggleConcludedFilter() {
+            showConcluded = !showConcluded;
+            const btn = document.getElementById('concludedToggleBtn');
+            if (showConcluded) {
+                btn.classList.add('bg-slate-100', 'border-slate-300', 'text-slate-800');
+            } else {
+                btn.classList.remove('bg-slate-100', 'border-slate-300', 'text-slate-800');
+            }
+            renderEvents();
+        }
+
         function resetAllFilters() {
             document.getElementById('searchInput').value = '';
             document.getElementById('sortSelect').selectedIndex = 0;
             document.getElementById('comuneFilter').value = 'all';
             document.getElementById('monthFilter').value = 'all';
             showFavoritesOnly = false;
+            showConcluded = false;
             
-            const btn = document.getElementById('favoriteToggleBtn');
-            btn.classList.remove('bg-rose-50', 'text-rose-600', 'border-rose-200');
+            const btnFav = document.getElementById('favoriteToggleBtn');
+            btnFav.classList.remove('bg-rose-50', 'text-rose-600', 'border-rose-200');
+
+            const btnConc = document.getElementById('concludedToggleBtn');
+            btnConc.classList.remove('bg-slate-100', 'border-slate-300', 'text-slate-800');
 
             setSpecialtyFilter('all');
             renderEvents();
@@ -653,7 +674,18 @@
                 const isFav = favorites.includes(name);
                 const matchesFav = !showFavoritesOnly || isFav;
 
-                return matchesSearch && matchesComune && matchesMonth && matchesSpecialty && matchesFav;
+                // Concluded filter
+                let matchesConcluded = true;
+                if (!showConcluded) {
+                    const today = new Date();
+                    today.setHours(0,0,0,0);
+                    const endDate = parseDateString(ev["Data Fine"]);
+                    if (endDate && endDate < today) {
+                        matchesConcluded = false;
+                    }
+                }
+
+                return matchesSearch && matchesComune && matchesMonth && matchesSpecialty && matchesFav && matchesConcluded;
             });
 
             // Sorting logic
