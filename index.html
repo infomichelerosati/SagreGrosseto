@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sagre e Feste della Provincia di Grosseto</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- PapaParse for robust CSV parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    },
+                    colors: {
+                        maremma: {
+                            50: '#fdf8f5',
+                            100: '#fbeee6',
+                            200: '#f5d9ca',
+                            600: '#d96b27', // Terracotta warm
+                            700: '#b24f1c',
+                            800: '#8c3a16',
+                            900: '#4c1a06',
+                        },
+                        olive: {
+                            50: '#f7f8f4',
+                            100: '#ecefe4',
+                            600: '#606c38', // Olive green Maremma
+                            700: '#4f582f',
+                            800: '#283618',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d96b27;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #b24f1c;
+        }
+    </style>
+</head>
+<body class="bg-maremma-50 text-slate-800 font-sans min-h-screen selection:bg-maremma-200">
+
+    <!-- Header / Hero Section -->
+    <header class="relative bg-gradient-to-r from-olive-800 to-maremma-900 text-white overflow-hidden py-12 md:py-16 shadow-lg">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-maremma-700/30 via-transparent to-transparent"></div>
+        
+        <!-- Decorative subtle pattern overlay -->
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                <div>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-maremma-600/30 text-maremma-200 border border-maremma-500/30 mb-3 uppercase tracking-wider">
+                        <i class="fa-solid fa-wheat-awn mr-1.5 text-amber-400"></i> Tradizioni della Maremma
+                    </span>
+                    <h1 class="text-4xl md:text-5xl font-bold font-serif leading-tight">
+                        Sagre & Feste di Grosseto
+                    </h1>
+                    <p class="mt-2 text-maremma-100/90 text-sm md:text-base max-w-xl font-light">
+                        Esplora i sapori autentici, la cultura e le feste tradizionali del territorio maremmano.
+                    </p>
+                </div>
+
+                <!-- Sincronizzazione Dati -->
+                <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 max-w-sm w-full flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-cloud-arrow-down text-3xl text-emerald-400"></i>
+                    <div class="text-left">
+                        <p class="text-sm font-semibold text-white">Dati Sincronizzati</p>
+                        <p class="text-xs text-maremma-200">Eventi aggiornati in tempo reale</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Quick Stats Banner -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-maremma-100/50 flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-maremma-100 flex items-center justify-center text-maremma-600 shrink-0">
+                    <i class="fa-solid fa-calendar-days text-lg"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Totale Eventi</p>
+                    <h3 id="statTotal" class="text-xl font-bold text-slate-800">0</h3>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-maremma-100/50 flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
+                    <i class="fa-solid fa-circle-check text-lg"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold">In Corso/Attivi</p>
+                    <h3 id="statActive" class="text-xl font-bold text-slate-800">0</h3>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-maremma-100/50 flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center text-amber-500 shrink-0">
+                    <i class="fa-solid fa-star text-lg"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Top Rating</p>
+                    <h3 id="statTopRating" class="text-base font-bold text-slate-800 truncate max-w-[130px]">-</h3>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-maremma-100/50 flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-olive-100 flex items-center justify-center text-olive-600 shrink-0">
+                    <i class="fa-solid fa-map-location-dot text-lg"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Comune Top</p>
+                    <h3 id="statTopComune" class="text-xl font-bold text-slate-800 truncate max-w-[130px]">-</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter & Search Controls -->
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-maremma-100/60 mb-8">
+            <div class="flex flex-col gap-4">
+                
+                <!-- Row 1: Search & Active Toggle -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 items-center">
+                    <div class="lg:col-span-6 relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" id="searchInput" placeholder="Cerca per nome, comune, descrizione..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-maremma-600/20 focus:border-maremma-600 text-sm transition-all">
+                    </div>
+                    
+                    <div class="lg:col-span-3">
+                        <select id="sortSelect" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-maremma-600/20 focus:border-maremma-600 text-sm bg-white transition-all">
+                            <option value="date-asc">Ordina per: Data (Prima i più vicini)</option>
+                            <option value="date-desc">Ordina per: Data (In fondo i più vicini)</option>
+                            <option value="rating-desc">Ordina per: Valutazione (Più alta)</option>
+                            <option value="name-asc">Ordina per: Nome (A-Z)</option>
+                        </select>
+                    </div>
+
+                    <div class="lg:col-span-3 flex items-center gap-2">
+                        <button id="favoriteToggleBtn" class="flex-1 py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 flex items-center justify-center gap-2 text-sm transition-all">
+                            <i class="fa-solid fa-heart text-rose-500"></i>
+                            <span>Solo Preferiti</span>
+                        </button>
+                        <button id="resetFiltersBtn" class="p-2.5 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition-all" title="Resetta tutti i filtri">
+                            <i class="fa-solid fa-arrow-rotate-left"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Row 2: Category and Comune Selectors -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 border-t border-slate-100">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Filtra per Comune</label>
+                        <select id="comuneFilter" class="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none text-xs bg-white">
+                            <option value="all">Tutti i comuni</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Filtra per Mese</label>
+                        <select id="monthFilter" class="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none text-xs bg-white">
+                            <option value="all">Tutti i mesi</option>
+                            <option value="01">Gennaio</option>
+                            <option value="02">Febbraio</option>
+                            <option value="03">Marzo</option>
+                            <option value="04">Aprile</option>
+                            <option value="05">Maggio</option>
+                            <option value="06">Giugno</option>
+                            <option value="07">Luglio</option>
+                            <option value="08">Agosto</option>
+                            <option value="09">Settembre</option>
+                            <option value="10">Ottobre</option>
+                            <option value="11">Novembre</option>
+                            <option value="12">Dicembre</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Tipologia Sagra</label>
+                        <div class="flex gap-1">
+                            <button onclick="setSpecialtyFilter('all')" class="spec-btn flex-1 py-1.5 px-2 rounded-lg text-xs bg-maremma-600 text-white font-medium shadow-sm transition-all">Tutte</button>
+                            <button onclick="setSpecialtyFilter('carne')" class="spec-btn flex-1 py-1.5 px-2 rounded-lg text-xs bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition-all">🍖 Carne</button>
+                            <button onclick="setSpecialtyFilter('pesce')" class="spec-btn flex-1 py-1.5 px-2 rounded-lg text-xs bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition-all">🐟 Pesce</button>
+                            <button onclick="setSpecialtyFilter('vegetale')" class="spec-btn flex-1 py-1.5 px-2 rounded-lg text-xs bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition-all">🍄 Terra</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Events Grid -->
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold font-serif text-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-utensils text-maremma-600"></i> Eventi in programma
+                <span id="eventsCountBadge" class="ml-2 text-xs font-sans px-2.5 py-1 bg-maremma-100 text-maremma-700 rounded-full font-semibold">0</span>
+            </h2>
+            
+            <div class="flex items-center gap-1.5 bg-white border border-slate-200 p-1 rounded-lg shadow-sm">
+                <button id="viewGridBtn" class="p-1.5 rounded text-maremma-600 bg-maremma-50 hover:bg-maremma-100 transition-all" title="Vista griglia">
+                    <i class="fa-solid fa-grip"></i>
+                </button>
+                <button id="viewListBtn" class="p-1.5 rounded text-slate-400 hover:text-slate-600 transition-all" title="Vista tabella compatta">
+                    <i class="fa-solid fa-list"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Items Container -->
+        <div id="eventsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-300">
+            <!-- Rendered by JS -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-16 bg-white rounded-2xl border border-slate-100 shadow-sm">
+            <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
+                <i class="fa-solid fa-calendar-xmark text-2xl"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-700">Nessun evento trovato</h3>
+            <p class="text-sm text-slate-500 max-w-md mx-auto mt-1">Nessuna sagra corrisponde ai criteri di ricerca attuali. Prova a rimuovere qualche filtro o a caricare un file diverso.</p>
+            <button onclick="resetAllFilters()" class="mt-4 px-4 py-2 bg-maremma-600 hover:bg-maremma-700 text-white text-xs font-semibold rounded-lg transition-all">
+                Resetta Filtri
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Detailed Modal -->
+    <div id="detailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-100 transform scale-95 transition-transform duration-300 max-h-[90vh] flex flex-col">
+            <!-- Modal Header / Image Area -->
+            <div class="relative h-44 bg-gradient-to-r from-maremma-700 to-olive-700 flex items-end p-6">
+                <!-- Overlay effect -->
+                <div class="absolute inset-0 bg-black/30"></div>
+                <!-- Banner text details -->
+                <div class="relative z-10 text-white">
+                    <span id="modalCategoryBadge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/20 border border-white/30 backdrop-blur-sm">Sagra</span>
+                    <h3 id="modalTitle" class="text-2xl font-bold font-serif mt-1 drop-shadow-md">Carnevale di Montemerano</h3>
+                </div>
+                <button onclick="closeModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/40 text-white hover:bg-black/60 flex items-center justify-center transition-all">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content (Scrollable) -->
+            <div class="p-6 overflow-y-auto custom-scrollbar flex-1 space-y-4">
+                <!-- Location & Rating -->
+                <div class="flex justify-between items-start gap-4">
+                    <div>
+                        <p class="text-xs text-slate-400 uppercase font-semibold">Località</p>
+                        <p id="modalLocation" class="text-sm font-semibold text-slate-800 flex items-center gap-1.5 mt-0.5">
+                            <i class="fa-solid fa-location-dot text-rose-500"></i> Manciano (Fraz. Montemerano)
+                        </p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs text-slate-400 uppercase font-semibold">Valutazione</p>
+                        <p id="modalRating" class="text-sm font-bold text-amber-500 mt-0.5">⭐ 4.2</p>
+                    </div>
+                </div>
+
+                <!-- Dates -->
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-[10px] text-slate-400 uppercase font-semibold">Data Inizio</p>
+                        <p id="modalStartDate" class="text-sm font-bold text-slate-700 mt-0.5">
+                            <i class="fa-regular fa-calendar-check text-maremma-600 mr-1.5"></i> 13 Feb 2026
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-slate-400 uppercase font-semibold">Data Fine</p>
+                        <p id="modalEndDate" class="text-sm font-bold text-slate-700 mt-0.5">
+                            <i class="fa-regular fa-calendar-xmark text-rose-600 mr-1.5"></i> 22 Feb 2026
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Exact Address -->
+                <div>
+                    <p class="text-xs text-slate-400 uppercase font-semibold">Indirizzo / Luogo Esatto</p>
+                    <p id="modalExactAddress" class="text-sm text-slate-600 mt-0.5 italic">Centro Storico e Piazza del Castello, Montemerano</p>
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <p class="text-xs text-slate-400 uppercase font-semibold">L'Evento</p>
+                    <p id="modalDesc" class="text-sm text-slate-700 mt-1 leading-relaxed">
+                        Rassegna invernale con sfilate allegoriche storiche e degustazioni dei dolci tipici della tradizione della Val d'Albegna.
+                    </p>
+                </div>
+
+                <!-- Map Placeholder Simulated -->
+                <div class="border border-slate-100 rounded-xl overflow-hidden h-28 relative bg-slate-100 flex items-center justify-center">
+                    <div class="absolute inset-0 opacity-40 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:12px_12px]"></div>
+                    <div class="z-10 text-center p-3">
+                        <i class="fa-solid fa-map-location text-slate-400 text-lg mb-1"></i>
+                        <p class="text-[10px] text-slate-500 font-medium">Coordinate e Mappa Territorio</p>
+                        <p class="text-[9px] text-slate-400" id="modalMapComune">Provincia di Grosseto, Toscana</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 bg-slate-50 border-t border-slate-100 flex gap-3">
+                <button id="modalFavBtn" class="px-4 py-2.5 rounded-xl border border-slate-200 text-rose-500 hover:bg-rose-50 font-medium text-xs transition-all flex items-center gap-1.5 justify-center">
+                    <i class="fa-regular fa-heart"></i> Pref.
+                </button>
+                <button onclick="simulateCalendar()" class="flex-1 px-4 py-2.5 rounded-xl bg-maremma-600 hover:bg-maremma-700 text-white font-medium text-xs transition-all flex items-center gap-2 justify-center shadow-sm">
+                    <i class="fa-solid fa-calendar-plus"></i> Aggiungi al mio Calendario
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert / Toast Notifications container -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm pointer-events-none"></div>
+
+    <script>
+        // --- DATASET & LOCAL STORAGE INITS ---
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'sagre-grosseto-dashboard';
+
+        // App state
+        let events = [];
+        let favorites = JSON.parse(localStorage.getItem(`${appId}-favorites`)) || [];
+        let currentFilterSpecialty = 'all';
+        let showFavoritesOnly = false;
+        let activeView = 'grid'; // 'grid' or 'list'
+
+        // --- ON PAGE LOAD ---
+        window.addEventListener('DOMContentLoaded', () => {
+            setupEventListeners();
+            loadCSVData();
+        });
+
+        // Initialize display and filters
+        function initializePage() {
+            populateComuniFilter();
+            renderStats();
+            renderEvents();
+        }
+
+        function loadCSVData() {
+            showToast("Caricamento eventi in corso...", "info");
+            
+            Papa.parse("sagre.csv", {
+                download: true,
+                header: true,
+                skipEmptyLines: true,
+                complete: function(results) {
+                    if (results.data && results.data.length > 0) {
+                        // Check headers
+                        const headers = Object.keys(results.data[0]);
+                        const required = ["Data Inizio", "Data Fine", "Nome Evento", "Comune / Frazione"];
+                        const missing = required.filter(h => !headers.includes(h));
+
+                        if (missing.length > 0) {
+                            showToast(`Il CSV non sembra avere le intestazioni corrette. Mancano: ${missing.join(', ')}`, "error");
+                            return;
+                        }
+
+                        // Set new events with unique numeric IDs to prevent quote crashes
+                        events = results.data.map((ev, idx) => ({ ...ev, id: idx }));
+                        initializePage();
+                        
+                        showToast(`Caricati con successo ${events.length} eventi dal file!`, "success");
+                    } else {
+                        showToast("Nessun dato trovato nel file CSV", "error");
+                    }
+                },
+                error: function(err) {
+                    showToast("Impossibile leggere il file CSV (verifica che si chiami sagre.csv)", "error");
+                    console.error(err);
+                }
+            });
+        }
+
+        // --- EVENT LISTENERS ---
+        function setupEventListeners() {
+            // Filtering Inputs
+            document.getElementById('searchInput').addEventListener('input', renderEvents);
+            document.getElementById('sortSelect').addEventListener('change', renderEvents);
+            document.getElementById('comuneFilter').addEventListener('change', renderEvents);
+            document.getElementById('monthFilter').addEventListener('change', renderEvents);
+            document.getElementById('resetFiltersBtn').addEventListener('click', resetAllFilters);
+            document.getElementById('favoriteToggleBtn').addEventListener('click', toggleFavoritesFilter);
+
+            // View toggles
+            document.getElementById('viewGridBtn').addEventListener('click', () => setView('grid'));
+            document.getElementById('viewListBtn').addEventListener('click', () => setView('list'));
+        }
+
+        // --- FILTER HELPERS ---
+        function populateComuniFilter() {
+            const filter = document.getElementById('comuneFilter');
+            const comuni = new Set();
+            
+            events.forEach(ev => {
+                const match = ev["Comune / Frazione"] ? ev["Comune / Frazione"].split('(')[0].trim() : null;
+                if (match) comuni.add(match);
+            });
+
+            // Reset options keeping only the first
+            filter.innerHTML = '<option value="all">Tutti i comuni</option>';
+            
+            // Sort and append
+            Array.from(comuni).sort().forEach(comune => {
+                const opt = document.createElement('option');
+                opt.value = comune;
+                opt.textContent = comune;
+                filter.appendChild(opt);
+            });
+        }
+
+        function setSpecialtyFilter(specialty) {
+            currentFilterSpecialty = specialty;
+            
+            // Update UI buttons state
+            document.querySelectorAll('.spec-btn').forEach(btn => {
+                btn.classList.remove('bg-maremma-600', 'text-white', 'shadow-sm');
+                btn.classList.add('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+            });
+
+            // Set active button
+            const eventTarget = window.event?.currentTarget;
+            if (eventTarget) {
+                eventTarget.classList.remove('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+                eventTarget.classList.add('bg-maremma-600', 'text-white', 'shadow-sm');
+            }
+
+            renderEvents();
+        }
+
+        function toggleFavoritesFilter() {
+            showFavoritesOnly = !showFavoritesOnly;
+            const btn = document.getElementById('favoriteToggleBtn');
+            if (showFavoritesOnly) {
+                btn.classList.add('bg-rose-50', 'text-rose-600', 'border-rose-200');
+            } else {
+                btn.classList.remove('bg-rose-50', 'text-rose-600', 'border-rose-200');
+            }
+            renderEvents();
+        }
+
+        function resetAllFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('sortSelect').selectedIndex = 0;
+            document.getElementById('comuneFilter').value = 'all';
+            document.getElementById('monthFilter').value = 'all';
+            showFavoritesOnly = false;
+            
+            const btn = document.getElementById('favoriteToggleBtn');
+            btn.classList.remove('bg-rose-50', 'text-rose-600', 'border-rose-200');
+
+            setSpecialtyFilter('all');
+            renderEvents();
+            showToast("Tutti i filtri sono stati azzerati", "info");
+        }
+
+        function setView(view) {
+            activeView = view;
+            const gridBtn = document.getElementById('viewGridBtn');
+            const listBtn = document.getElementById('viewListBtn');
+
+            if (view === 'grid') {
+                gridBtn.classList.add('text-maremma-600', 'bg-maremma-50');
+                gridBtn.classList.remove('text-slate-400');
+                listBtn.classList.remove('text-maremma-600', 'bg-maremma-50');
+                listBtn.classList.add('text-slate-400');
+            } else {
+                listBtn.classList.add('text-maremma-600', 'bg-maremma-50');
+                listBtn.classList.remove('text-slate-400');
+                gridBtn.classList.remove('text-maremma-600', 'bg-maremma-50');
+                gridBtn.classList.add('text-slate-400');
+            }
+            renderEvents();
+        }
+
+        // --- STATISTICS COMPUTING ---
+        function renderStats() {
+            document.getElementById('statTotal').textContent = events.length;
+
+            // Compute active events
+            const today = new Date();
+            let activeCount = 0;
+            let topRating = { name: '-', value: 0 };
+            const comuniCount = {};
+
+            events.forEach(ev => {
+                // Dates calculation
+                const startDate = parseDateString(ev["Data Inizio"]);
+                const endDate = parseDateString(ev["Data Fine"]);
+                if (startDate && endDate && today >= startDate && today <= endDate) {
+                    activeCount++;
+                }
+
+                // Top Rated
+                const ratingNum = parseFloat(extractRatingNumber(ev["Valutazione"]));
+                if (ratingNum > topRating.value) {
+                    topRating = { name: ev["Nome Evento"], value: ratingNum };
+                }
+
+                // Comuni activity count
+                const comunePure = ev["Comune / Frazione"] ? ev["Comune / Frazione"].split('(')[0].trim() : null;
+                if (comunePure) {
+                    comuniCount[comunePure] = (comuniCount[comunePure] || 0) + 1;
+                }
+            });
+
+            document.getElementById('statActive').textContent = activeCount;
+            document.getElementById('statTopRating').textContent = topRating.name;
+            document.getElementById('statTopRating').title = `${topRating.name} (${topRating.value})`;
+
+            let maxComune = '-';
+            let maxCount = 0;
+            for (const c in comuniCount) {
+                if (comuniCount[c] > maxCount) {
+                    maxCount = comuniCount[c];
+                    maxComune = c;
+                }
+            }
+            document.getElementById('statTopComune').textContent = maxComune;
+            document.getElementById('statTopComune').title = `${maxComune} (${maxCount} sagre)`;
+        }
+
+        // Helper: Extract rating numeric from star string "⭐⭐⭐⭐ (4.2)"
+        function extractRatingNumber(ratingString) {
+            if (!ratingString) return 0;
+            const match = ratingString.match(/\((\d+(\.\d+)?)\)/);
+            return match ? parseFloat(match[1]) : 0;
+        }
+
+        // Helper: Parse DD/MM/YYYY
+        function parseDateString(dateStr) {
+            if (!dateStr) return null;
+            const parts = dateStr.trim().split('/');
+            if (parts.length !== 3) return null;
+            return new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
+        }
+
+        // Format dates nicely
+        function formatDatePretty(dateStr) {
+            const date = parseDateString(dateStr);
+            if (!date) return dateStr;
+            return date.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+
+        // Identify category type for tag & decorative theme
+        function getEventCategory(name, desc) {
+            const content = `${name} ${desc}`.toLowerCase();
+            if (content.includes('carnevale') || content.includes('sport') || content.includes('fiera')) {
+                return { label: 'Cultura & Sport', bg: 'bg-indigo-50 border-indigo-100 text-indigo-700', icon: 'fa-masks-theater', type: 'cultura' };
+            }
+            if (content.includes('tortello') || content.includes('maccherone') || content.includes('patata') || content.includes('acquacotta') || content.includes('polenta') || content.includes('fungo') || content.includes('castagna')) {
+                return { label: 'Sagra di Terra', bg: 'bg-amber-50 border-amber-100 text-amber-700', icon: 'fa-wheat-awn', type: 'vegetale' };
+            }
+            if (content.includes('polpo') || content.includes('pesce') || content.includes('pescatore') || content.includes('calamaro') || content.includes('marinara')) {
+                return { label: 'Specialità di Mare', bg: 'bg-sky-50 border-sky-100 text-sky-700', icon: 'fa-fish-fins', type: 'pesce' };
+            }
+            if (content.includes('cinghiale') || content.includes('vacca') || content.includes('pollo') || content.includes('carne') || content.includes('brace')) {
+                return { label: 'Sagra di Carne', bg: 'bg-rose-50 border-rose-100 text-rose-700', icon: 'fa-drumstick-bite', type: 'carne' };
+            }
+            return { label: 'Sagra Tradizionale', bg: 'bg-olive-50 border-olive-100 text-olive-700', icon: 'fa-utensils', type: 'generico' };
+        }
+
+        // --- RENDER COMPONENT ---
+        function renderEvents() {
+            const container = document.getElementById('eventsContainer');
+            const emptyState = document.getElementById('emptyState');
+            const searchVal = document.getElementById('searchInput').value.toLowerCase().trim();
+            const sortVal = document.getElementById('sortSelect').value;
+            const comuneFilterVal = document.getElementById('comuneFilter').value;
+            const monthFilterVal = document.getElementById('monthFilter').value;
+
+            // Clear current view
+            container.innerHTML = '';
+
+            // Apply logic filters
+            let filtered = events.filter(ev => {
+                const name = ev["Nome Evento"] || "";
+                const desc = ev["Descrizione dell'Evento"] || "";
+                const comune = ev["Comune / Frazione"] || "";
+                const luogo = ev["Luogo Esatto"] || "";
+
+                // Search query
+                const matchesSearch = name.toLowerCase().includes(searchVal) || 
+                                      desc.toLowerCase().includes(searchVal) || 
+                                      comune.toLowerCase().includes(searchVal) ||
+                                      luogo.toLowerCase().includes(searchVal);
+
+                // Comune filter
+                const matchesComune = comuneFilterVal === 'all' || comune.startsWith(comuneFilterVal);
+
+                // Month filter
+                let matchesMonth = true;
+                if (monthFilterVal !== 'all') {
+                    const startMonth = ev["Data Inizio"] ? ev["Data Inizio"].split('/')[1] : '';
+                    const endMonth = ev["Data Fine"] ? ev["Data Fine"].split('/')[1] : '';
+                    matchesMonth = startMonth === monthFilterVal || endMonth === monthFilterVal;
+                }
+
+                // Food Type Filter
+                const categoryInfo = getEventCategory(name, desc);
+                let matchesSpecialty = true;
+                if (currentFilterSpecialty !== 'all') {
+                    matchesSpecialty = categoryInfo.type === currentFilterSpecialty;
+                }
+
+                // Favorites toggle filter
+                const isFav = favorites.includes(name);
+                const matchesFav = !showFavoritesOnly || isFav;
+
+                return matchesSearch && matchesComune && matchesMonth && matchesSpecialty && matchesFav;
+            });
+
+            // Sorting logic
+            filtered.sort((a, b) => {
+                if (sortVal.startsWith('date-')) {
+                    const dateA = parseDateString(a["Data Inizio"]) || new Date(0);
+                    const dateB = parseDateString(b["Data Inizio"]) || new Date(0);
+                    return sortVal === 'date-asc' ? dateA - dateB : dateB - dateA;
+                }
+                if (sortVal === 'rating-desc') {
+                    return extractRatingNumber(b["Valutazione"]) - extractRatingNumber(a["Valutazione"]);
+                }
+                if (sortVal === 'name-asc') {
+                    return (a["Nome Evento"] || "").localeCompare(b["Nome Evento"] || "");
+                }
+                return 0;
+            });
+
+            // Handle empty state visibility
+            if (filtered.length === 0) {
+                container.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                document.getElementById('eventsCountBadge').textContent = "0";
+                return;
+            } else {
+                container.classList.remove('hidden');
+                emptyState.classList.add('hidden');
+                document.getElementById('eventsCountBadge').textContent = filtered.length;
+            }
+
+            // Design layouts
+            if (activeView === 'grid') {
+                container.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6";
+                filtered.forEach(ev => {
+                    const card = createGridCard(ev);
+                    container.appendChild(card);
+                });
+            } else {
+                container.className = "flex flex-col gap-3 w-full";
+                filtered.forEach(ev => {
+                    const listItem = createListCard(ev);
+                    container.appendChild(listItem);
+                });
+            }
+        }
+
+        // --- DESIGN: GRID CARD ---
+        function createGridCard(ev) {
+            const name = ev["Nome Evento"] || "Sagra Senza Nome";
+            const rating = ev["Valutazione"] || "N/D";
+            const comune = ev["Comune / Frazione"] || "Grosseto (GR)";
+            const desc = ev["Descrizione dell'Evento"] || "Nessuna descrizione disponibile per l'evento.";
+            const startDateFormatted = formatDatePretty(ev["Data Inizio"]);
+            const endDateFormatted = formatDatePretty(ev["Data Fine"]);
+            const isFav = favorites.includes(name);
+
+            const category = getEventCategory(name, desc);
+
+            // Simple date active badge logic
+            const today = new Date();
+            const start = parseDateString(ev["Data Inizio"]);
+            const end = parseDateString(ev["Data Fine"]);
+            let statusBadge = "";
+            
+            if (start && end) {
+                if (today >= start && today <= end) {
+                    statusBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 uppercase tracking-wide animate-pulse">In Corso</span>`;
+                } else if (today < start) {
+                    statusBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-700 uppercase tracking-wide">In Arrivo</span>`;
+                } else {
+                    statusBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-500 uppercase tracking-wide">Conclusa</span>`;
+                }
+            }
+
+            const div = document.createElement('div');
+            div.className = "group bg-white rounded-2xl shadow-sm hover:shadow-md border border-maremma-100/40 hover:border-maremma-200 transition-all duration-300 flex flex-col overflow-hidden";
+            
+            div.innerHTML = `
+                <!-- Top Header banner decorative background -->
+                <div class="h-3 relative bg-gradient-to-r from-maremma-600 to-olive-600"></div>
+
+                <div class="p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                        <!-- Header Tags Row -->
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${category.bg} border">
+                                <i class="fa-solid ${category.icon} mr-1"></i> ${category.label}
+                            </span>
+                            <div class="flex items-center gap-1.5">
+                                ${statusBadge}
+                                <button onclick="toggleFavorite(event, ${ev.id})" class="text-slate-300 hover:text-rose-500 transition-colors text-base" title="Aggiungi ai preferiti">
+                                    <i class="${isFav ? 'fa-solid fa-heart text-rose-500' : 'fa-regular fa-heart'}"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Sagra Main details -->
+                        <h3 onclick="openModal(${ev.id})" class="text-lg font-bold font-serif text-slate-800 hover:text-maremma-700 cursor-pointer transition-colors leading-snug">
+                            ${name}
+                        </h3>
+
+                        <!-- Località -->
+                        <p class="text-xs text-slate-500 mt-1.5 flex items-center gap-1.5 font-medium">
+                            <i class="fa-solid fa-location-dot text-rose-400"></i> ${comune}
+                        </p>
+
+                        <!-- Descrizione -->
+                        <p class="text-xs text-slate-600 mt-3 line-clamp-3 leading-relaxed">
+                            ${desc}
+                        </p>
+                    </div>
+
+                    <!-- Footer card info -->
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                        <div class="text-slate-500">
+                            <i class="fa-regular fa-calendar text-maremma-600 mr-1"></i>
+                            <span class="font-semibold text-slate-700">${startDateFormatted.split(' ')[0]} ${startDateFormatted.split(' ')[1]}</span>
+                            <span class="mx-1 text-slate-300">al</span>
+                            <span class="font-semibold text-slate-700">${endDateFormatted.split(' ')[0]} ${endDateFormatted.split(' ')[1]}</span>
+                        </div>
+                        <div class="flex items-center font-bold text-amber-500 bg-amber-50 px-2 py-1 rounded-lg">
+                            <span class="mr-1">★</span> ${extractRatingNumber(rating).toFixed(1)}
+                        </div>
+                    </div>
+                </div>
+            `;
+            return div;
+        }
+
+        // --- DESIGN: COMPACT LIST CARD ---
+        function createListCard(ev) {
+            const name = ev["Nome Evento"] || "Sagra Senza Nome";
+            const rating = ev["Valutazione"] || "N/D";
+            const comune = ev["Comune / Frazione"] || "Grosseto (GR)";
+            const startDateFormatted = formatDatePretty(ev["Data Inizio"]);
+            const endDateFormatted = formatDatePretty(ev["Data Fine"]);
+            const desc = ev["Descrizione dell'Evento"] || "";
+            const isFav = favorites.includes(name);
+            const category = getEventCategory(name, desc);
+
+            const div = document.createElement('div');
+            div.className = "bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-maremma-200 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4";
+            
+            div.innerHTML = `
+                <div class="flex items-start md:items-center gap-3 flex-1 min-w-0">
+                    <div class="w-10 h-10 rounded-xl ${category.bg} flex items-center justify-center text-base shrink-0 border">
+                        <i class="fa-solid ${category.icon}"></i>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <div class="flex flex-wrap items-center gap-2 mb-1">
+                            <h3 onclick="openModal(${ev.id})" class="text-sm font-bold text-slate-800 hover:text-maremma-700 cursor-pointer transition-colors truncate">
+                                ${name}
+                            </h3>
+                            <span class="text-[10px] bg-slate-50 border px-1.5 py-0.2 rounded text-slate-500 font-medium">${category.label}</span>
+                        </div>
+                        <p class="text-xs text-slate-500 flex items-center gap-1">
+                            <i class="fa-solid fa-location-dot text-rose-400"></i> ${comune}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between md:justify-end gap-6 shrink-0 pt-3 md:pt-0 border-t md:border-t-0 border-slate-100">
+                    <!-- Date -->
+                    <div class="text-right">
+                        <p class="text-[10px] text-slate-400 font-medium">Periodo Sagra</p>
+                        <p class="text-xs font-semibold text-slate-700 mt-0.5">
+                            ${startDateFormatted.split(' ')[0]} ${startDateFormatted.split(' ')[1]} - ${endDateFormatted.split(' ')[0]} ${endDateFormatted.split(' ')[1]}
+                        </p>
+                    </div>
+                    <!-- Rating -->
+                    <div class="text-center bg-amber-50 px-2.5 py-1 rounded-lg">
+                        <p class="text-[9px] text-amber-600 font-semibold uppercase">Rating</p>
+                        <p class="text-xs font-bold text-amber-500 flex items-center justify-center gap-0.5 mt-0.5">
+                            ★ <span>${extractRatingNumber(rating).toFixed(1)}</span>
+                        </p>
+                    </div>
+                    <!-- Actions -->
+                    <div class="flex items-center gap-2">
+                        <button onclick="toggleFavorite(event, ${ev.id})" class="p-1.5 rounded text-slate-300 hover:text-rose-500 transition-colors">
+                            <i class="${isFav ? 'fa-solid fa-heart text-rose-500' : 'fa-regular fa-heart'}"></i>
+                        </button>
+                        <button onclick="openModal(${ev.id})" class="p-1.5 rounded text-maremma-600 hover:bg-maremma-50 transition-all">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            return div;
+        }
+
+        // --- FAVORITES ACTION ---
+        function toggleFavorite(event, id) {
+            if (event) event.stopPropagation(); // Avoid triggering open modal click
+            
+            const ev = events.find(e => e.id === id);
+            if (!ev) return;
+            
+            const name = ev["Nome Evento"];
+            const index = favorites.indexOf(name);
+            
+            if (index > -1) {
+                favorites.splice(index, 1);
+                showToast(`Rimosso dai preferiti: ${name}`, "info");
+            } else {
+                favorites.push(name);
+                showToast(`Aggiunto ai preferiti: ${name}`, "success");
+            }
+
+            localStorage.setItem(`${appId}-favorites`, JSON.stringify(favorites));
+            renderEvents();
+        }
+
+        // --- DETAILED MODAL ---
+        let activeModalEvent = null;
+
+        function openModal(id) {
+            const ev = events.find(e => e.id === id);
+            if (!ev) return;
+            
+            activeModalEvent = ev;
+
+            const name = ev["Nome Evento"] || "Sagra";
+            const desc = ev["Descrizione dell'Evento"] || "";
+            const category = getEventCategory(name, desc);
+
+            document.getElementById('modalTitle').textContent = name;
+            document.getElementById('modalLocation').innerHTML = `<i class="fa-solid fa-location-dot text-rose-500 mr-1.5"></i> ${ev["Comune / Frazione"] || 'Grosseto'}`;
+            document.getElementById('modalRating').innerHTML = `⭐ ${extractRatingNumber(ev["Valutazione"]).toFixed(1)} <span class="text-slate-400 font-normal text-xs">/ 5.0</span>`;
+            document.getElementById('modalStartDate').innerHTML = `<i class="fa-regular fa-calendar-check text-maremma-600 mr-1.5"></i> ${formatDatePretty(ev["Data Inizio"])}`;
+            document.getElementById('modalEndDate').innerHTML = `<i class="fa-regular fa-calendar-xmark text-rose-600 mr-1.5"></i> ${formatDatePretty(ev["Data Fine"])}`;
+            document.getElementById('modalExactAddress').textContent = ev["Luogo Esatto"] || "Centro Storico";
+            document.getElementById('modalDesc').textContent = desc;
+            document.getElementById('modalCategoryBadge').textContent = category.label;
+            document.getElementById('modalMapComune').textContent = ev["Comune / Frazione"] || "Maremma, Toscana";
+
+            // Favorite btn state
+            const isFav = favorites.includes(name);
+            const favBtn = document.getElementById('modalFavBtn');
+            favBtn.setAttribute('onclick', `toggleFavoriteFromModal(${ev.id})`);
+            if (isFav) {
+                favBtn.innerHTML = `<i class="fa-solid fa-heart"></i> Preferito`;
+                favBtn.className = "px-4 py-2.5 rounded-xl border border-rose-200 text-rose-500 bg-rose-50 font-medium text-xs transition-all flex items-center gap-1.5 justify-center";
+            } else {
+                favBtn.innerHTML = `<i class="fa-regular fa-heart"></i> Pref.`;
+                favBtn.className = "px-4 py-2.5 rounded-xl border border-slate-200 text-slate-500 hover:bg-rose-50 hover:text-rose-500 font-medium text-xs transition-all flex items-center gap-1.5 justify-center";
+            }
+
+            // Display animation
+            const modal = document.getElementById('detailModal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.firstElementChild.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('detailModal');
+            modal.classList.add('opacity-0');
+            modal.firstElementChild.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function toggleFavoriteFromModal(id) {
+            const ev = events.find(e => e.id === id);
+            if (!ev) return;
+            
+            const name = ev["Nome Evento"];
+            const index = favorites.indexOf(name);
+            const favBtn = document.getElementById('modalFavBtn');
+
+            if (index > -1) {
+                favorites.splice(index, 1);
+                favBtn.innerHTML = `<i class="fa-regular fa-heart"></i> Pref.`;
+                favBtn.className = "px-4 py-2.5 rounded-xl border border-slate-200 text-slate-500 hover:bg-rose-50 hover:text-rose-500 font-medium text-xs transition-all flex items-center gap-1.5 justify-center";
+                showToast(`Rimosso dai preferiti: ${name}`, "info");
+            } else {
+                favorites.push(name);
+                favBtn.innerHTML = `<i class="fa-solid fa-heart"></i> Preferito`;
+                favBtn.className = "px-4 py-2.5 rounded-xl border border-rose-200 text-rose-500 bg-rose-50 font-medium text-xs transition-all flex items-center gap-1.5 justify-center";
+                showToast(`Aggiunto ai preferiti: ${name}`, "success");
+            }
+
+            localStorage.setItem(`${appId}-favorites`, JSON.stringify(favorites));
+            renderEvents();
+        }
+
+        function simulateCalendar() {
+            if (!activeModalEvent) return;
+            const title = activeModalEvent["Nome Evento"];
+            const location = activeModalEvent["Luogo Esatto"] + ", " + activeModalEvent["Comune / Frazione"];
+            const desc = activeModalEvent["Descrizione dell'Evento"];
+            
+            // Format to iCal format string
+            const url = `data:text/calendar;charset=utf-8,` + encodeURIComponent(
+                `BEGIN:VCALENDAR\n` +
+                `VERSION:2.0\n` +
+                `BEGIN:VEVENT\n` +
+                `SUMMARY:${title}\n` +
+                `LOCATION:${location}\n` +
+                `DESCRIPTION:${desc}\n` +
+                `STATUS:CONFIRMED\n` +
+                `END:VEVENT\n` +
+                `END:VCALENDAR`
+            );
+
+            const downloadLink = document.createElement("a");
+            downloadLink.href = url;
+            downloadLink.download = `${title.replace(/\s+/g, '_')}.ics`;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+
+            showToast("Esportazione iCal (.ics) avviata con successo!", "success");
+        }
+
+        // --- CUSTOM TOAST MESSAGES (No Browser Alerts!) ---
+        function showToast(message, type = "success") {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            
+            toast.className = "bg-white text-slate-800 p-4 rounded-xl shadow-lg border-l-4 transform translate-y-2 opacity-0 transition-all duration-300 pointer-events-auto flex items-center gap-3 max-w-sm";
+            
+            if (type === "success") {
+                toast.classList.add('border-emerald-500');
+                toast.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-500 text-lg"></i> <p class="text-xs font-semibold flex-1">${message}</p>`;
+            } else if (type === "error") {
+                toast.classList.add('border-rose-500');
+                toast.innerHTML = `<i class="fa-solid fa-circle-exclamation text-rose-500 text-lg"></i> <p class="text-xs font-semibold flex-1">${message}</p>`;
+            } else {
+                toast.classList.add('border-maremma-600');
+                toast.innerHTML = `<i class="fa-solid fa-circle-info text-maremma-600 text-lg"></i> <p class="text-xs font-semibold flex-1">${message}</p>`;
+            }
+
+            container.appendChild(toast);
+            
+            // Slide in animation
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            // Close after 4s
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
