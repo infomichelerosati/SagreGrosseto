@@ -874,6 +874,7 @@
 
             // Simple date active badge logic
             const today = new Date();
+            today.setHours(0,0,0,0);
             const start = parseDateString(ev["Data Inizio"]);
             const end = parseDateString(ev["Data Fine"]);
             let statusBadge = "";
