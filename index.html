@@ -712,10 +712,16 @@
             if (content.includes('mostra') || content.includes('arte') || content.includes('pittura')) {
                 return { label: 'Mostra d\'Arte', bg: 'bg-purple-50 border-purple-200 text-purple-700', icon: 'fa-palette', type: 'cultura' };
             }
+            if (content.includes('vino') || content.includes('cantin') || content.includes('degustazion') || content.includes('calici') || content.includes('enolog') || content.includes('olio')) {
+                return { label: 'Enologia & Degustazioni', bg: 'bg-red-50 border-red-200 text-red-700', icon: 'fa-wine-glass', type: 'cultura' };
+            }
+            if (content.includes('mercatino') || content.includes('mercato') || content.includes('antiquariato') || content.includes('artigianato')) {
+                return { label: 'Mercatini & Artigianato', bg: 'bg-teal-50 border-teal-200 text-teal-700', icon: 'fa-store', type: 'cultura' };
+            }
             if (content.includes('musica') || content.includes('concerto') || content.includes('teatro') || content.includes('festival') || content.includes('ecofestival')) {
                 return { label: 'Musica & Spettacolo', bg: 'bg-fuchsia-50 border-fuchsia-200 text-fuchsia-700', icon: 'fa-music', type: 'cultura' };
             }
-            if (content.includes('palio') || content.includes('storico') || content.includes('patrono') || content.includes('patronale') || content.includes('processione') || content.includes('rievocazione')) {
+            if (content.includes('palio') || content.includes('storico') || content.includes('patrono') || content.includes('patronale') || content.includes('processione') || content.includes('rievocazione') || content.includes('balestro') || content.includes('corteo')) {
                 return { label: 'Evento Storico', bg: 'bg-orange-50 border-orange-200 text-orange-700', icon: 'fa-chess-rook', type: 'cultura' };
             }
             if (content.includes('carnevale') || content.includes('sport') || content.includes('fiera')) {
