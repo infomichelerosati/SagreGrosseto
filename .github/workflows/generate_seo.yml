@@ -1,0 +1,35 @@
+name: Auto-Generate SEO Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'sagre.csv'
+      - 'build_seo_pages.py'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Run SEO Pages Generator
+        run: python build_seo_pages.py
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name 'infomichelerosati'
+          git config --global user.email 'info.michele.rosati@gmail.com'
+          git add eventi/ sitemap.xml
+          # Commit only if there are changes (e.g. new, modified, or deleted HTML files)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update: Sincronizzate le pagine SEO statiche a seguito di modifiche al CSV" && git push)
