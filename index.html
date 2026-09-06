@@ -1113,7 +1113,14 @@
             }
 
             document.getElementById('modalExactAddress').textContent = ev["Luogo Esatto"] || "Centro Storico";
-            document.getElementById('modalDesc').textContent = desc;
+            
+            const detailedProgram = ev["Programma Dettagliato"];
+            if (detailedProgram && detailedProgram.trim() !== "") {
+                document.getElementById('modalDesc').innerHTML = detailedProgram;
+            } else {
+                document.getElementById('modalDesc').textContent = desc;
+            }
+
             document.getElementById('modalCategoryBadge').textContent = category.label;
             document.getElementById('modalMapComune').textContent = ev["Comune / Frazione"] || "Maremma, Toscana";
 
