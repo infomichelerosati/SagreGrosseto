@@ -1,0 +1,16 @@
+{
+  "name": "Sagre Grosseto",
+  "short_name": "SagreGR",
+  "description": "Scopri tutte le sagre, feste e manifestazioni enogastronomiche della provincia di Grosseto.",
+  "start_url": "/SagreGrosseto/",
+  "display": "standalone",
+  "background_color": "#fdf8f5",
+  "theme_color": "#d96b27",
+  "icons": [
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Coat_of_arms_of_Province_of_Grosseto.svg/512px-Coat_of_arms_of_Province_of_Grosseto.svg.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
