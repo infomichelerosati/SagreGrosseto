@@ -535,13 +535,15 @@
             const schemaEvents = upcomingEvents.map(ev => {
                 const startDate = parseDateString(ev["Data Inizio"]);
                 const endDate = parseDateString(ev["Data Fine"]);
+                const isoStart = startDate ? startDate.toISOString().split('T')[0] : "";
+                const isoEnd = endDate ? endDate.toISOString().split('T')[0] : "";
                 return {
                     "@context": "https://schema.org",
                     "@type": "Event",
                     "name": ev["Nome Evento"],
                     "description": ev["Descrizione dell'Evento"],
-                    "startDate": startDate ? startDate.toISOString().split('T')[0] : "",
-                    "endDate": endDate ? endDate.toISOString().split('T')[0] : "",
+                    "startDate": isoStart,
+                    "endDate": isoEnd,
                     "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
                     "eventStatus": "https://schema.org/EventScheduled",
                     "location": {
@@ -553,6 +555,26 @@
                             "addressRegion": "Toscana",
                             "addressCountry": "IT"
                         }
+                    },
+                    "image": [
+                        "https://infomichelerosati.github.io/SagreGrosseto/images/default-sagra.jpg"
+                    ],
+                    "organizer": {
+                        "@type": "Organization",
+                        "name": "Comitato Festeggiamenti " + ev["Comune / Frazione"],
+                        "url": "https://infomichelerosati.github.io/SagreGrosseto/"
+                    },
+                    "offers": {
+                        "@type": "Offer",
+                        "price": "0",
+                        "priceCurrency": "EUR",
+                        "availability": "https://schema.org/InStock",
+                        "url": "https://infomichelerosati.github.io/SagreGrosseto/",
+                        "validFrom": isoStart
+                    },
+                    "performer": {
+                        "@type": "PerformingGroup",
+                        "name": "Artisti e Band Locali"
                     }
                 };
             });
