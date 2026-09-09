@@ -10,7 +10,7 @@ def slugify(text):
 
 file_path = 'sagre.csv'
 out_dir = 'eventi'
-site_url = 'https://infomichelerosati.github.io/SagreGrosseto'
+site_url = 'https://sagre.spiritoindomito.it'
 
 import glob
 
@@ -149,7 +149,7 @@ for ev in events:
         }}
       }},
       "image": [
-        "https://infomichelerosati.github.io/SagreGrosseto/images/default-sagra.jpg"
+        "https://sagre.spiritoindomito.it/images/default-sagra.jpg"
       ],
       "organizer": {{
         "@type": "Organization",
