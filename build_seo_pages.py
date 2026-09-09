@@ -147,6 +147,26 @@ for ev in events:
           "addressRegion": "Toscana",
           "addressCountry": "IT"
         }}
+      }},
+      "image": [
+        "https://infomichelerosati.github.io/SagreGrosseto/images/default-sagra.jpg"
+      ],
+      "organizer": {{
+        "@type": "Organization",
+        "name": "Comitato Festeggiamenti {comune}",
+        "url": "{page_url}"
+      }},
+      "offers": {{
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "url": "{page_url}",
+        "validFrom": "{iso_start}"
+      }},
+      "performer": {{
+        "@type": "PerformingGroup",
+        "name": "Artisti e Band Locali"
       }}
     }}"""
 

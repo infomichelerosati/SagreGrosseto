@@ -336,7 +336,22 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/festa-di-fine-estate-sorano-fraz-san-giovanni-delle-contee.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/sagra-del-porcino-campagnatico-fraz-arcille.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/settembre-roccastradino-54-edizione-roccastrada.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/palio-dei-ciuchi-e-tradizioni-di-campagnatico-69-edizione-campagnatico.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -361,6 +376,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/la-stortellata-festa-del-tortello-di-selvena-castellazzara-fraz-selvena.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/magico-settembre-castiglione-della-pescaia.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -376,6 +396,16 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/sagra-della-polenta-a-bivio-di-ravi-gavorrano-fraz-bivio-di-ravi.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/festa-delluva-e-delle-cantine-al-giglio-isola-del-giglio-fraz-giglio-castello.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/sagra-della-salsiccia-civitella-paganico-fraz-pari.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -386,12 +416,22 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/festa-contadina-di-tirli-in-rosa-castiglione-della-pescaia-fraz-tirli.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/festa-delluva-cinigiano.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/sagra-del-fungo-porcino-civitella-paganico-fraz-casale-di-pari.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/festa-della-castagna-ciola-e-raduno-dautunno-castel-del-piano.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -431,6 +471,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/festa-del-marrone-santafiorese-santa-fiora.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/festa-delle-cantine-sorano.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -461,7 +506,32 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/focarazza-di-santa-caterina-rito-del-fuoco-e-palio-dello-stollo-roccalbegna-fraz-santa-caterina.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/festa-dellolio-seggiano.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/lea-festa-dellolio-novo-di-giuncarico-gavorrano-fraz-giuncarico.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/olionovo-a-pereta-magliano-in-toscana-fraz-pereta.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/fiaccolata-di-santa-fiora-notte-delle-fiaccole-e-delle-frasche-santa-fiora.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://infomichelerosati.github.io/SagreGrosseto/eventi/focarazza-di-san-silvestro-manciano-fraz-saturnia.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
