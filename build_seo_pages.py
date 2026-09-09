@@ -38,7 +38,7 @@ html_template = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{title} - Sagre Grosseto</title>
+    <title>{title} - Sagre Grosseto</title>`n    <link rel="icon" href="/Logo.png" type="image/png">
     <meta name="description" content="{description}">
     <link rel="canonical" href="{url}">
     <meta property="og:title" content="{title}">
