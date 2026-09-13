@@ -365,7 +365,8 @@
 
     <!-- Detailed Modal -->
     <div id="detailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-100 transform scale-95 transition-transform duration-300 max-h-[90vh] flex flex-col">
+        <div class="relative bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-100 transform scale-95 transition-transform duration-300 max-h-[90vh] flex flex-col">
+            <div id="modalWatermark" class="absolute inset-0 opacity-[0.15] bg-cover bg-center pointer-events-none hidden"></div>
             <!-- Modal Header / Image Area -->
             <div class="relative h-44 bg-gradient-to-r from-maremma-700 to-olive-700 flex items-end p-6">
                 <!-- Overlay effect -->
@@ -381,7 +382,7 @@
             </div>
 
             <!-- Modal Content (Scrollable) -->
-            <div class="p-6 overflow-y-auto custom-scrollbar flex-1 space-y-4">
+            <div class="p-6 overflow-y-auto custom-scrollbar flex-1 space-y-4 relative z-10">
                 <!-- Location & Rating -->
                 <div class="flex justify-between items-start gap-4">
                     <div>
@@ -451,7 +452,7 @@
             </div>
 
             <!-- Modal Footer -->
-            <div class="p-4 bg-slate-50 border-t border-slate-100 flex flex-col gap-3">
+            <div class="p-4 bg-slate-50 border-t border-slate-100 flex flex-col gap-3 relative z-10">
                 <div id="modalDefaultActions" class="flex gap-3 w-full">
                     <button id="modalFavBtn" class="px-3 py-2.5 rounded-xl border border-slate-200 text-rose-500 hover:bg-rose-50 font-medium text-xs transition-all flex items-center gap-1.5 justify-center">
                         <i class="fa-regular fa-heart"></i> <span class="hidden xs:inline">Pref.</span>
@@ -849,6 +850,9 @@
             if (content.includes('palio') || content.includes('storico') || content.includes('patrono') || content.includes('patronale') || content.includes('processione') || content.includes('rievocazione') || content.includes('balestro') || content.includes('corteo')) {
                 return { label: 'Evento Storico', bg: 'bg-orange-50 border-orange-200 text-orange-700', icon: 'fa-chess-rook', type: 'cultura' };
             }
+            if (content.includes('natale') || content.includes('presepe') || content.includes('capodanno')) {
+                return { label: 'Evento Invernale', bg: 'bg-red-50 border-red-200 text-red-700', icon: 'fa-sleigh', type: 'cultura', bgImage: '/sfondo-natale.png' };
+            }
             if (content.includes('carnevale') || content.includes('sport') || content.includes('fiera')) {
                 return { label: 'Fiera & Sport', bg: 'bg-indigo-50 border-indigo-200 text-indigo-700', icon: 'fa-masks-theater', type: 'cultura' };
             }
@@ -1021,14 +1025,16 @@
             }
 
             const div = document.createElement('div');
-            div.className = "group bg-white rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 border border-maremma-100/40 hover:border-maremma-300 transition-all duration-300 flex flex-col overflow-hidden animate-fade-in-up cursor-pointer";
+            div.className = "group relative bg-white rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 border border-maremma-100/40 hover:border-maremma-300 transition-all duration-300 flex flex-col overflow-hidden animate-fade-in-up cursor-pointer";
             div.onclick = () => openModal(ev.id);
             
+            let cardBgLayer = category.bgImage ? `<div class="absolute inset-0 opacity-10 bg-cover bg-center pointer-events-none" style="background-image: url('${category.bgImage}')"></div>` : "";
+            let topBanner = category.bgImage ? `<div class="h-3 relative bg-gradient-to-r from-red-600 to-amber-500"></div>` : `<div class="h-3 relative bg-gradient-to-r from-maremma-600 to-olive-600"></div>`;
+            
             div.innerHTML = `
-                <!-- Top Header banner decorative background -->
-                <div class="h-3 relative bg-gradient-to-r from-maremma-600 to-olive-600"></div>
-
-                <div class="p-5 flex-1 flex flex-col justify-between">
+                ${topBanner}
+                ${cardBgLayer}
+                <div class="p-5 flex-1 flex flex-col justify-between relative z-10">
                     <div class="min-w-0">
                         <!-- Header Tags Row -->
                         <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
@@ -1096,11 +1102,14 @@
             const giorniEffettivi = ev["Giorni Effettivi"] || "";
 
             const div = document.createElement('div');
-            div.className = "group bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-maremma-300 hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 animate-fade-in-up cursor-pointer";
+            div.className = "group relative bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-maremma-300 hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 animate-fade-in-up cursor-pointer overflow-hidden";
             div.onclick = () => openModal(ev.id);
             
+            let listBgLayer = category.bgImage ? `<div class="absolute inset-0 opacity-10 bg-cover bg-center pointer-events-none" style="background-image: url('${category.bgImage}')"></div>` : "";
+            
             div.innerHTML = `
-                <div class="flex items-start md:items-center gap-3 flex-1 min-w-0">
+                ${listBgLayer}
+                <div class="flex items-start md:items-center gap-3 flex-1 min-w-0 relative z-10">
                     <div class="w-10 h-10 rounded-xl ${category.bg} flex items-center justify-center text-base shrink-0 border">
                         <i class="fa-solid ${category.icon}"></i>
                     </div>
@@ -1117,7 +1126,7 @@
                     </div>
                 </div>
 
-                <div class="flex items-center justify-between md:justify-end gap-6 shrink-0 pt-3 md:pt-0 border-t md:border-t-0 border-slate-100">
+                <div class="flex items-center justify-between md:justify-end gap-6 shrink-0 pt-3 md:pt-0 border-t md:border-t-0 border-slate-100 relative z-10">
                     <!-- Date -->
                     <div class="text-right">
                         <p class="text-[10px] text-slate-400 font-medium">Periodo Sagra</p>
@@ -1181,6 +1190,14 @@
             const name = ev["Nome Evento"] || "Sagra";
             const desc = ev["Descrizione dell'Evento"] || "";
             const category = getEventCategory(name, desc);
+            
+            const watermark = document.getElementById('modalWatermark');
+            if (category.bgImage) {
+                watermark.style.backgroundImage = `url('${category.bgImage}')`;
+                watermark.classList.remove('hidden');
+            } else {
+                watermark.classList.add('hidden');
+            }
 
             document.getElementById('modalTitle').textContent = name;
             document.getElementById('modalLocation').innerHTML = `<i class="fa-solid fa-location-dot text-rose-500 mr-1.5"></i> ${ev["Comune / Frazione"] || 'Grosseto'}`;
