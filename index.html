@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -244,15 +244,15 @@
                     
                     <div class="lg:col-span-3">
                         <select id="sortSelect" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-maremma-600/20 focus:border-maremma-600 text-sm bg-white transition-all">
-                            <option value="date-asc">Ordina per: Data (Prima i più vicini)</option>
-                            <option value="date-desc">Ordina per: Data (In fondo i più vicini)</option>
-                            <option value="rating-desc">Ordina per: Valutazione (Più alta)</option>
+                            <option value="date-asc">Ordina per: Data (Prima i piÃ¹ vicini)</option>
+                            <option value="date-desc">Ordina per: Data (In fondo i piÃ¹ vicini)</option>
+                            <option value="rating-desc">Ordina per: Valutazione (PiÃ¹ alta)</option>
                             <option value="name-asc">Ordina per: Nome (A-Z)</option>
                         </select>
                     </div>
 
                     <div class="lg:col-span-4 flex items-center gap-2">
-                        <button id="concludedToggleBtn" class="flex-1 py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 flex items-center justify-center gap-2 text-[11px] font-medium transition-all" title="Mostra eventi già conclusi">
+                        <button id="concludedToggleBtn" class="flex-1 py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 flex items-center justify-center gap-2 text-[11px] font-medium transition-all" title="Mostra eventi giÃ  conclusi">
                             <i class="fa-solid fa-clock-rotate-left text-slate-400"></i>
                             <span class="hidden xl:inline">Passate</span>
                         </button>
@@ -298,9 +298,9 @@
                         <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Tipologia Sagra</label>
                         <div class="flex gap-1">
                             <button onclick="setSpecialtyFilter('all')" class="spec-btn flex-1 py-1.5 px-2 rounded-lg text-xs bg-maremma-600 text-white font-medium shadow-sm transition-all">Tutte</button>
-                            <button onclick="setSpecialtyFilter('carne')" class="spec-btn flex-1 py-1.5 px-2 rounded-lg text-xs bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition-all">🍖 Carne</button>
-                            <button onclick="setSpecialtyFilter('pesce')" class="spec-btn flex-1 py-1.5 px-2 rounded-lg text-xs bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition-all">🐟 Pesce</button>
-                            <button onclick="setSpecialtyFilter('vegetale')" class="spec-btn flex-1 py-1.5 px-2 rounded-lg text-xs bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition-all">🍄 Terra</button>
+                            <button onclick="setSpecialtyFilter('carne')" class="spec-btn flex-1 py-1.5 px-2 rounded-lg text-xs bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition-all">ðŸ– Carne</button>
+                            <button onclick="setSpecialtyFilter('pesce')" class="spec-btn flex-1 py-1.5 px-2 rounded-lg text-xs bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition-all">ðŸŸ Pesce</button>
+                            <button onclick="setSpecialtyFilter('vegetale')" class="spec-btn flex-1 py-1.5 px-2 rounded-lg text-xs bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition-all">ðŸ„ Terra</button>
                         </div>
                     </div>
                 </div>
@@ -348,7 +348,7 @@
             <p class="text-sm leading-relaxed">
                 Benvenuti nel calendario delle <strong>sagre in provincia di Grosseto</strong> e delle feste di paese della Maremma. 
                 Che tu stia cercando una degustazione di <strong>prodotti tipici toscani</strong>, come i celebri tortelli maremmani, il cinghiale alla cacciatora o il vino Morellino, 
-                oppure un <strong>concerto gratuito</strong> sotto le stelle, la nostra mappa degli eventi ti guida tra le piazze più belle della Toscana del sud.
+                oppure un <strong>concerto gratuito</strong> sotto le stelle, la nostra mappa degli eventi ti guida tra le piazze piÃ¹ belle della Toscana del sud.
             </p>
             <p class="text-sm leading-relaxed">
                 Esplora gli appuntamenti imperdibili dell'estate 2026: dalle <strong>sagre gastronomiche</strong> della costa (Castiglione della Pescaia, Follonica e Orbetello), 
@@ -357,7 +357,7 @@
             </p>
             <hr class="border-slate-100 my-4">
             <p class="text-xs text-slate-400">
-                <strong>Nota bene:</strong> Questo sito ha scopo puramente informativo. Le date, gli orari e i programmi degli eventi potrebbero subire variazioni o annullamenti per cause di forza maggiore (es. maltempo). Si consiglia sempre di verificare con gli organizzatori ufficiali o le Pro Loco locali prima di mettersi in viaggio. Non ci assumiamo responsabilità per eventuali inesattezze o cambi di programma.
+                <strong>Nota bene:</strong> Questo sito ha scopo puramente informativo. Le date, gli orari e i programmi degli eventi potrebbero subire variazioni o annullamenti per cause di forza maggiore (es. maltempo). Si consiglia sempre di verificare con gli organizzatori ufficiali o le Pro Loco locali prima di mettersi in viaggio. Non ci assumiamo responsabilitÃ  per eventuali inesattezze o cambi di programma.
             </p>
         </div>
 
@@ -386,14 +386,14 @@
                 <!-- Location & Rating -->
                 <div class="flex justify-between items-start gap-4">
                     <div>
-                        <p class="text-xs text-slate-400 uppercase font-semibold">Località</p>
+                        <p class="text-xs text-slate-400 uppercase font-semibold">LocalitÃ </p>
                         <p id="modalLocation" class="text-sm font-semibold text-slate-800 flex items-center gap-1.5 mt-0.5">
                             <i class="fa-solid fa-location-dot text-rose-500"></i> Manciano (Fraz. Montemerano)
                         </p>
                     </div>
                     <div class="text-right">
                         <p class="text-xs text-slate-400 uppercase font-semibold">Valutazione</p>
-                        <p id="modalRating" class="text-sm font-bold text-amber-500 mt-0.5">⭐ 4.2</p>
+                        <p id="modalRating" class="text-sm font-bold text-amber-500 mt-0.5">â­ 4.2</p>
                     </div>
                 </div>
 
@@ -467,7 +467,7 @@
                 
                 <!-- Hidden Calendar Picker -->
                 <div id="modalCalendarPicker" class="hidden w-full bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-2">
-                    <p class="text-xs text-slate-600 font-medium">L'evento dura più giorni. Quando vuoi andare?</p>
+                    <p class="text-xs text-slate-600 font-medium">L'evento dura piÃ¹ giorni. Quando vuoi andare?</p>
                     <div class="flex gap-2">
                         <input type="text" id="calendarDateSelect" placeholder="Scegli data..." class="flex-1 text-sm border border-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-maremma-500 text-slate-700 bg-slate-50 cursor-pointer">
                         <button onclick="confirmCalendar()" class="bg-maremma-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-maremma-700 transition-colors">Salva</button>
@@ -528,6 +528,7 @@
             document.querySelectorAll('script.dynamic-json-ld').forEach(el => el.remove());
             
             const today = new Date();
+            today.setHours(0,0,0,0);
             const upcomingEvents = events.filter(ev => {
                 const endDate = parseDateString(ev["Data Fine"]);
                 return endDate && endDate >= today;
@@ -768,6 +769,7 @@
 
             // Compute active events
             const today = new Date();
+            today.setHours(0,0,0,0);
             let activeCount = 0;
             let topRating = { name: '-', value: 0 };
             const comuniCount = {};
@@ -809,7 +811,7 @@
             document.getElementById('statTopComune').title = `${maxComune} (${maxCount} sagre)`;
         }
 
-        // Helper: Extract rating numeric from star string "⭐⭐⭐⭐ (4.2)"
+        // Helper: Extract rating numeric from star string "â­â­â­â­ (4.2)"
         function extractRatingNumber(ratingString) {
             if (!ratingString) return 0;
             const match = ratingString.match(/\((\d+(\.\d+)?)\)/);
@@ -861,7 +863,7 @@
                 return { label: 'Sagra di Terra', bg: 'bg-amber-50 border-amber-200 text-amber-700', icon: 'fa-wheat-awn', type: 'vegetale' };
             }
             if (content.includes('polpo') || content.includes('pesce') || content.includes('pescatore') || content.includes('calamaro') || content.includes('marinara')) {
-                return { label: 'Specialità di Mare', bg: 'bg-sky-50 border-sky-200 text-sky-700', icon: 'fa-fish-fins', type: 'pesce' };
+                return { label: 'SpecialitÃ  di Mare', bg: 'bg-sky-50 border-sky-200 text-sky-700', icon: 'fa-fish-fins', type: 'pesce' };
             }
             if (content.includes('cinghiale') || content.includes('vacca') || content.includes('pollo') || content.includes('carne') || content.includes('brace') || content.includes('pecora') || content.includes('maiale')) {
                 return { label: 'Sagra di Carne', bg: 'bg-rose-50 border-rose-200 text-rose-700', icon: 'fa-drumstick-bite', type: 'carne' };
@@ -1054,7 +1056,7 @@
                             ${name}
                         </h3>
 
-                        <!-- Località -->
+                        <!-- LocalitÃ  -->
                         <p class="text-xs text-slate-500 mt-1.5 flex items-center gap-1.5 font-medium break-words">
                             <i class="fa-solid fa-location-dot text-rose-400 shrink-0"></i> <span class="break-words line-clamp-2">${comune}</span>
                         </p>
@@ -1081,7 +1083,7 @@
                             <span class="font-semibold text-slate-700">${endDateFormatted.split(' ')[0]} ${endDateFormatted.split(' ')[1]}</span>
                         </div>
                         <div class="flex items-center font-bold text-amber-500 bg-amber-50 px-2 py-1 rounded-lg">
-                            <span class="mr-1">★</span> ${extractRatingNumber(rating).toFixed(1)}
+                            <span class="mr-1">â˜…</span> ${extractRatingNumber(rating).toFixed(1)}
                         </div>
                     </div>
                 </div>
@@ -1139,7 +1141,7 @@
                     <div class="text-center bg-amber-50 px-2.5 py-1 rounded-lg">
                         <p class="text-[9px] text-amber-600 font-semibold uppercase">Rating</p>
                         <p class="text-xs font-bold text-amber-500 flex items-center justify-center gap-0.5 mt-0.5">
-                            ★ <span>${extractRatingNumber(rating).toFixed(1)}</span>
+                            â˜… <span>${extractRatingNumber(rating).toFixed(1)}</span>
                         </p>
                     </div>
                     <!-- Actions -->
@@ -1201,7 +1203,7 @@
 
             document.getElementById('modalTitle').textContent = name;
             document.getElementById('modalLocation').innerHTML = `<i class="fa-solid fa-location-dot text-rose-500 mr-1.5"></i> ${ev["Comune / Frazione"] || 'Grosseto'}`;
-            document.getElementById('modalRating').innerHTML = `⭐ ${extractRatingNumber(ev["Valutazione"]).toFixed(1)} <span class="text-slate-400 font-normal text-xs">/ 5.0</span>`;
+            document.getElementById('modalRating').innerHTML = `â­ ${extractRatingNumber(ev["Valutazione"]).toFixed(1)} <span class="text-slate-400 font-normal text-xs">/ 5.0</span>`;
             document.getElementById('modalStartDate').innerHTML = `<i class="fa-regular fa-calendar-check text-maremma-600 mr-1.5"></i> ${formatDatePretty(ev["Data Inizio"])}`;
             document.getElementById('modalEndDate').innerHTML = `<i class="fa-regular fa-calendar-xmark text-rose-600 mr-1.5"></i> ${formatDatePretty(ev["Data Fine"])}`;
             
@@ -1296,11 +1298,11 @@
                             <p class="text-xs text-slate-500 break-words leading-tight mt-0.5">${ev["Comune / Frazione"]}</p>
                         </div>
                     </div>
-                    <div class="font-bold text-amber-500 text-sm shrink-0 whitespace-nowrap">⭐ ${extractRatingNumber(ev["Valutazione"]).toFixed(1)}</div>
+                    <div class="font-bold text-amber-500 text-sm shrink-0 whitespace-nowrap">â­ ${extractRatingNumber(ev["Valutazione"]).toFixed(1)}</div>
                 </li>`;
             });
             html += `</ul>`;
-            showListModal("I 5 Eventi Più Votati", html);
+            showListModal("I 5 Eventi PiÃ¹ Votati", html);
         }
 
         function showTopComuneModal() {
@@ -1321,7 +1323,7 @@
                 </li>`;
             });
             html += `</ul>`;
-            showListModal("I 5 Comuni Più Attivi", html);
+            showListModal("I 5 Comuni PiÃ¹ Attivi", html);
         }
 
         function toggleFavoriteFromModal(id) {
@@ -1403,8 +1405,8 @@
             
             if (text.includes("tutti i giorni")) return true;
 
-            const isWeekend = text.includes("weekend") || text.includes("fine settimana") || text.includes("ven-dom") || text.includes("venerdì alla domenica");
-            const isGioDom = text.includes("giovedì alla domenica") || text.includes("gio-dom");
+            const isWeekend = text.includes("weekend") || text.includes("fine settimana") || text.includes("ven-dom") || text.includes("venerdÃ¬ alla domenica");
+            const isGioDom = text.includes("giovedÃ¬ alla domenica") || text.includes("gio-dom");
 
             if (isGioDom) {
                 if (day !== 4 && day !== 5 && day !== 6 && day !== 0) return false;
@@ -1427,9 +1429,9 @@
             const giorniEffettivi = activeModalEvent["Giorni Effettivi"] || "";
             
             if (!isDateValidForEvent(dateObj, giorniEffettivi)) {
-                const dayNames = ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"];
+                const dayNames = ["Domenica", "LunedÃ¬", "MartedÃ¬", "MercoledÃ¬", "GiovedÃ¬", "VenerdÃ¬", "Sabato"];
                 const dayName = dayNames[dateObj.getDay()];
-                showToast(`Impossibile selezionare ${dayName}: l'evento non è aperto in questa data.`, "error");
+                showToast(`Impossibile selezionare ${dayName}: l'evento non Ã¨ aperto in questa data.`, "error");
                 return;
             }
 
