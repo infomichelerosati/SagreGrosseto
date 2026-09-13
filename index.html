@@ -366,7 +366,7 @@
     <!-- Detailed Modal -->
     <div id="detailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
         <div class="relative bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-100 transform scale-95 transition-transform duration-300 max-h-[90vh] flex flex-col">
-            <div id="modalWatermark" class="absolute inset-0 opacity-[0.15] bg-cover bg-center pointer-events-none hidden"></div>
+            <div id="modalWatermark" class="absolute inset-0 opacity-40 bg-cover bg-center pointer-events-none hidden"></div>
             <!-- Modal Header / Image Area -->
             <div class="relative h-44 bg-gradient-to-r from-maremma-700 to-olive-700 flex items-end p-6">
                 <!-- Overlay effect -->
@@ -1028,7 +1028,7 @@
             div.className = "group relative bg-white rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 border border-maremma-100/40 hover:border-maremma-300 transition-all duration-300 flex flex-col overflow-hidden animate-fade-in-up cursor-pointer";
             div.onclick = () => openModal(ev.id);
             
-            let cardBgLayer = category.bgImage ? `<div class="absolute inset-0 opacity-10 bg-cover bg-center pointer-events-none" style="background-image: url('${category.bgImage}')"></div>` : "";
+            let cardBgLayer = category.bgImage ? `<div class="absolute inset-0 opacity-40 bg-cover bg-center pointer-events-none" style="background-image: url('${category.bgImage}')"></div>` : "";
             let topBanner = category.bgImage ? `<div class="h-3 relative bg-gradient-to-r from-red-600 to-amber-500"></div>` : `<div class="h-3 relative bg-gradient-to-r from-maremma-600 to-olive-600"></div>`;
             
             div.innerHTML = `
@@ -1105,7 +1105,7 @@
             div.className = "group relative bg-white p-4 rounded-xl shadow-sm border border-slate-100 hover:border-maremma-300 hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 animate-fade-in-up cursor-pointer overflow-hidden";
             div.onclick = () => openModal(ev.id);
             
-            let listBgLayer = category.bgImage ? `<div class="absolute inset-0 opacity-10 bg-cover bg-center pointer-events-none" style="background-image: url('${category.bgImage}')"></div>` : "";
+            let listBgLayer = category.bgImage ? `<div class="absolute inset-0 opacity-40 bg-cover bg-center pointer-events-none" style="background-image: url('${category.bgImage}')"></div>` : "";
             
             div.innerHTML = `
                 ${listBgLayer}
