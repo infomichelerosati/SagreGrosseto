@@ -381,12 +381,22 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/festa-di-fine-estate-scansano-fraz-poggioferro.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://sagre.spiritoindomito.it/eventi/magico-settembre-castiglione-della-pescaia.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sagre.spiritoindomito.it/eventi/a-spasso-nel-medioevo-sulle-orme-del-grifone-grosseto.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/bagana-e-festa-della-torchiatura-manciano-fraz-poggio-murella.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -442,6 +452,11 @@
   </url>
   <url>
     <loc>https://sagre.spiritoindomito.it/eventi/festa-della-castagna-cinigiano-fraz-monticello-amiata.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/sagra-della-castagna-di-montieri-montieri.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -526,12 +541,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sagre.spiritoindomito.it/eventi/fiaccolata-di-santa-fiora-notte-delle-fiaccole-e-delle-frasche-santa-fiora.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sagre.spiritoindomito.it/eventi/focarazza-di-san-silvestro-manciano-fraz-saturnia.html</loc>
+    <loc>https://sagre.spiritoindomito.it/eventi/mercatini-di-natale-nel-borgo-pitigliano.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -541,7 +551,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sagre.spiritoindomito.it/eventi/mercatini-di-natale-nel-borgo-pitigliano.html</loc>
+    <loc>https://sagre.spiritoindomito.it/eventi/fiaccolata-di-santa-fiora-notte-delle-fiaccole-e-delle-frasche-santa-fiora.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/focarazza-di-san-silvestro-manciano-fraz-saturnia.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
