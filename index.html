@@ -837,7 +837,7 @@
         function getEventCategory(name, desc) {
             const content = `${name} ${desc}`.toLowerCase();
             
-            if (content.includes('natale') || content.includes('presepe') || content.includes('capodanno')) {
+            if (content.includes('natale') || content.includes('presepe') || content.includes('capodanno') || content.includes('fiaccolata') || content.includes('fiaccole')) {
                 return { label: 'Evento Invernale', bg: 'bg-red-50 border-red-200 text-red-700', icon: 'fa-sleigh', type: 'cultura', bgImage: '/sfondo-natale.png' };
             }
             if (content.includes('mostra') || content.includes('arte') || content.includes('pittura')) {
