@@ -146,7 +146,17 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/festa-di-ottobre-festa-delle-cantine-roccalbegna-fraz-vallerona.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://sagre.spiritoindomito.it/eventi/festa-della-castagna-ciola-e-raduno-dautunno-castel-del-piano.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/festa-dautunno-gavorrano-fraz-caldana.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -157,6 +167,11 @@
   </url>
   <url>
     <loc>https://sagre.spiritoindomito.it/eventi/festa-della-castagna-cinigiano-fraz-monticello-amiata.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/il-risveglio-delle-cantine-semproniano.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -186,6 +201,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/festa-della-castagna-monterotondo-marittimo.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://sagre.spiritoindomito.it/eventi/un-viaggio-nel-gusto-grosseto.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -211,6 +231,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/festautunno-festa-dautunno-e-dei-sapori-amiatini-castellazzara.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://sagre.spiritoindomito.it/eventi/santi-vinai-pitigliano.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -222,6 +247,11 @@
   </url>
   <url>
     <loc>https://sagre.spiritoindomito.it/eventi/festa-dellolio-novo-manciano-fraz-marsiliana.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/sapori-dautunno-massa-marittima-fraz-tatti.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -242,6 +272,11 @@
   </url>
   <url>
     <loc>https://sagre.spiritoindomito.it/eventi/olionovo-a-pereta-magliano-in-toscana-fraz-pereta.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/festa-di-santa-barbara-tradizione-dei-minatori-massa-marittima-fraz-niccioleta.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -267,6 +302,26 @@
   </url>
   <url>
     <loc>https://sagre.spiritoindomito.it/eventi/capodanno-in-piazza-grosseto.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/festa-di-santantonio-abate-e-benedizione-degli-animali-manciano-fraz-marsiliana.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/carnevale-follonichese-60-edizione-follonica.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/torciata-di-san-giuseppe-pitigliano.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/sagra-dellagnello-e-del-buglione-maremmano-manciano-fraz-san-martino-sul-fiora.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
