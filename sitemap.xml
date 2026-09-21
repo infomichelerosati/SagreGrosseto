@@ -126,12 +126,17 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sagre.spiritoindomito.it/eventi/sagra-della-bruschetta-e-dellolio-novo-castel-del-piano-fraz-montegiovi.html</loc>
+    <loc>https://sagre.spiritoindomito.it/eventi/sasso-in-festa-cinigiano-fraz-sasso-dombrone.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sagre.spiritoindomito.it/eventi/festa-contadina-di-tirli-in-rosa-castiglione-della-pescaia-fraz-tirli.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/sagra-della-bruschetta-e-dellolio-novo-castel-del-piano-fraz-montegiovi.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -176,6 +181,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/festa-di-san-cerbone-e-sfida-della-balestra-massa-marittima.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://sagre.spiritoindomito.it/eventi/sagra-della-castagna-di-montieri-montieri.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -196,17 +206,22 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sagre.spiritoindomito.it/eventi/festa-dellolio-di-batignano-grosseto-fraz-batignano.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://sagre.spiritoindomito.it/eventi/festa-della-castagna-monterotondo-marittimo.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/festa-dellolio-di-batignano-grosseto-fraz-batignano.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://sagre.spiritoindomito.it/eventi/un-viaggio-nel-gusto-grosseto.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/festa-della-castagna-di-sassofortino-roccastrada-fraz-sassofortino.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -232,6 +247,11 @@
   </url>
   <url>
     <loc>https://sagre.spiritoindomito.it/eventi/festautunno-festa-dautunno-e-dei-sapori-amiatini-castellazzara.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/cantine-aperte-a-san-martino-varie-localit-provincia-di-grosseto.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -316,12 +336,42 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/carnevaletto-da-3-soldi-56-edizione-orbetello.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://sagre.spiritoindomito.it/eventi/torciata-di-san-giuseppe-pitigliano.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sagre.spiritoindomito.it/eventi/sagra-dellagnello-e-del-buglione-maremmano-manciano-fraz-san-martino-sul-fiora.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/sui-sentieri-del-prugnolo-festa-al-prugnolo-montieri.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/sagra-della-lumaca-riganella-manciano-fraz-poggio-murella.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/festa-dello-sport-e-del-cinghiale-alla-cacciatora-grosseto-fraz-rispescia.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/sagra-del-moscardino-e-del-polpetto-orbetello-fraz-talamone.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/sagra-del-baccal-magliano-in-toscana-fraz-santandrea.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
