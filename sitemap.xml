@@ -166,11 +166,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sagre.spiritoindomito.it/eventi/sagra-del-fungo-amiatino-santa-fiora-fraz-bagnolo.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://sagre.spiritoindomito.it/eventi/festa-della-castagna-cinigiano-fraz-monticello-amiata.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -231,12 +226,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sagre.spiritoindomito.it/eventi/festa-delle-cantine-sorano.html</loc>
+    <loc>https://sagre.spiritoindomito.it/eventi/gustatus-orbetello.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sagre.spiritoindomito.it/eventi/gustatus-orbetello.html</loc>
+    <loc>https://sagre.spiritoindomito.it/eventi/festa-delle-cantine-sorano.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
