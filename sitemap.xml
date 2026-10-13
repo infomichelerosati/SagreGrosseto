@@ -251,17 +251,17 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sagre.spiritoindomito.it/eventi/santi-vinai-pitigliano.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://sagre.spiritoindomito.it/eventi/festa-del-buco-unto-civitella-paganico-fraz-civitella-marittima.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sagre.spiritoindomito.it/eventi/festa-dellolio-novo-manciano-fraz-marsiliana.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/santi-vinai-pitigliano.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -296,7 +296,17 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/sagra-della-bruscagna-capalbio-fraz-borgo-carige.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://sagre.spiritoindomito.it/eventi/mercatini-di-natale-nel-borgo-pitigliano.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/luci-e-sapori-dinverno-castel-del-piano.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -307,6 +317,11 @@
   </url>
   <url>
     <loc>https://sagre.spiritoindomito.it/eventi/fiaccolata-di-santa-fiora-notte-delle-fiaccole-e-delle-frasche-santa-fiora.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/notte-della-luce-rito-del-fuoco-sorano.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
