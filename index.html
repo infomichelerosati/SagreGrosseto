@@ -393,7 +393,7 @@
                     </div>
                     <div class="text-right">
                         <p class="text-xs text-slate-400 uppercase font-semibold">Valutazione</p>
-                        <p id="modalRating" class="text-sm font-bold text-amber-500 mt-0.5">â­ 4.2</p>
+                        <p id="modalRating" class="text-sm font-bold text-amber-500 mt-0.5">★ 4.2</p>
                     </div>
                 </div>
 
@@ -811,7 +811,7 @@
             document.getElementById('statTopComune').title = `${maxComune} (${maxCount} sagre)`;
         }
 
-        // Helper: Extract rating numeric from star string "â­â­â­â­ (4.2)"
+        // Helper: Extract rating numeric from star string "★★★★ (4.2)"
         function extractRatingNumber(ratingString) {
             if (!ratingString) return 0;
             const match = ratingString.match(/\((\d+(\.\d+)?)\)/);
@@ -863,7 +863,7 @@
                 return { label: 'Sagra di Terra', bg: 'bg-amber-50 border-amber-200 text-amber-700', icon: 'fa-wheat-awn', type: 'vegetale' };
             }
             if (content.includes('polpo') || content.includes('pesce') || content.includes('pescatore') || content.includes('calamaro') || content.includes('marinara')) {
-                return { label: 'Specialità  di Mare', bg: 'bg-sky-50 border-sky-200 text-sky-700', icon: 'fa-fish-fins', type: 'pesce' };
+                return { label: 'Specialità di Mare', bg: 'bg-sky-50 border-sky-200 text-sky-700', icon: 'fa-fish-fins', type: 'pesce' };
             }
             if (content.includes('cinghiale') || content.includes('vacca') || content.includes('pollo') || content.includes('carne') || content.includes('brace') || content.includes('pecora') || content.includes('maiale')) {
                 return { label: 'Sagra di Carne', bg: 'bg-rose-50 border-rose-200 text-rose-700', icon: 'fa-drumstick-bite', type: 'carne' };
@@ -1203,7 +1203,7 @@
 
             document.getElementById('modalTitle').textContent = name;
             document.getElementById('modalLocation').innerHTML = `<i class="fa-solid fa-location-dot text-rose-500 mr-1.5"></i> ${ev["Comune / Frazione"] || 'Grosseto'}`;
-            document.getElementById('modalRating').innerHTML = `â­ ${extractRatingNumber(ev["Valutazione"]).toFixed(1)} <span class="text-slate-400 font-normal text-xs">/ 5.0</span>`;
+            document.getElementById('modalRating').innerHTML = `★ ${extractRatingNumber(ev["Valutazione"]).toFixed(1)} <span class="text-slate-400 font-normal text-xs">/ 5.0</span>`;
             document.getElementById('modalStartDate').innerHTML = `<i class="fa-regular fa-calendar-check text-maremma-600 mr-1.5"></i> ${formatDatePretty(ev["Data Inizio"])}`;
             document.getElementById('modalEndDate').innerHTML = `<i class="fa-regular fa-calendar-xmark text-rose-600 mr-1.5"></i> ${formatDatePretty(ev["Data Fine"])}`;
             
@@ -1298,7 +1298,7 @@
                             <p class="text-xs text-slate-500 break-words leading-tight mt-0.5">${ev["Comune / Frazione"]}</p>
                         </div>
                     </div>
-                    <div class="font-bold text-amber-500 text-sm shrink-0 whitespace-nowrap">â­ ${extractRatingNumber(ev["Valutazione"]).toFixed(1)}</div>
+                    <div class="font-bold text-amber-500 text-sm shrink-0 whitespace-nowrap">★ ${extractRatingNumber(ev["Valutazione"]).toFixed(1)}</div>
                 </li>`;
             });
             html += `</ul>`;
