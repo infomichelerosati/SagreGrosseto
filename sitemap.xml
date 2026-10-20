@@ -306,12 +306,32 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/natale-a-massa-marittima-e-mercatini-nel-chiostro-massa-marittima.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/natale-di-luce-ad-arcidosso-arcidosso.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://sagre.spiritoindomito.it/eventi/luci-e-sapori-dinverno-castel-del-piano.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sagre.spiritoindomito.it/eventi/presepe-vivente-di-porto-ercole-monte-argentario-fraz-porto-ercole.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/presepe-vivente-di-pitigliano-pitigliano.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/presepe-vivente-di-castiglione-della-pescaia-castiglione-della-pescaia.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -337,6 +357,16 @@
   </url>
   <url>
     <loc>https://sagre.spiritoindomito.it/eventi/festa-di-santantonio-abate-e-benedizione-degli-animali-manciano-fraz-marsiliana.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/festa-di-santantonio-abate-dei-butteri-grosseto-fraz-alberese.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/carnevale-di-pitigliano-pitigliano.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
