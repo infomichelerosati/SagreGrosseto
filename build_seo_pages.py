@@ -1,6 +1,7 @@
 import csv
 import os
 import re
+import glob
 
 def slugify(text):
     text = text.lower()
@@ -11,8 +12,6 @@ def slugify(text):
 file_path = 'sagre.csv'
 out_dir = 'eventi'
 site_url = 'https://sagre.spiritoindomito.it'
-
-import glob
 
 if not os.path.exists(out_dir):
     os.makedirs(out_dir)
@@ -38,7 +37,8 @@ html_template = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{title} - Sagre Grosseto</title>`n    <link rel="icon" href="/Logo.png" type="image/png">
+    <title>{title}</title>
+    <link rel="icon" href="/Logo.png" type="image/png">
     <meta name="description" content="{description}">
     <link rel="canonical" href="{url}">
     <meta property="og:title" content="{title}">
@@ -58,7 +58,13 @@ html_template = """<!DOCTYPE html>
 <body class="bg-[#fdf8f5] text-slate-800 min-h-screen flex flex-col">
     <header class="bg-gradient-to-r from-[#283618] to-[#4c1a06] text-white py-6 shadow-lg">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <a href="../index.html" class="inline-block text-[#f5d9ca] hover:text-white mb-2 text-sm uppercase tracking-wider font-semibold transition-colors">&larr; Torna al Calendario Completo</a>
+            <nav class="text-xs text-[#f5d9ca] mb-2 flex items-center justify-center gap-1.5" aria-label="Breadcrumb">
+                <a href="../index.html" class="hover:underline">Home</a>
+                <span>&gt;</span>
+                <a href="../index.html" class="hover:underline">Sagre Grosseto</a>
+                <span>&gt;</span>
+                <span class="text-white font-medium">{name}</span>
+            </nav>
             <h1 class="text-3xl md:text-4xl font-bold mt-2">{name}</h1>
             <p class="mt-2 text-[#fbeee6] text-lg">{location}</p>
         </div>
@@ -78,7 +84,7 @@ html_template = """<!DOCTYPE html>
                 </div>
             </div>
             
-            <h2 class="text-2xl font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Dettagli dell'Evento</h2>
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Dettagli dell'Evento e Programma</h2>
             <div class="prose max-w-none text-slate-700 leading-relaxed text-lg">
                 {rich_program}
             </div>
@@ -124,50 +130,72 @@ for ev in events:
     page_url = f"{site_url}/eventi/{file_name}"
     
     # Metadata
-    page_title = f"{name} a {comune} | Sagre Grosseto {start_date[-4:] if start_date else ''}"
-    clean_desc = desc.replace('"', '&quot;')
+    year_str = start_date.split('/')[-1] if start_date else '2026'
+    page_title = f"{name} a {comune} {year_str} | Date, Programma e Info - Sagre Grosseto"
+    clean_desc = f"Tutte le informazioni su {name} a {comune} ({start_date} - {end_date}): date, programma, stand gastronomici tipici e indicazioni stradali in provincia di Grosseto.".replace('"', '&quot;')
     
     rich_program = prog if prog else f"<p>{desc}</p>"
 
     json_ld = f"""{{
       "@context": "https://schema.org",
-      "@type": "Event",
-      "name": "{name}",
-      "description": "{clean_desc}",
-      "startDate": "{iso_start}",
-      "endDate": "{iso_end}",
-      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-      "eventStatus": "https://schema.org/EventScheduled",
-      "location": {{
-        "@type": "Place",
-        "name": "{exact_loc}",
-        "address": {{
-          "@type": "PostalAddress",
-          "addressLocality": "{comune}",
-          "addressRegion": "Toscana",
-          "addressCountry": "IT"
+      "@graph": [
+        {{
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {{
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Sagre Grosseto",
+              "item": "{site_url}/"
+            }},
+            {{
+              "@type": "ListItem",
+              "position": 2,
+              "name": "{name}",
+              "item": "{page_url}"
+            }}
+          ]
+        }},
+        {{
+          "@type": "Event",
+          "name": "{name}",
+          "description": "{clean_desc}",
+          "startDate": "{iso_start}",
+          "endDate": "{iso_end}",
+          "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+          "eventStatus": "https://schema.org/EventScheduled",
+          "location": {{
+            "@type": "Place",
+            "name": "{exact_loc}",
+            "address": {{
+              "@type": "PostalAddress",
+              "addressLocality": "{comune}",
+              "addressRegion": "Toscana",
+              "addressCountry": "IT"
+            }}
+          }},
+          "image": [
+            "https://sagre.spiritoindomito.it/images/default-sagra.jpg"
+          ],
+          "organizer": {{
+            "@type": "Organization",
+            "name": "Comitato Festeggiamenti {comune}",
+            "url": "{page_url}"
+          }},
+          "offers": {{
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR",
+            "availability": "https://schema.org/InStock",
+            "url": "{page_url}",
+            "validFrom": "{iso_start}"
+          }},
+          "performer": {{
+            "@type": "PerformingGroup",
+            "name": "Artisti e Band Locali"
+          }}
         }}
-      }},
-      "image": [
-        "https://sagre.spiritoindomito.it/images/default-sagra.jpg"
-      ],
-      "organizer": {{
-        "@type": "Organization",
-        "name": "Comitato Festeggiamenti {comune}",
-        "url": "{page_url}"
-      }},
-      "offers": {{
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "EUR",
-        "availability": "https://schema.org/InStock",
-        "url": "{page_url}",
-        "validFrom": "{iso_start}"
-      }},
-      "performer": {{
-        "@type": "PerformingGroup",
-        "name": "Artisti e Band Locali"
-      }}
+      ]
     }}"""
 
     html_content = html_template.format(

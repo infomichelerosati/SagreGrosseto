@@ -3,38 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Scopri tutte le sagre, feste e manifestazioni enogastronomiche della provincia di Grosseto. Calendario aggiornato degli eventi in Maremma.">
-    <meta name="keywords" content="sagre grosseto, eventi maremma, feste grosseto, calendario sagre, cibo maremmano">
+    <meta name="description" content="Calendario aggiornato di tutte le sagre a Grosseto e provincia oggi e questo weekend. Scopri eventi, date, luoghi, menu tipici maremmani e indicazioni stradali.">
+    <meta name="keywords" content="sagre grosseto, sagre grosseto questo weekend, sagre provincia di grosseto, sagra grosseto, sagre in provincia di grosseto, sagre oggi vicino a me, sagra del tortello, feste grosseto, eventi maremma">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://sagre.spiritoindomito.it/">
     
     <!-- Open Graph (Facebook, WhatsApp, ecc.) -->
     <meta property="og:site_name" content="Sagre ed Eventi Grosseto e Provincia">
-    <meta property="og:title" content="Sagre e Eventi della Provincia di Grosseto">
-    <meta property="og:description" content="Scopri tutte le sagre, feste e manifestazioni enogastronomiche della provincia di Grosseto. Calendario aggiornato degli eventi in Maremma.">
+    <meta property="og:title" content="Sagre Grosseto e Provincia 2026: Calendario, Eventi e Questo Weekend">
+    <meta property="og:description" content="Calendario aggiornato di tutte le sagre a Grosseto e provincia oggi e questo weekend. Scopri eventi, date, luoghi, menu tipici maremmani e indicazioni stradali.">
     <meta property="og:url" content="https://sagre.spiritoindomito.it/">
     <meta property="og:type" content="website">
     
-    <!-- Structured Data for Google Site Name -->
+    <!-- Structured Data for Google Site Name & FAQPage -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Sagre ed Eventi Grosseto e Provincia",
-      "alternateName": "Sagre in Maremma",
-      "url": "https://sagre.spiritoindomito.it/"
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://sagre.spiritoindomito.it/#website",
+          "name": "Sagre Grosseto e Provincia",
+          "alternateName": ["Sagre in Maremma", "Eventi Grosseto e Provincia", "Sagre Grosseto Questo Weekend"],
+          "url": "https://sagre.spiritoindomito.it/",
+          "inLanguage": "it-IT"
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://sagre.spiritoindomito.it/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Dove trovare le sagre in provincia di Grosseto questo weekend?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sul nostro portale puoi consultare in tempo reale il calendario aggiornato delle sagre a Grosseto e provincia filtrando per 'Questo Weekend'. Trovi date ufficiali, orari, indirizzi per il navigatore e menu delle sagre gastronomiche maremmane."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Quali sono le sagre più famose della Maremma?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Tra le sagre più celebri della provincia di Grosseto figurano la Sagra del Tortello Maremmano (Campagnatico, Podere San Rocco), la Sagra del Cinghiale a Capalbio, la Sagra del Fungo Porcino a Bagnolo (Santa Fiora), la Sagra della Lumaca a Marciano e la Sagra del Piciarello a Sorano."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Cosa si mangia alle sagre grossetane?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "La cucina maremmana propone tortelli maremmani fatti a mano al ragù di carne o cinghiale, acquacotta, cinghiale alla cacciatora, funghi porcini dell'Amiata, pesce fresco del Tirreno, carni alla brace e vino Morellino di Scansano DOCG."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Le sagre a Grosseto si tengono anche in caso di maltempo?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "La maggior parte delle sagre maremmane dispone di stand gastronomici al coperto o tendostrutture protette, tuttavia per conferma o variazioni di programma dell'ultimo minuto è sempre raccomandato consultare le pagine ufficiali delle Pro Loco o dei comitati organizzatori indicati nella scheda di ciascun evento."
+              }
+            }
+          ]
+        }
+      ]
     }
     </script>
     
-    <title>Sagre e Eventi della Provincia di Grosseto</title>
+    <title>Sagre Grosseto e Provincia 2026: Calendario, Eventi e Questo Weekend</title>
     <meta name="theme-color" content="#d96b27">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="/Logo.png" type="image/png">
     
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Sagre e Eventi della Provincia di Grosseto">
-    <meta name="twitter:description" content="Scopri tutte le sagre, feste e manifestazioni enogastronomiche in Maremma. Calendario sempre aggiornato.">
+    <meta name="twitter:title" content="Sagre Grosseto e Provincia 2026: Calendario, Eventi e Questo Weekend">
+    <meta name="twitter:description" content="Calendario aggiornato di tutte le sagre a Grosseto e provincia oggi e questo weekend. Date, luoghi e menu tipici maremmani.">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
@@ -252,13 +296,17 @@
                     </div>
 
                     <div class="lg:col-span-4 flex items-center gap-2">
-                        <button id="concludedToggleBtn" class="flex-1 py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 flex items-center justify-center gap-2 text-[11px] font-medium transition-all" title="Mostra eventi già conclusi">
-                            <i class="fa-solid fa-clock-rotate-left text-slate-400"></i>
-                            <span class="hidden xl:inline">Passate</span>
+                        <button id="weekendToggleBtn" class="flex-1 py-2.5 px-3 rounded-xl border border-amber-200 bg-amber-50/50 hover:bg-amber-100/70 text-amber-800 flex items-center justify-center gap-2 text-[11px] font-semibold transition-all shadow-sm" title="Mostra solo le sagre di questo weekend">
+                            <i class="fa-solid fa-calendar-week text-amber-600"></i>
+                            <span>Questo Weekend</span>
                         </button>
-                        <button id="favoriteToggleBtn" class="flex-1 py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 flex items-center justify-center gap-2 text-[11px] font-medium transition-all">
+                        <button id="favoriteToggleBtn" class="py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 flex items-center justify-center gap-1.5 text-[11px] font-medium transition-all" title="Mostra i tuoi preferiti">
                             <i class="fa-solid fa-heart text-rose-500"></i>
                             <span class="hidden xl:inline">Preferiti</span>
+                        </button>
+                        <button id="concludedToggleBtn" class="py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 flex items-center justify-center gap-1.5 text-[11px] font-medium transition-all" title="Mostra eventi già conclusi">
+                            <i class="fa-solid fa-clock-rotate-left text-slate-400"></i>
+                            <span class="hidden xl:inline">Passate</span>
                         </button>
                         <button id="resetFiltersBtn" class="p-2.5 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition-all shrink-0" title="Resetta tutti i filtri">
                             <i class="fa-solid fa-arrow-rotate-left"></i>
@@ -342,24 +390,107 @@
             </button>
         </div>
 
-        <!-- SEO Footer Text -->
-        <div class="mt-16 bg-white p-8 rounded-3xl border border-slate-100 shadow-sm text-slate-600 space-y-4">
-            <h2 class="text-xl font-bold text-slate-800 font-serif">La guida completa alle sagre e agli eventi in Maremma</h2>
-            <p class="text-sm leading-relaxed">
-                Benvenuti nel calendario delle <strong>sagre in provincia di Grosseto</strong> e delle feste di paese della Maremma. 
-                Che tu stia cercando una degustazione di <strong>prodotti tipici toscani</strong>, come i celebri tortelli maremmani, il cinghiale alla cacciatora o il vino Morellino, 
-                oppure un <strong>concerto gratuito</strong> sotto le stelle, la nostra mappa degli eventi ti guida tra le piazze più belle della Toscana del sud.
-            </p>
-            <p class="text-sm leading-relaxed">
-                Esplora gli appuntamenti imperdibili dell'estate 2026: dalle <strong>sagre gastronomiche</strong> della costa (Castiglione della Pescaia, Follonica e Orbetello), 
-                fino alle rievocazioni storiche, le feste dell'uva e i mercatini serali dei borghi medievali dell'entroterra come Massa Marittima, Pitigliano e Scansano.
-                La lista si aggiorna in tempo reale per non farti perdere il meglio dell'estate maremmana!
-            </p>
+        <!-- SEO Rich Guide & FAQ Section -->
+        <section class="mt-16 bg-white p-6 sm:p-10 rounded-3xl border border-slate-100 shadow-sm text-slate-700 space-y-8">
+            <div>
+                <h2 class="text-2xl font-bold text-slate-900 font-serif mb-4">Guida Completa alle Sagre a Grosseto e in Provincia</h2>
+                <p class="text-sm sm:text-base leading-relaxed text-slate-600 mb-4">
+                    Cerchi <strong>sagre a Grosseto questo weekend</strong> o eventi gastronomici nei borghi della Maremma? 
+                    Questo portale è il punto di riferimento sempre aggiornato per scoprire tutte le <strong>sagre in provincia di Grosseto</strong>, 
+                    le feste patronali, le fiere tradizionali e le rassegne enogastronomiche tipiche della nostra terra.
+                </p>
+                <p class="text-sm sm:text-base leading-relaxed text-slate-600">
+                    Dalla costa d'argento (Orbetello, Castiglione della Pescaia, Follonica e Monte Argentario) ai borghi delle Colline Metallifere (Massa Marittima, Gavorrano, Scarlino), 
+                    fino alle pendici del Monte Amiata (Arcidosso, Castel del Piano, Santa Fiora) e alle suggestive città del Tufo (Pitigliano, Sorano, Sovana): 
+                    ogni weekend la Maremma celebra i suoi sapori autentici con manifestazioni imperdibili.
+                </p>
+            </div>
+
+            <!-- Highlights Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-slate-100">
+                <div class="bg-amber-50/50 p-5 rounded-2xl border border-amber-100/60">
+                    <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold mb-3">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-base mb-2">Sagre Oggi e Questo Weekend</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Usa il nostro filtro rapido <em>"Questo Weekend"</em> per trovare subito gli stand aperti stasera e nel fine settimana a Grosseto e nei paesi limitrofi.
+                    </p>
+                </div>
+                <div class="bg-rose-50/50 p-5 rounded-2xl border border-rose-100/60">
+                    <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center font-bold mb-3">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-base mb-2">I Grandi Piatti Maremmani</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Tortelli fatti a mano con ricotta e spinaci, cinghiale in umido alla cacciatora, pici, acquacotta, lumache, funghi porcini e grigliate di carne locale.
+                    </p>
+                </div>
+                <div class="bg-emerald-50/50 p-5 rounded-2xl border border-emerald-100/60">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold mb-3">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-base mb-2">Mappa e Come Arrivare</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Ogni sagra include il link diretto a Google Maps con le coordinate esatte del campo sportivo, piazza o parco festeggiamenti.
+                    </p>
+                </div>
+            </div>
+
+            <!-- SEO FAQ Section -->
+            <div class="pt-6 border-t border-slate-100 space-y-4">
+                <h3 class="text-xl font-bold text-slate-900 font-serif mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-question text-maremma-600"></i> Domande Frequenti sulle Sagre a Grosseto e Maremma
+                </h3>
+
+                <div class="space-y-4">
+                    <details class="group bg-slate-50 p-4 rounded-2xl border border-slate-200/60 cursor-pointer">
+                        <summary class="font-semibold text-slate-800 list-none flex justify-between items-center text-sm sm:text-base">
+                            <span>Dove trovare le sagre in provincia di Grosseto questo weekend?</span>
+                            <i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <p class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Sul nostro portale basta attivare il pulsante <strong>"Questo Weekend"</strong> nella barra di ricerca superiore: il sistema mostrerà immediatamente tutti gli eventi e le sagre attive dal venerdì alla domenica in tutta la provincia di Grosseto, con orari, date e indicazioni stradali.
+                        </p>
+                    </details>
+
+                    <details class="group bg-slate-50 p-4 rounded-2xl border border-slate-200/60 cursor-pointer">
+                        <summary class="font-semibold text-slate-800 list-none flex justify-between items-center text-sm sm:text-base">
+                            <span>Quali sono le sagre più famose e frequentate a Grosseto e provincia?</span>
+                            <i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <p class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Tra le sagre storiche più amate spiccano la <strong>Sagra del Tortello Maremmano</strong> a Podere San Rocco e Campagnatico, la <strong>Sagra del Cinghiale</strong> a Capalbio, la <strong>Sagra della Lumaca</strong> a Marciano, la <strong>Festa del Fungo e della Castagna</strong> sui borghi dell'Amiata, la <strong>Sagra del Pesce</strong> nei borghi costieri e le numerose feste dello sport e delle Pro Loco con specialità alla brace.
+                        </p>
+                    </details>
+
+                    <details class="group bg-slate-50 p-4 rounded-2xl border border-slate-200/60 cursor-pointer">
+                        <summary class="font-semibold text-slate-800 list-none flex justify-between items-center text-sm sm:text-base">
+                            <span>Gli stand gastronomici delle sagre sono aperti a pranzo o solo a cena?</span>
+                            <i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <p class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Generalmente le sagre estive e serali aprono gli stand gastronomici dalle ore 19:30 o 20:00 per la cena. Durante la domenica e nei giorni festivi molti eventi aprono anche a pranzo (solitamente dalle 12:30). Consulta la scheda del singolo evento per verificare orari dettagliati e giorni di apertura effettivi.
+                        </p>
+                    </details>
+
+                    <details class="group bg-slate-50 p-4 rounded-2xl border border-slate-200/60 cursor-pointer">
+                        <summary class="font-semibold text-slate-800 list-none flex justify-between items-center text-sm sm:text-base">
+                            <span>Cosa succede in caso di pioggia o maltempo?</span>
+                            <i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <p class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Molte sagre in Maremma dispongono di ampi locali coperti o tensostrutture protette. Tuttavia, in caso di maltempo eccezionale consigliamo di verificare sempre gli avvisi pubblicati sui canali social delle rispettive Pro Loco o comitati festeggiamenti indicati.
+                        </p>
+                    </details>
+                </div>
+            </div>
+
             <hr class="border-slate-100 my-4">
-            <p class="text-xs text-slate-400">
-                <strong>Nota bene:</strong> Questo sito ha scopo puramente informativo. Le date, gli orari e i programmi degli eventi potrebbero subire variazioni o annullamenti per cause di forza maggiore (es. maltempo). Si consiglia sempre di verificare con gli organizzatori ufficiali o le Pro Loco locali prima di mettersi in viaggio. Non ci assumiamo responsabilità  per eventuali inesattezze o cambi di programma.
+            <p class="text-xs text-slate-400 leading-relaxed">
+                <strong>Nota bene:</strong> Questo sito ha scopo puramente informativo e turistico. Le date, gli orari e i programmi degli eventi potrebbero subire variazioni o annullamenti per cause organizzative o meteorologiche. Si raccomanda sempre di verificare con gli organizzatori ufficiali o le Pro Loco locali prima di mettersi in viaggio.
             </p>
-        </div>
+        </section>
 
     </main>
 
@@ -508,6 +639,7 @@
         let showFavoritesOnly = false;
         let showConcluded = false; // Hide concluded by default
         let showActiveOnly = false; // Filter active events
+        let showWeekendOnly = false; // Filter weekend events
         let activeView = 'grid'; // 'grid' or 'list'
 
         // --- ON PAGE LOAD ---
@@ -633,6 +765,8 @@
             document.getElementById('comuneFilter').addEventListener('change', renderEvents);
             document.getElementById('monthFilter').addEventListener('change', renderEvents);
             document.getElementById('resetFiltersBtn').addEventListener('click', resetAllFilters);
+            const weekendBtn = document.getElementById('weekendToggleBtn');
+            if (weekendBtn) weekendBtn.addEventListener('click', toggleWeekendFilter);
             document.getElementById('favoriteToggleBtn').addEventListener('click', toggleFavoritesFilter);
             document.getElementById('concludedToggleBtn').addEventListener('click', toggleConcludedFilter);
 
@@ -682,6 +816,60 @@
             renderEvents();
         }
 
+        function getWeekendRange(referenceDate = new Date()) {
+            const today = new Date(referenceDate);
+            today.setHours(0, 0, 0, 0);
+            const day = today.getDay(); // 0: Sun, 1: Mon, ..., 5: Fri, 6: Sat
+            let friday = new Date(today);
+            let sunday = new Date(today);
+            
+            if (day === 0) { // Domenica: weekend corrente (venerdi scorso - oggi)
+                friday.setDate(today.getDate() - 2);
+            } else if (day === 6) { // Sabato: weekend corrente (ieri - domani)
+                friday.setDate(today.getDate() - 1);
+                sunday.setDate(today.getDate() + 1);
+            } else if (day === 5) { // Venerdì: weekend corrente (oggi - domenica)
+                sunday.setDate(today.getDate() + 2);
+            } else { // Da Lunedì (1) a Giovedì (4): punta al weekend imminente
+                const diff = 5 - day;
+                friday.setDate(today.getDate() + diff);
+                sunday.setDate(today.getDate() + diff + 2);
+            }
+            friday.setHours(0, 0, 0, 0);
+            sunday.setHours(23, 59, 59, 999);
+            return { friday, sunday };
+        }
+
+        function isEventInThisWeekend(ev) {
+            const start = parseDateString(ev["Data Inizio"]);
+            const end = parseDateString(ev["Data Fine"]);
+            if (!start || !end) return false;
+            const { friday, sunday } = getWeekendRange();
+            return start <= sunday && end >= friday;
+        }
+
+        function toggleWeekendFilter() {
+            showWeekendOnly = !showWeekendOnly;
+            const btn = document.getElementById('weekendToggleBtn');
+            if (btn) {
+                if (showWeekendOnly) {
+                    btn.classList.add('bg-amber-600', 'text-white', 'border-amber-700', 'ring-2', 'ring-amber-300');
+                    btn.classList.remove('bg-amber-50/50', 'text-amber-800', 'border-amber-200');
+                    showToast("Filtro 'Questo Weekend' attivato", "info");
+                } else {
+                    btn.classList.remove('bg-amber-600', 'text-white', 'border-amber-700', 'ring-2', 'ring-amber-300');
+                    btn.classList.add('bg-amber-50/50', 'text-amber-800', 'border-amber-200');
+                }
+            }
+            renderEvents();
+            if (showWeekendOnly) {
+                setTimeout(() => {
+                    const header = document.getElementById('eventsHeader');
+                    if (header) header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 50);
+            }
+        }
+
         function toggleFavoritesFilter() {
             showFavoritesOnly = !showFavoritesOnly;
             const btn = document.getElementById('favoriteToggleBtn');
@@ -729,6 +917,13 @@
             showFavoritesOnly = false;
             showConcluded = false;
             showActiveOnly = false;
+            showWeekendOnly = false;
+
+            const btnWeekend = document.getElementById('weekendToggleBtn');
+            if (btnWeekend) {
+                btnWeekend.classList.remove('bg-amber-600', 'text-white', 'border-amber-700', 'ring-2', 'ring-amber-300');
+                btnWeekend.classList.add('bg-amber-50/50', 'text-amber-800', 'border-amber-200');
+            }
             
             const btnFav = document.getElementById('favoriteToggleBtn');
             btnFav.classList.remove('bg-rose-50', 'text-rose-600', 'border-rose-200');
@@ -949,7 +1144,13 @@
                     }
                 }
 
-                return matchesSearch && matchesComune && matchesMonth && matchesSpecialty && matchesFav && matchesConcluded && matchesActive;
+                // Weekend filter
+                let matchesWeekend = true;
+                if (showWeekendOnly) {
+                    matchesWeekend = isEventInThisWeekend(ev);
+                }
+
+                return matchesSearch && matchesComune && matchesMonth && matchesSpecialty && matchesFav && matchesConcluded && matchesActive && matchesWeekend;
             });
 
             // Sorting logic
