@@ -279,32 +279,41 @@
         <div class="bg-white p-5 rounded-2xl shadow-sm border border-maremma-100/60 mb-8">
             <div class="flex flex-col gap-4">
                 
-                <!-- Row 1: Search & Active Toggle -->
+                <!-- Row 1: Search, Sort & Action Buttons -->
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 items-center">
-                    <div class="lg:col-span-5 relative">
+                    <div class="lg:col-span-4 relative">
                         <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
                         <input type="text" id="searchInput" placeholder="Cerca per nome, comune, descrizione..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-maremma-600/20 focus:border-maremma-600 text-sm transition-all">
                     </div>
                     
                     <div class="lg:col-span-3">
-                        <select id="sortSelect" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-maremma-600/20 focus:border-maremma-600 text-sm bg-white transition-all">
+                        <select id="sortSelect" class="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-maremma-600/20 focus:border-maremma-600 text-sm bg-white transition-all">
                             <option value="date-asc">Ordina per: Data (Prima i più vicini)</option>
+                            <option value="distance-asc" id="sortDistanceOpt">Ordina per: Distanza (Più vicine a te 📍)</option>
                             <option value="date-desc">Ordina per: Data (In fondo i più vicini)</option>
                             <option value="rating-desc">Ordina per: Valutazione (Più alta)</option>
                             <option value="name-asc">Ordina per: Nome (A-Z)</option>
                         </select>
                     </div>
 
-                    <div class="lg:col-span-4 flex items-center gap-2">
-                        <button id="weekendToggleBtn" class="flex-1 py-2.5 px-3 rounded-xl border border-amber-200 bg-amber-50/50 hover:bg-amber-100/70 text-amber-800 flex items-center justify-center gap-2 text-[11px] font-semibold transition-all shadow-sm" title="Mostra solo le sagre di questo weekend">
-                            <i class="fa-solid fa-calendar-week text-amber-600"></i>
-                            <span>Questo Weekend</span>
+                    <div class="lg:col-span-5 flex items-center gap-1.5 flex-wrap sm:flex-nowrap">
+                        <button id="todayToggleBtn" class="flex-1 py-2.5 px-2.5 rounded-xl border border-emerald-200 bg-emerald-50/50 hover:bg-emerald-100/70 text-emerald-800 flex items-center justify-center gap-1.5 text-[11px] font-semibold transition-all shadow-sm" title="Mostra le sagre attive oggi">
+                            <i class="fa-solid fa-bolt text-emerald-600"></i>
+                            <span>Oggi</span>
                         </button>
-                        <button id="favoriteToggleBtn" class="py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 flex items-center justify-center gap-1.5 text-[11px] font-medium transition-all" title="Mostra i tuoi preferiti">
+                        <button id="weekendToggleBtn" class="flex-1 py-2.5 px-2.5 rounded-xl border border-amber-200 bg-amber-50/50 hover:bg-amber-100/70 text-amber-800 flex items-center justify-center gap-1.5 text-[11px] font-semibold transition-all shadow-sm" title="Mostra solo le sagre di questo weekend">
+                            <i class="fa-solid fa-calendar-week text-amber-600"></i>
+                            <span>Weekend</span>
+                        </button>
+                        <button id="nearMeBtn" class="flex-1 py-2.5 px-2.5 rounded-xl border border-sky-200 bg-sky-50/50 hover:bg-sky-100/70 text-sky-800 flex items-center justify-center gap-1.5 text-[11px] font-semibold transition-all shadow-sm" title="Calcola distanza e ordina per vicinanza (100% privato)">
+                            <i class="fa-solid fa-location-crosshairs text-sky-600"></i>
+                            <span id="nearMeBtnText">Vicino a me</span>
+                        </button>
+                        <button id="favoriteToggleBtn" class="py-2.5 px-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 flex items-center justify-center gap-1 text-[11px] font-medium transition-all" title="Mostra i tuoi preferiti">
                             <i class="fa-solid fa-heart text-rose-500"></i>
                             <span class="hidden xl:inline">Preferiti</span>
                         </button>
-                        <button id="concludedToggleBtn" class="py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 flex items-center justify-center gap-1.5 text-[11px] font-medium transition-all" title="Mostra eventi già conclusi">
+                        <button id="concludedToggleBtn" class="py-2.5 px-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 flex items-center justify-center gap-1 text-[11px] font-medium transition-all" title="Mostra eventi già conclusi">
                             <i class="fa-solid fa-clock-rotate-left text-slate-400"></i>
                             <span class="hidden xl:inline">Passate</span>
                         </button>
@@ -312,6 +321,14 @@
                             <i class="fa-solid fa-arrow-rotate-left"></i>
                         </button>
                     </div>
+                </div>
+
+                <!-- Privacy & Transparency Banner -->
+                <div class="flex items-center justify-between text-[11px] text-slate-400 px-1 pt-1 border-t border-slate-100/60">
+                    <span class="flex items-center gap-1.5">
+                        <i class="fa-solid fa-shield-halved text-emerald-600"></i>
+                        <span><strong>Privacy 100% Garantita:</strong> Sito gratuito, nessun cookie di profilazione né raccolta dati. La posizione per "Vicino a me" opera solo nella memoria del tuo browser.</span>
+                    </span>
                 </div>
 
                 <!-- Row 2: Category and Comune Selectors -->
@@ -640,6 +657,9 @@
         let showConcluded = false; // Hide concluded by default
         let showActiveOnly = false; // Filter active events
         let showWeekendOnly = false; // Filter weekend events
+        let showTodayOnly = false; // Filter events active today
+        let userLocation = null; // Volatile in-memory: { lat, lng } (never sent anywhere)
+        let isNearMeActive = false;
         let activeView = 'grid'; // 'grid' or 'list'
 
         // --- ON PAGE LOAD ---
@@ -765,8 +785,14 @@
             document.getElementById('comuneFilter').addEventListener('change', renderEvents);
             document.getElementById('monthFilter').addEventListener('change', renderEvents);
             document.getElementById('resetFiltersBtn').addEventListener('click', resetAllFilters);
+            const todayBtn = document.getElementById('todayToggleBtn');
+            if (todayBtn) todayBtn.addEventListener('click', toggleTodayFilter);
+
             const weekendBtn = document.getElementById('weekendToggleBtn');
             if (weekendBtn) weekendBtn.addEventListener('click', toggleWeekendFilter);
+
+            const nearMeBtn = document.getElementById('nearMeBtn');
+            if (nearMeBtn) nearMeBtn.addEventListener('click', toggleNearMe);
             document.getElementById('favoriteToggleBtn').addEventListener('click', toggleFavoritesFilter);
             document.getElementById('concludedToggleBtn').addEventListener('click', toggleConcludedFilter);
 
@@ -814,6 +840,193 @@
             }
 
             renderEvents();
+        }
+
+        // --- GEOGRAPHIC & DISTANCE LOGIC (100% CLIENT-SIDE & PRIVACY-COMPLIANT) ---
+        const TOWN_COORDINATES = {
+            "arcidosso": [42.8722, 11.5386],
+            "campagnatico": [42.8833, 11.2667],
+            "arcille": [42.8350, 11.2330],
+            "montorsaio": [42.8750, 11.2220],
+            "capalbio": [42.4542, 11.4214],
+            "borgo carige": [42.4330, 11.4500],
+            "castel del piano": [42.8925, 11.5367],
+            "montegiovi": [42.9167, 11.5333],
+            "castell'azzara": [42.7725, 11.6989],
+            "selvena": [42.7833, 11.6667],
+            "castiglione della pescaia": [42.7633, 10.8808],
+            "tirli": [42.8250, 10.9500],
+            "cinigiano": [42.8906, 11.4131],
+            "monticello amiata": [42.8667, 11.5167],
+            "sasso d'ombrone": [42.8833, 11.3500],
+            "civitella paganico": [42.9272, 11.2825],
+            "casale di pari": [43.0167, 11.3167],
+            "civitella marittima": [42.9950, 11.2817],
+            "paganico": [42.9300, 11.2700],
+            "pari": [43.0033, 11.3183],
+            "follonica": [42.9242, 10.7583],
+            "gavorrano": [42.9250, 10.9083],
+            "bivio di ravi": [42.9100, 10.9600],
+            "caldana": [42.8983, 10.9250],
+            "giuncarico": [42.8933, 10.9850],
+            "grosseto": [42.7600, 11.1130],
+            "batignano": [42.8367, 11.1617],
+            "rispescia": [42.7050, 11.1550],
+            "barbanella": [42.7700, 11.1100],
+            "isola del giglio": [42.3600, 10.9000],
+            "giglio castello": [42.3650, 10.9020],
+            "magliano in toscana": [42.5986, 11.2936],
+            "pereta": [42.6000, 11.3500],
+            "sant'andrea": [42.5800, 11.2500],
+            "manciano": [42.5878, 11.5169],
+            "marsiliana": [42.5333, 11.3833],
+            "montemerano": [42.6200, 11.4900],
+            "poggio murella": [42.6400, 11.5400],
+            "san martino sul fiora": [42.6500, 11.6000],
+            "saturnia": [42.6650, 11.5050],
+            "massa marittima": [43.0500, 10.8889],
+            "niccioleta": [43.0800, 10.9100],
+            "tatti": [43.0167, 11.0167],
+            "monte argentario": [42.4333, 11.1667],
+            "porto ercole": [42.3950, 11.2050],
+            "monterotondo marittimo": [43.1444, 10.8556],
+            "montieri": [43.1311, 11.0169],
+            "orbetello": [42.4411, 11.2197],
+            "albinia": [42.5000, 11.2100],
+            "talamone": [42.5550, 11.1350],
+            "pitigliano": [42.6333, 11.6667],
+            "roccalbegna": [42.7861, 11.5028],
+            "cana": [42.8100, 11.4500],
+            "santa caterina": [42.7800, 11.5300],
+            "vallerona": [42.7600, 11.5100],
+            "roccastrada": [43.0111, 11.1667],
+            "sassofortino": [43.0250, 11.0800],
+            "santa fiora": [42.8317, 11.5856],
+            "bagnolo": [42.8450, 11.6000],
+            "scansano": [42.6883, 11.3325],
+            "poggioferro": [42.6950, 11.3900],
+            "seggiano": [42.9286, 11.5583],
+            "semproniano": [42.7300, 11.5417],
+            "sorano": [42.6806, 11.7144],
+            "san giovanni delle contee": [42.7300, 11.7700]
+        };
+
+        function getEventCoordinates(ev) {
+            const loc = (ev["Comune / Frazione"] || "").toLowerCase();
+            for (const [key, coords] of Object.entries(TOWN_COORDINATES)) {
+                if (loc.includes(key)) return coords;
+            }
+            return [42.7600, 11.1130]; // Default Grosseto centro
+        }
+
+        function calculateDistanceKm(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Raggio terrestre in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return Math.round(R * c);
+        }
+
+        function getEventDistance(ev) {
+            if (!userLocation) return null;
+            const coords = getEventCoordinates(ev);
+            return calculateDistanceKm(userLocation.lat, userLocation.lng, coords[0], coords[1]);
+        }
+
+        function isEventToday(ev) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const start = parseDateString(ev["Data Inizio"]);
+            const end = parseDateString(ev["Data Fine"]);
+            if (!start || !end) return false;
+            return today >= start && today <= end;
+        }
+
+        function toggleTodayFilter() {
+            showTodayOnly = !showTodayOnly;
+            const btn = document.getElementById('todayToggleBtn');
+            if (btn) {
+                if (showTodayOnly) {
+                    btn.classList.add('bg-emerald-600', 'text-white', 'border-emerald-700', 'ring-2', 'ring-emerald-300');
+                    btn.classList.remove('bg-emerald-50/50', 'text-emerald-800', 'border-emerald-200');
+                    showToast("Filtro 'Oggi' attivato", "info");
+                } else {
+                    btn.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-700', 'ring-2', 'ring-emerald-300');
+                    btn.classList.add('bg-emerald-50/50', 'text-emerald-800', 'border-emerald-200');
+                }
+            }
+            renderEvents();
+            if (showTodayOnly) {
+                setTimeout(() => {
+                    const header = document.getElementById('eventsHeader');
+                    if (header) header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 50);
+            }
+        }
+
+        function toggleNearMe() {
+            if (isNearMeActive) {
+                isNearMeActive = false;
+                userLocation = null;
+                updateNearMeButtonUI(false);
+                const sortSelect = document.getElementById('sortSelect');
+                if (sortSelect.value === 'distance-asc') {
+                    sortSelect.value = 'date-asc';
+                }
+                renderEvents();
+                showToast("Ordinamento per distanza disattivato", "info");
+                return;
+            }
+
+            if (!navigator.geolocation) {
+                showToast("La geolocalizzazione non è supportata dal tuo browser", "error");
+                return;
+            }
+
+            const btn = document.getElementById('nearMeBtn');
+            const origHTML = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-sky-600"></i> <span class="text-[11px]">Rilevo...</span>`;
+
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    userLocation = {
+                        lat: pos.coords.latitude,
+                        lng: pos.coords.longitude
+                    };
+                    isNearMeActive = true;
+                    updateNearMeButtonUI(true);
+                    const sortSelect = document.getElementById('sortSelect');
+                    sortSelect.value = 'distance-asc';
+                    renderEvents();
+                    showToast("📍 Posizione rilevata! Sagre ordinate per distanza. (Nessun dato salvato o inviato)", "success");
+                },
+                (err) => {
+                    btn.innerHTML = origHTML;
+                    let msg = "Impossibile rilevare la posizione";
+                    if (err.code === 1) msg = "Permesso di posizione negato nel browser";
+                    else if (err.code === 2) msg = "Posizione non disponibile";
+                    else if (err.code === 3) msg = "Richiesta scaduta (timeout)";
+                    showToast(msg, "warning");
+                },
+                { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
+            );
+        }
+
+        function updateNearMeButtonUI(active) {
+            const btn = document.getElementById('nearMeBtn');
+            if (!btn) return;
+            if (active) {
+                btn.classList.add('bg-sky-600', 'text-white', 'border-sky-700', 'ring-2', 'ring-sky-300');
+                btn.classList.remove('bg-sky-50/50', 'text-sky-800', 'border-sky-200');
+                btn.innerHTML = `<i class="fa-solid fa-location-crosshairs text-white"></i> <span>Più vicine</span>`;
+            } else {
+                btn.classList.remove('bg-sky-600', 'text-white', 'border-sky-700', 'ring-2', 'ring-sky-300');
+                btn.classList.add('bg-sky-50/50', 'text-sky-800', 'border-sky-200');
+                btn.innerHTML = `<i class="fa-solid fa-location-crosshairs text-sky-600"></i> <span>Vicino a me</span>`;
+            }
         }
 
         function getWeekendRange(referenceDate = new Date()) {
@@ -918,6 +1131,17 @@
             showConcluded = false;
             showActiveOnly = false;
             showWeekendOnly = false;
+            showTodayOnly = false;
+            isNearMeActive = false;
+            userLocation = null;
+
+            const btnToday = document.getElementById('todayToggleBtn');
+            if (btnToday) {
+                btnToday.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-700', 'ring-2', 'ring-emerald-300');
+                btnToday.classList.add('bg-emerald-50/50', 'text-emerald-800', 'border-emerald-200');
+            }
+
+            updateNearMeButtonUI(false);
 
             const btnWeekend = document.getElementById('weekendToggleBtn');
             if (btnWeekend) {
@@ -1150,11 +1374,22 @@
                     matchesWeekend = isEventInThisWeekend(ev);
                 }
 
-                return matchesSearch && matchesComune && matchesMonth && matchesSpecialty && matchesFav && matchesConcluded && matchesActive && matchesWeekend;
+                // Today filter
+                let matchesToday = true;
+                if (showTodayOnly) {
+                    matchesToday = isEventToday(ev);
+                }
+
+                return matchesSearch && matchesComune && matchesMonth && matchesSpecialty && matchesFav && matchesConcluded && matchesActive && matchesWeekend && matchesToday;
             });
 
             // Sorting logic
             filtered.sort((a, b) => {
+                if (sortVal === 'distance-asc') {
+                    const distA = getEventDistance(a) !== null ? getEventDistance(a) : 9999;
+                    const distB = getEventDistance(b) !== null ? getEventDistance(b) : 9999;
+                    if (distA !== distB) return distA - distB;
+                }
                 if (sortVal.startsWith('date-')) {
                     const dateA = parseDateString(a["Data Inizio"]) || new Date(0);
                     const dateB = parseDateString(b["Data Inizio"]) || new Date(0);
@@ -1210,6 +1445,11 @@
 
             const category = getEventCategory(name, desc);
 
+            // Distance badge logic
+            const dist = getEventDistance(ev);
+            const distanceBadge = dist !== null ? 
+                `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-sky-50 text-sky-700 border border-sky-200 shadow-xs"><i class="fa-solid fa-location-arrow mr-1 text-[9px]"></i>a ${dist} km da te</span>` : '';
+
             // Simple date active badge logic
             const today = new Date();
             today.setHours(0,0,0,0);
@@ -1244,7 +1484,8 @@
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${category.bg} border">
                                 <i class="fa-solid ${category.icon} mr-1"></i> ${category.label}
                             </span>
-                            <div class="flex items-center gap-1.5">
+                            <div class="flex items-center gap-1.5 flex-wrap justify-end">
+                                ${distanceBadge}
                                 ${statusBadge}
                                 <button onclick="toggleFavorite(event, ${ev.id})" class="text-slate-300 hover:text-rose-500 transition-colors text-base" title="Aggiungi ai preferiti">
                                     <i class="${isFav ? 'fa-solid fa-heart text-rose-500' : 'fa-regular fa-heart'}"></i>
@@ -1323,8 +1564,9 @@
                             </h3>
                             <span class="text-[10px] bg-slate-50 border px-1.5 py-0.2 rounded text-slate-500 font-medium">${category.label}</span>
                         </div>
-                        <p class="text-xs text-slate-500 flex items-center gap-1">
+                        <p class="text-xs text-slate-500 flex items-center gap-1 flex-wrap">
                             <i class="fa-solid fa-location-dot text-rose-400"></i> ${comune}
+                            ${getEventDistance(ev) !== null ? `<span class="inline-flex items-center text-[10px] font-bold text-sky-700 bg-sky-50 border border-sky-200 px-1.5 py-0.5 rounded ml-2"><i class="fa-solid fa-location-arrow mr-1 text-[8px]"></i>a ${getEventDistance(ev)} km</span>` : ''}
                         </p>
                     </div>
                 </div>
@@ -1418,6 +1660,10 @@
             }
 
             document.getElementById('modalExactAddress').textContent = ev["Luogo Esatto"] || "Centro Storico";
+            const modalDist = getEventDistance(ev);
+            if (modalDist !== null) {
+                document.getElementById('modalExactAddress').textContent += ` • a circa ${modalDist} km da te`;
+            }
             
             const detailedProgram = ev["Programma Dettagliato"];
             if (detailedProgram && detailedProgram.trim() !== "") {
