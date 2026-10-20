@@ -1,16 +1,32 @@
 {
-  "name": "Sagre Grosseto",
-  "short_name": "SagreGR",
-  "description": "Scopri tutte le sagre, feste e manifestazioni enogastronomiche della provincia di Grosseto.",
-  "start_url": "/SagreGrosseto/",
+  "name": "Sagre Grosseto e Maremma",
+  "short_name": "Sagre Grosseto",
+  "description": "Calendario sempre aggiornato delle sagre ed eventi enogastronomici in provincia di Grosseto.",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#fdf8f5",
   "theme_color": "#d96b27",
+  "categories": ["food", "travel", "lifestyle"],
   "icons": [
     {
-      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Coat_of_arms_of_Province_of_Grosseto.svg/512px-Coat_of_arms_of_Province_of_Grosseto.svg.png",
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

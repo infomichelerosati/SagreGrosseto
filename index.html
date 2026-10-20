@@ -72,8 +72,15 @@
     
     <title>Sagre Grosseto e Provincia 2026: Calendario, Eventi e Questo Weekend</title>
     <meta name="theme-color" content="#d96b27">
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="/Logo.png" type="image/png">
+    
+    <!-- PWA & Apple iOS Support -->
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Sagre Grosseto">
+    <meta name="mobile-web-app-capable" content="yes">
     
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
@@ -214,11 +221,19 @@
                     </p>
                 </div>
 
-                                <!-- Controlli Social e Sync -->
+                                <!-- Controlli Social, Install e Sync -->
                 <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                    <!-- Tasto Installa App PWA -->
+                    <button id="pwaHeaderInstallBtn" onclick="triggerPWAInstall()" class="bg-gradient-to-r from-amber-500 to-maremma-600 hover:from-amber-600 hover:to-maremma-700 text-white backdrop-blur-md p-3.5 sm:p-4 rounded-2xl border border-amber-300/30 flex items-center justify-center gap-3 shadow-lg transition-transform hover:scale-105 active:scale-95 cursor-pointer">
+                        <i class="fa-solid fa-mobile-screen-button text-2xl sm:text-3xl text-amber-100"></i>
+                        <div class="text-left">
+                            <p class="text-sm font-semibold">Installa App</p>
+                            <p class="text-xs text-amber-100">Accesso rapido da Home</p>
+                        </div>
+                    </button>
                     <!-- Tasto Condividi Sito -->
-                    <button onclick="if(navigator.share){navigator.share({title:'Sagre Grosseto', text:'Guarda tutti gli eventi e le sagre in Maremma!', url:window.location.href})}else{alert('Copia questo link: '+window.location.href)}" class="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white backdrop-blur-md p-4 rounded-2xl border border-emerald-400/30 flex items-center justify-center gap-3 shadow-lg transition-transform hover:scale-105 active:scale-95">
-                        <i class="fa-brands fa-whatsapp text-3xl"></i>
+                    <button onclick="if(navigator.share){navigator.share({title:'Sagre Grosseto', text:'Guarda tutti gli eventi e le sagre in Maremma!', url:window.location.href})}else{alert('Copia questo link: '+window.location.href)}" class="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white backdrop-blur-md p-3.5 sm:p-4 rounded-2xl border border-emerald-400/30 flex items-center justify-center gap-3 shadow-lg transition-transform hover:scale-105 active:scale-95">
+                        <i class="fa-brands fa-whatsapp text-2xl sm:text-3xl"></i>
                         <div class="text-left">
                             <p class="text-sm font-semibold">Condividi Sito</p>
                             <p class="text-xs text-emerald-100">Invia agli amici</p>
@@ -678,6 +693,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             setupEventListeners();
             loadCSVData();
+            initPWA();
         });
 
         // Initialize display and filters
@@ -1629,6 +1645,117 @@
             return div;
         }
 
+        // --- PWA & SERVICE WORKER LIFECYCLE (AUTO-UPDATING) ---
+        let deferredPrompt = null;
+
+        function initPWA() {
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+            
+            // Register Service Worker
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js').then((registration) => {
+                        console.log('[PWA] Service Worker attivo.');
+                        
+                        // Controlla aggiornamenti subito all'avvio
+                        registration.update();
+                        
+                        // E ricontrolla ogni volta che la finestra torna in primo piano
+                        document.addEventListener('visibilitychange', () => {
+                            if (document.visibilityState === 'visible') {
+                                registration.update();
+                            }
+                        });
+                    }).catch((err) => {
+                        console.warn('[PWA] Registrazione Service Worker:', err);
+                    });
+                });
+
+                // Ricarica automatica e pulita se un nuovo SW aggiornato prende il controllo
+                let refreshing = false;
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    if (!refreshing) {
+                        refreshing = true;
+                        console.log('[PWA] Nuova versione software rilevata. Aggiornamento in corso...');
+                        window.location.reload();
+                    }
+                });
+            }
+
+            // Se l'app è già avviata da schermata Home / Standalone, nascondi pulsanti di installazione
+            if (isStandalone) {
+                const headerBtn = document.getElementById('pwaHeaderInstallBtn');
+                if (headerBtn) headerBtn.classList.add('hidden');
+                return;
+            }
+
+            // Cattura evento installazione su Chrome, Edge, Samsung Internet, Android
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+
+                // Mostra il banner flottante dopo 3 secondi (se non chiuso in questa sessione)
+                if (!sessionStorage.getItem('pwa-banner-dismissed')) {
+                    setTimeout(() => {
+                        const banner = document.getElementById('pwaBottomBanner');
+                        if (banner && deferredPrompt) {
+                            banner.classList.remove('translate-y-36');
+                        }
+                    }, 3000);
+                }
+            });
+
+            window.addEventListener('appinstalled', () => {
+                deferredPrompt = null;
+                dismissPWABanner();
+                const headerBtn = document.getElementById('pwaHeaderInstallBtn');
+                if (headerBtn) headerBtn.classList.add('hidden');
+                showToast("🎉 Sagre Grosseto installata con successo sulla tua schermata Home!", "success");
+            });
+        }
+
+        function triggerPWAInstall() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    deferredPrompt = null;
+                    dismissPWABanner();
+                });
+            } else {
+                // Rilevamento iOS Safari o browser senza prompt automatico
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                if (isIOS) {
+                    showIOSInstallModal();
+                } else {
+                    showToast("Per installare: tocca i tre puntini ⋮ del browser e seleziona 'Aggiungi a schermata Home'", "info");
+                }
+            }
+        }
+
+        function dismissPWABanner() {
+            const banner = document.getElementById('pwaBottomBanner');
+            if (banner) {
+                banner.classList.add('translate-y-36');
+            }
+            sessionStorage.setItem('pwa-banner-dismissed', 'true');
+        }
+
+        function showIOSInstallModal() {
+            const modal = document.getElementById('iosInstallModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                setTimeout(() => modal.classList.remove('opacity-0'), 10);
+            }
+        }
+
+        function closeIOSInstallModal() {
+            const modal = document.getElementById('iosInstallModal');
+            if (modal) {
+                modal.classList.add('opacity-0');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            }
+        }
+
         // --- FAVORITES ACTION ---
         function toggleFavorite(event, id) {
             if (event) event.stopPropagation(); // Avoid triggering open modal click
@@ -2041,5 +2168,49 @@
             }, 4000);
         }
     </script>
+    <!-- Floating PWA Install Banner -->
+    <div id="pwaBottomBanner" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md bg-slate-900/95 backdrop-blur-md text-white p-3.5 sm:p-4 rounded-2xl shadow-2xl border border-slate-700/80 z-50 flex items-center justify-between gap-3 transform translate-y-36 transition-transform duration-500">
+        <div class="flex items-center gap-3 min-w-0">
+            <img src="/icons/icon-192x192.png" alt="Logo" class="w-10 h-10 rounded-xl shadow-md shrink-0 border border-white/20">
+            <div class="min-w-0">
+                <h4 class="text-xs sm:text-sm font-bold truncate">Installa Sagre Grosseto</h4>
+                <p class="text-[11px] text-slate-300 truncate">A tutto schermo e consultabile offline!</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+            <button onclick="triggerPWAInstall()" class="px-3 py-1.5 sm:py-2 bg-gradient-to-r from-maremma-600 to-amber-600 hover:from-maremma-700 hover:to-amber-700 text-white text-xs font-bold rounded-xl shadow-md transition-all active:scale-95">
+                Installa
+            </button>
+            <button onclick="dismissPWABanner()" class="p-1.5 text-slate-400 hover:text-white transition-colors" title="Chiudi">
+                <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal Istruzioni Installazione iOS (iPhone/iPad) -->
+    <div id="iosInstallModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-end sm:items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="relative bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-100 text-slate-700 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-2">
+                    <img src="/icons/icon-192x192.png" alt="Logo" class="w-8 h-8 rounded-lg">
+                    <h3 class="font-bold text-slate-800 text-sm">Installa su iPhone / iPad</h3>
+                </div>
+                <button onclick="closeIOSInstallModal()" class="text-slate-400 hover:text-slate-600 p-1">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+                Aggiungi l'app alla schermata Home in 2 semplici passi:
+            </p>
+            <ol class="text-xs space-y-2.5 text-slate-700 list-decimal pl-4">
+                <li>Tocca l'icona <strong>Condividi</strong> <i class="fa-solid fa-arrow-up-from-bracket text-blue-600 mx-1"></i> nella barra in basso di Safari.</li>
+                <li>Scorri il menu e seleziona <strong>"Aggiungi alla schermata Home"</strong> <i class="fa-regular fa-square-plus text-slate-800 mx-1"></i>.</li>
+                <li>Conferma toccando <strong>"Aggiungi"</strong> in alto a destra.</li>
+            </ol>
+            <button onclick="closeIOSInstallModal()" class="w-full py-2.5 bg-maremma-600 hover:bg-maremma-700 text-white font-semibold rounded-xl text-xs transition-all shadow-sm">
+                Ho capito
+            </button>
+        </div>
+    </div>
 </body>
 </html>
