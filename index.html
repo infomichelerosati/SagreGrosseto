@@ -178,18 +178,23 @@
     </style>
 </head>
 <body class="bg-maremma-50 text-slate-800 font-sans min-h-screen selection:bg-maremma-200 overflow-x-hidden">
-    <!-- Contatore Visite -->
-    <div class="fixed top-2 right-2 opacity-80 hover:opacity-100 transition-opacity z-[9999] text-xs" title="Visualizzazioni della pagina">
+    <!-- Contatore Visite (Desktop: fixed corner, Mobile: in header) -->
+    <div class="hidden sm:block fixed top-2 right-2 opacity-80 hover:opacity-100 transition-opacity z-50 text-xs" title="Visualizzazioni della pagina">
         <img src="https://hits.sh/infomichelerosati.github.io/SagreGrosseto.svg?color=d96b27" alt="visite" class="h-4 sm:h-5 rounded shadow-sm">
     </div>
 
-    <!-- Powered By Box -->
-    <div class="fixed top-2 left-2 z-[9999] bg-transparent border-transparent pointer-events-none select-none">
+    <!-- Powered By Box (Desktop: fixed corner, Mobile: in header) -->
+    <div class="hidden sm:block fixed top-2 left-2 z-50 bg-transparent border-transparent pointer-events-none select-none">
         <div class="powered-by-text">Powered By Michele Rosati</div>
     </div>
 
     <!-- Header / Hero Section -->
-    <header class="relative bg-gradient-to-r from-olive-800 to-maremma-900 text-white overflow-hidden py-12 md:py-16 shadow-lg">
+    <header class="relative bg-gradient-to-r from-olive-800 to-maremma-900 text-white overflow-hidden pb-12 pt-4 md:py-16 shadow-lg">
+        <!-- Mobile Top Brand Bar (Doesn't overlap content on scroll) -->
+        <div class="sm:hidden max-w-7xl mx-auto px-4 mb-4 flex items-center justify-between text-[11px] relative z-20 opacity-90 border-b border-white/10 pb-2">
+            <div class="powered-by-text text-[9px]">Powered By Michele Rosati</div>
+            <img src="https://hits.sh/infomichelerosati.github.io/SagreGrosseto.svg?color=d96b27" alt="visite" class="h-3.5 rounded shadow-xs">
+        </div>
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-maremma-700/30 via-transparent to-transparent"></div>
         
         <!-- Decorative subtle pattern overlay -->
@@ -275,74 +280,74 @@
             </div>
         </div>
 
-        <!-- Filter & Search Controls -->
-        <div class="bg-white p-5 rounded-2xl shadow-sm border border-maremma-100/60 mb-8">
-            <div class="flex flex-col gap-4">
-                
-                <!-- Row 1: Search, Sort & Action Buttons -->
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 items-center">
-                    <div class="lg:col-span-4 relative">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                        <input type="text" id="searchInput" placeholder="Cerca per nome, comune, descrizione..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-maremma-600/20 focus:border-maremma-600 text-sm transition-all">
-                    </div>
-                    
-                    <div class="lg:col-span-3">
-                        <select id="sortSelect" class="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-maremma-600/20 focus:border-maremma-600 text-sm bg-white transition-all">
-                            <option value="date-asc">Ordina per: Data (Prima i più vicini)</option>
-                            <option value="distance-asc" id="sortDistanceOpt">Ordina per: Distanza (Più vicine a te 📍)</option>
-                            <option value="date-desc">Ordina per: Data (In fondo i più vicini)</option>
-                            <option value="rating-desc">Ordina per: Valutazione (Più alta)</option>
-                            <option value="name-asc">Ordina per: Nome (A-Z)</option>
-                        </select>
-                    </div>
+        <!-- Filter & Search Controls (Mobile-First Optimized) -->
+        <div class="bg-white p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl shadow-sm border border-maremma-100/60 mb-6 sm:mb-8 space-y-3">
+            
+            <!-- Row 1: Search Bar -->
+            <div class="relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                <input type="text" id="searchInput" placeholder="Cerca sagra, comune, piatto tipico..." class="w-full pl-10 pr-9 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-maremma-600/20 focus:border-maremma-600 text-xs sm:text-sm transition-all bg-slate-50/50 focus:bg-white">
+                <button id="clearSearchBtn" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1" title="Cancella ricerca">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
 
-                    <div class="lg:col-span-5 flex items-center gap-1.5 flex-wrap sm:flex-nowrap">
-                        <button id="todayToggleBtn" class="flex-1 py-2.5 px-2.5 rounded-xl border border-emerald-200 bg-emerald-50/50 hover:bg-emerald-100/70 text-emerald-800 flex items-center justify-center gap-1.5 text-[11px] font-semibold transition-all shadow-sm" title="Mostra le sagre attive oggi">
-                            <i class="fa-solid fa-bolt text-emerald-600"></i>
-                            <span>Oggi</span>
-                        </button>
-                        <button id="weekendToggleBtn" class="flex-1 py-2.5 px-2.5 rounded-xl border border-amber-200 bg-amber-50/50 hover:bg-amber-100/70 text-amber-800 flex items-center justify-center gap-1.5 text-[11px] font-semibold transition-all shadow-sm" title="Mostra solo le sagre di questo weekend">
-                            <i class="fa-solid fa-calendar-week text-amber-600"></i>
-                            <span>Weekend</span>
-                        </button>
-                        <button id="nearMeBtn" class="flex-1 py-2.5 px-2.5 rounded-xl border border-sky-200 bg-sky-50/50 hover:bg-sky-100/70 text-sky-800 flex items-center justify-center gap-1.5 text-[11px] font-semibold transition-all shadow-sm" title="Calcola distanza e ordina per vicinanza (100% privato)">
-                            <i class="fa-solid fa-location-crosshairs text-sky-600"></i>
-                            <span id="nearMeBtnText">Vicino a me</span>
-                        </button>
-                        <button id="favoriteToggleBtn" class="py-2.5 px-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 flex items-center justify-center gap-1 text-[11px] font-medium transition-all" title="Mostra i tuoi preferiti">
-                            <i class="fa-solid fa-heart text-rose-500"></i>
-                            <span class="hidden xl:inline">Preferiti</span>
-                        </button>
-                        <button id="concludedToggleBtn" class="py-2.5 px-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 flex items-center justify-center gap-1 text-[11px] font-medium transition-all" title="Mostra eventi già conclusi">
-                            <i class="fa-solid fa-clock-rotate-left text-slate-400"></i>
-                            <span class="hidden xl:inline">Passate</span>
-                        </button>
-                        <button id="resetFiltersBtn" class="p-2.5 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition-all shrink-0" title="Resetta tutti i filtri">
-                            <i class="fa-solid fa-arrow-rotate-left"></i>
-                        </button>
-                    </div>
+            <!-- Row 2: 3 Quick Action Chips (Fixed 3-column grid on mobile & desktop: No awkward wraps!) -->
+            <div class="grid grid-cols-3 gap-1.5 sm:gap-2">
+                <button id="todayToggleBtn" class="py-2 sm:py-2.5 px-1.5 sm:px-2 rounded-xl border border-emerald-200 bg-emerald-50/60 hover:bg-emerald-100/80 text-emerald-800 flex items-center justify-center gap-1.5 text-xs font-semibold transition-all shadow-xs active:scale-95" title="Mostra solo le sagre aperte oggi">
+                    <i class="fa-solid fa-bolt text-emerald-600 text-xs sm:text-sm"></i>
+                    <span class="truncate">Oggi</span>
+                </button>
+                <button id="weekendToggleBtn" class="py-2 sm:py-2.5 px-1.5 sm:px-2 rounded-xl border border-amber-200 bg-amber-50/60 hover:bg-amber-100/80 text-amber-800 flex items-center justify-center gap-1.5 text-xs font-semibold transition-all shadow-xs active:scale-95" title="Mostra le sagre di questo weekend">
+                    <i class="fa-solid fa-calendar-week text-amber-600 text-xs sm:text-sm"></i>
+                    <span class="truncate">Weekend</span>
+                </button>
+                <button id="nearMeBtn" class="py-2 sm:py-2.5 px-1.5 sm:px-2 rounded-xl border border-sky-200 bg-sky-50/60 hover:bg-sky-100/80 text-sky-800 flex items-center justify-center gap-1.5 text-xs font-semibold transition-all shadow-xs active:scale-95" title="Calcola distanza e ordina per vicinanza (100% privato)">
+                    <i class="fa-solid fa-location-crosshairs text-sky-600 text-xs sm:text-sm"></i>
+                    <span id="nearMeBtnText" class="truncate">Vicino a me</span>
+                </button>
+            </div>
+
+            <!-- Row 3: Sort select + Compact Icon Toolbar (Preferiti, Passate, Reset on one clean line) -->
+            <div class="flex items-center gap-1.5 sm:gap-2">
+                <div class="flex-1 min-w-0">
+                    <select id="sortSelect" class="w-full px-2.5 sm:px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-maremma-600/20 focus:border-maremma-600 text-xs sm:text-sm bg-white transition-all text-slate-700 truncate">
+                        <option value="date-asc">Data (Prima i più vicini)</option>
+                        <option value="distance-asc" id="sortDistanceOpt">Distanza (Più vicine a te 📍)</option>
+                        <option value="date-desc">Data (In fondo i più vicini)</option>
+                        <option value="rating-desc">Valutazione (Più alta)</option>
+                        <option value="name-asc">Nome (A-Z)</option>
+                    </select>
                 </div>
 
-                <!-- Privacy & Transparency Banner -->
-                <div class="flex items-center justify-between text-[11px] text-slate-400 px-1 pt-1 border-t border-slate-100/60">
-                    <span class="flex items-center gap-1.5">
-                        <i class="fa-solid fa-shield-halved text-emerald-600"></i>
-                        <span><strong>Privacy 100% Garantita:</strong> Sito gratuito, nessun cookie di profilazione né raccolta dati. La posizione per "Vicino a me" opera solo nella memoria del tuo browser.</span>
-                    </span>
+                <div class="flex items-center gap-1 shrink-0">
+                    <button id="favoriteToggleBtn" class="h-8 sm:h-9 px-2 sm:px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 flex items-center justify-center gap-1 text-xs font-medium transition-all" title="Mostra solo preferiti">
+                        <i class="fa-solid fa-heart text-rose-500 text-xs"></i>
+                        <span class="hidden sm:inline text-xs">Preferiti</span>
+                    </button>
+                    <button id="concludedToggleBtn" class="h-8 sm:h-9 px-2 sm:px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 flex items-center justify-center gap-1 text-xs font-medium transition-all" title="Mostra eventi già conclusi">
+                        <i class="fa-solid fa-clock-rotate-left text-slate-400 text-xs"></i>
+                        <span class="hidden sm:inline text-xs">Passate</span>
+                    </button>
+                    <button id="resetFiltersBtn" class="h-8 sm:h-9 w-8 sm:w-9 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition-all flex items-center justify-center shrink-0" title="Resetta tutti i filtri">
+                        <i class="fa-solid fa-arrow-rotate-left text-xs"></i>
+                    </button>
                 </div>
+            </div>
 
-                <!-- Row 2: Category and Comune Selectors -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 border-t border-slate-100">
+            <!-- Row 4: Secondary Filters (Comune & Mese in 2 columns on mobile) -->
+            <div class="pt-2.5 border-t border-slate-100 space-y-2.5">
+                <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Filtra per Comune</label>
-                        <select id="comuneFilter" class="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none text-xs bg-white">
+                        <label class="block text-[10px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Comune</label>
+                        <select id="comuneFilter" class="w-full px-2 py-1.5 rounded-lg border border-slate-200 focus:outline-none text-xs bg-white text-slate-700 truncate">
                             <option value="all">Tutti i comuni</option>
                         </select>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Filtra per Mese</label>
-                        <select id="monthFilter" class="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none text-xs bg-white">
+                        <label class="block text-[10px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Mese</label>
+                        <select id="monthFilter" class="w-full px-2 py-1.5 rounded-lg border border-slate-200 focus:outline-none text-xs bg-white text-slate-700">
                             <option value="all">Tutti i mesi</option>
                             <option value="01">Gennaio</option>
                             <option value="02">Febbraio</option>
@@ -358,19 +363,26 @@
                             <option value="12">Dicembre</option>
                         </select>
                     </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Tipologia Sagra</label>
-                        <div class="flex gap-1">
-                            <button onclick="setSpecialtyFilter('all', this)" class="spec-btn flex-1 py-1.5 px-2 rounded-lg text-xs bg-maremma-600 text-white font-medium shadow-sm transition-all">Tutte</button>
-                            <button onclick="setSpecialtyFilter('carne', this)" class="spec-btn flex-1 py-1.5 px-2 rounded-lg text-xs bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition-all">🍖 Carne</button>
-                            <button onclick="setSpecialtyFilter('pesce', this)" class="spec-btn flex-1 py-1.5 px-2 rounded-lg text-xs bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition-all">🐟 Pesce</button>
-                            <button onclick="setSpecialtyFilter('vegetale', this)" class="spec-btn flex-1 py-1.5 px-2 rounded-lg text-xs bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition-all">🌱 Terra</button>
-                        </div>
-                    </div>
                 </div>
 
+                <!-- Tipologia Menu (4 clean columns) -->
+                <div>
+                    <label class="block text-[10px] sm:text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Tipologia Menu</label>
+                    <div class="grid grid-cols-4 gap-1 sm:gap-1.5">
+                        <button onclick="setSpecialtyFilter('all', this)" class="spec-btn py-1.5 px-1 rounded-lg text-xs bg-maremma-600 text-white font-medium shadow-xs transition-all text-center truncate">Tutte</button>
+                        <button onclick="setSpecialtyFilter('carne', this)" class="spec-btn py-1.5 px-1 rounded-lg text-xs bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition-all text-center truncate">🍖 Carne</button>
+                        <button onclick="setSpecialtyFilter('pesce', this)" class="spec-btn py-1.5 px-1 rounded-lg text-xs bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition-all text-center truncate">🐟 Pesce</button>
+                        <button onclick="setSpecialtyFilter('vegetale', this)" class="spec-btn py-1.5 px-1 rounded-lg text-xs bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition-all text-center truncate">🌱 Terra</button>
+                    </div>
+                </div>
             </div>
+
+            <!-- Row 5: Compact Privacy & Transparency Micro-Badge -->
+            <div class="pt-2 border-t border-slate-100 flex items-center justify-center gap-1.5 text-[10px] text-slate-400 text-center leading-tight">
+                <i class="fa-solid fa-shield-halved text-emerald-600 text-xs shrink-0"></i>
+                <span><strong>100% Privacy & Gratuito:</strong> Nessun dato salvato o profilato. La posizione opera solo sul tuo dispositivo.</span>
+            </div>
+
         </div>
 
         <!-- Events Grid -->
@@ -785,6 +797,19 @@
             document.getElementById('comuneFilter').addEventListener('change', renderEvents);
             document.getElementById('monthFilter').addEventListener('change', renderEvents);
             document.getElementById('resetFiltersBtn').addEventListener('click', resetAllFilters);
+            const searchInput = document.getElementById('searchInput');
+            const clearSearchBtn = document.getElementById('clearSearchBtn');
+            if (searchInput && clearSearchBtn) {
+                searchInput.addEventListener('input', () => {
+                    clearSearchBtn.classList.toggle('hidden', !searchInput.value.trim());
+                });
+                clearSearchBtn.addEventListener('click', () => {
+                    searchInput.value = '';
+                    clearSearchBtn.classList.add('hidden');
+                    renderEvents();
+                });
+            }
+
             const todayBtn = document.getElementById('todayToggleBtn');
             if (todayBtn) todayBtn.addEventListener('click', toggleTodayFilter);
 
@@ -1124,6 +1149,8 @@
 
         function resetAllFilters() {
             document.getElementById('searchInput').value = '';
+            const clearSearch = document.getElementById('clearSearchBtn');
+            if (clearSearch) clearSearch.classList.add('hidden');
             document.getElementById('sortSelect').selectedIndex = 0;
             document.getElementById('comuneFilter').value = 'all';
             document.getElementById('monthFilter').value = 'all';
