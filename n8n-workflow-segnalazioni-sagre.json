@@ -1,0 +1,122 @@
+{
+  "name": "Segnalazioni Sagre Grosseto - Notifica Email",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1wMb6K1GmFs4VpjZan_E-J3S1DiNr_LNR3UVceV87GqY",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 0,
+          "mode": "index"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "id": "e1f13b6d-8b01-4475-9c8c-12f558a5be01",
+      "name": "Google Sheets Trigger",
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        260,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Normalizza i dati ricevuti da Google Sheets\nconst item = $input.item.json;\n\nconst timestamp = item['Data e Ora'] || item['timestamp'] || new Date().toLocaleString('it-IT');\nconst eventName = item['Nome Evento'] || item['eventName'] || 'Sagra non specificata';\nconst issueType = item['Tipo Segnalazione'] || item['issueType'] || 'Generale';\nconst details = item['Dettagli Correzione'] || item['details'] || item['Dettagli'] || 'Nessun dettaglio specificato';\nconst device = item['Dispositivo'] || item['device'] || 'Web/Mobile';\n\nconst subject = `🚩 [Sagre Maremma] Nuova segnalazione: ${eventName} (${issueType})`;\n\nconst htmlBody = `\n<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n  <style>\n    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 20px; color: #1e293b; }\n    .card { max-width: 580px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; }\n    .header { background: linear-gradient(135deg, #283618 0%, #c35b23 100%); color: #ffffff; padding: 24px; text-align: left; }\n    .header h1 { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }\n    .header p { margin: 6px 0 0; font-size: 13px; opacity: 0.9; color: #fed7aa; }\n    .body { padding: 24px; }\n    .badge { display: inline-block; background: #fef3c7; color: #92400e; font-weight: 600; font-size: 11px; padding: 4px 10px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid #fde68a; margin-bottom: 12px; }\n    .field { margin-bottom: 16px; }\n    .label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b; letter-spacing: 0.5px; margin-bottom: 4px; }\n    .value { font-size: 15px; font-weight: 600; color: #0f172a; }\n    .box { background: #f1f5f9; border-left: 4px solid #c35b23; padding: 14px; border-radius: 8px; font-size: 14px; line-height: 1.5; color: #334155; margin-top: 6px; font-family: monospace; white-space: pre-wrap; }\n    .footer { padding: 18px 24px; background: #f8fafc; border-top: 1px solid #e2e8f0; text-align: center; }\n    .btn { display: inline-block; background: #c35b23; color: #ffffff !important; text-decoration: none; font-weight: 600; font-size: 13px; padding: 10px 20px; border-radius: 10px; margin: 4px; }\n    .btn-secondary { background: #0f172a; }\n  </style>\n</head>\n<body>\n  <div class=\"card\">\n    <div class=\"header\">\n      <h1>🚩 Nuova Segnalazione Utente</h1>\n      <p>Un visitatore dell'app ha segnalato un errore o aggiornamento.</p>\n    </div>\n    <div class=\"body\">\n      <span class=\"badge\">${issueType}</span>\n      \n      <div class=\"field\">\n        <div class=\"label\">Evento</div>\n        <div class=\"value\">${eventName}</div>\n      </div>\n\n      <div class=\"field\">\n        <div class=\"label\">Note e correzione inviata dall'utente</div>\n        <div class=\"box\">${details}</div>\n      </div>\n\n      <div style=\"display: flex; gap: 24px; margin-top: 18px;\">\n        <div class=\"field\" style=\"flex: 1;\">\n          <div class=\"label\">Data e Ora Ricezione</div>\n          <div style=\"font-size: 13px; color: #475569;\">${timestamp}</div>\n        </div>\n        <div class=\"field\" style=\"flex: 1;\">\n          <div class=\"label\">Dispositivo</div>\n          <div style=\"font-size: 13px; color: #475569;\">${device}</div>\n        </div>\n      </div>\n    </div>\n    <div class=\"footer\">\n      <a href=\"https://docs.google.com/spreadsheets/d/1wMb6K1GmFs4VpjZan_E-J3S1DiNr_LNR3UVceV87GqY/edit\" class=\"btn\" target=\"_blank\">Apri Foglio Google</a>\n    </div>\n  </div>\n</body>\n</html>\n`;\n\nreturn {\n  json: {\n    toEmail: 'info.michele.rosati@gmail.com',\n    subject: subject,\n    htmlBody: htmlBody,\n    eventName,\n    issueType,\n    details,\n    timestamp,\n    device\n  }\n};"
+      },
+      "id": "7b822d51-37d4-4bb8-8d38-941c2c31e672",
+      "name": "Format Email & Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "info.michele.rosati@gmail.com",
+        "toEmail": "info.michele.rosati@gmail.com",
+        "subject": "={{ $json.subject }}",
+        "html": "={{ $json.htmlBody }}",
+        "options": {}
+      },
+      "id": "403b5b63-1d44-4df8-b590-77a83d722d3b",
+      "name": "Invia Email (SMTP)",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        700,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "info.michele.rosati@gmail.com",
+        "subject": "={{ $json.subject }}",
+        "message": "={{ $json.htmlBody }}",
+        "options": {}
+      },
+      "id": "06bce839-a03d-4c31-9f93-4a17960fa222",
+      "name": "Invia Email (Gmail)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        700,
+        440
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Format Email & Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Email & Data": {
+      "main": [
+        [
+          {
+            "node": "Invia Email (SMTP)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Invia Email (Gmail)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f7d7168c-9a41-4da2-b1e7-8b091f09c735",
+  "id": "segnalazioni-sagre-grosseto",
+  "meta": {
+    "instanceId": "sagre-grosseto-maremma"
+  },
+  "tags": []
+}
