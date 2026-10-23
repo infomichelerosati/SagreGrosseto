@@ -230,23 +230,39 @@
             </p>
 
             <!-- Controlli Social e Installazione (Flessibili e sempre perfettamente centrati) -->
-            <div id="headerActionsContainer" class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3.5 w-full sm:w-auto mt-4 sm:mt-5">
-                <!-- Tasto Installa App PWA (nascosto automaticamente se l'app è già installata) -->
-                <button id="pwaHeaderInstallBtn" onclick="triggerPWAInstall()" class="bg-gradient-to-r from-amber-500 to-maremma-600 hover:from-amber-600 hover:to-maremma-700 text-white backdrop-blur-md py-2.5 px-4 sm:py-3 sm:px-5 rounded-xl sm:rounded-2xl border border-amber-300/30 flex items-center justify-center gap-2.5 sm:gap-3 shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer">
-                    <i class="fa-solid fa-mobile-screen-button text-base sm:text-xl text-amber-100 shrink-0"></i>
+            <div id="headerActionsContainer" class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full mt-4 sm:mt-5">
+                <!-- Tasto Installa App PWA (visibile solo su browser quando l'app non è ancora installata) -->
+                <button id="pwaHeaderInstallBtn" onclick="triggerPWAInstall()" class="bg-gradient-to-r from-amber-500 to-maremma-600 hover:from-amber-600 hover:to-maremma-700 text-white backdrop-blur-md py-2 px-4 rounded-xl sm:rounded-2xl border border-amber-300/30 flex items-center justify-center gap-2.5 shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer">
+                    <i class="fa-solid fa-mobile-screen-button text-base sm:text-lg text-amber-100 shrink-0"></i>
                     <div class="text-left min-w-0">
                         <p class="text-xs sm:text-sm font-semibold leading-tight truncate">Installa App</p>
-                        <p class="text-[10px] sm:text-xs text-amber-100/90 leading-tight truncate">Sulla Home</p>
+                        <p class="text-[10px] text-amber-100/90 leading-tight truncate">Sulla Home</p>
                     </div>
                 </button>
-                <!-- Tasto Condividi App (Grafica coordinata ed elegante, apre la condivisione multicanale) -->
-                <button onclick="openSocialShareModal()" class="bg-white/15 hover:bg-white/25 active:scale-95 text-white backdrop-blur-md py-2.5 px-4 sm:py-3 sm:px-5 rounded-xl sm:rounded-2xl border border-white/25 flex items-center justify-center gap-2.5 sm:gap-3 shadow-md transition-all hover:scale-105 cursor-pointer" title="Condividi Sagre Grosseto sui tuoi social">
-                    <i class="fa-solid fa-share-nodes text-base sm:text-xl text-amber-300 shrink-0"></i>
-                    <div class="text-left min-w-0">
-                        <p class="text-xs sm:text-sm font-semibold leading-tight truncate">Condividi</p>
-                        <p class="text-[10px] sm:text-xs text-amber-100/90 leading-tight truncate">Sui tuoi Social</p>
-                    </div>
-                </button>
+
+                <!-- Icone Social Ufficiali (Riconoscibili a colpo d'occhio, senza testo superfluo) -->
+                <div class="flex items-center justify-center gap-2 sm:gap-2.5">
+                    <!-- WhatsApp -->
+                    <a href="https://api.whatsapp.com/send?text=Scopri%20tutte%20le%20sagre%20e%20feste%20tradizionali%20a%20Grosseto%20e%20in%20Maremma%3A%20https%3A%2F%2Fsagre.spiritoindomito.it%2F" target="_blank" rel="noopener" class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white flex items-center justify-center text-lg sm:text-xl shadow-md transition-all hover:scale-110" title="Condividi su WhatsApp">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+                    <!-- Facebook -->
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsagre.spiritoindomito.it%2F" target="_blank" rel="noopener" class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#1877F2] hover:bg-[#166fe5] active:scale-95 text-white flex items-center justify-center text-lg sm:text-xl shadow-md transition-all hover:scale-110" title="Condividi su Facebook">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <!-- Telegram -->
+                    <a href="https://t.me/share/url?url=https%3A%2F%2Fsagre.spiritoindomito.it%2F&text=Scopri%20tutte%20le%20sagre%20e%20feste%20tradizionali%20in%20Maremma!" target="_blank" rel="noopener" class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#229ED9] hover:bg-[#1e8ec3] active:scale-95 text-white flex items-center justify-center text-lg sm:text-xl shadow-md transition-all hover:scale-110" title="Condividi su Telegram">
+                        <i class="fa-brands fa-telegram"></i>
+                    </a>
+                    <!-- X / Twitter -->
+                    <a href="https://twitter.com/intent/tweet?text=Scopri%20tutte%20le%20sagre%20e%20feste%20tradizionali%20a%20Grosseto%20e%20in%20Maremma!&url=https%3A%2F%2Fsagre.spiritoindomito.it%2F" target="_blank" rel="noopener" class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-black hover:bg-neutral-900 active:scale-95 text-white border border-white/20 flex items-center justify-center text-base sm:text-lg shadow-md transition-all hover:scale-110" title="Condividi su X (Twitter)">
+                        <i class="fa-brands fa-x-twitter"></i>
+                    </a>
+                    <!-- Tutte le altre App / Copia Link -->
+                    <button onclick="shareOrCopyApp()" class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white/20 hover:bg-white/30 active:scale-95 text-white backdrop-blur-md border border-white/30 flex items-center justify-center text-base sm:text-lg shadow-md transition-all hover:scale-110 cursor-pointer" title="Condividi su altre app (Instagram, Messaggi...) o copia link">
+                        <i class="fa-solid fa-share-nodes text-amber-300"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
@@ -2106,6 +2122,25 @@
         }
 
                 // --- SOCIAL SHARE MODAL FUNCTIONS ---
+        function shareOrCopyApp() {
+            const url = "https://sagre.spiritoindomito.it/";
+            const title = "Sagre Grosseto & Maremma";
+            const text = "Scopri tutte le sagre, feste tradizionali e fiere a Grosseto e in Maremma con date, orari, menu e navigatore GPS!";
+            if (navigator.share) {
+                navigator.share({ title, text, url }).catch(() => {});
+            } else {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(url).then(() => {
+                        showToast("Link copiato negli appunti! 📋", "success");
+                    }).catch(() => {
+                        fallbackCopyUrl(url);
+                    });
+                } else {
+                    fallbackCopyUrl(url);
+                }
+            }
+        }
+
         function openSocialShareModal() {
             const url = "https://sagre.spiritoindomito.it/";
             const text = "Scopri tutte le sagre e feste tradizionali a Grosseto e in Maremma con date, orari, menu e navigatore GPS!";
