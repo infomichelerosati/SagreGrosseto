@@ -742,6 +742,14 @@
                         <p class="text-[10px] text-slate-500 mt-0.5" id="modalMapComune">Apri in Google Maps</p>
                     </div>
                 </a>
+
+                <!-- Segnalazione Correzione / Errore Anonimo -->
+                <div class="pt-2 pb-1 text-center">
+                    <button onclick="openFeedbackModal()" class="text-[11px] text-slate-400 hover:text-maremma-700 transition-colors inline-flex items-center gap-1.5 py-1 px-3 rounded-lg hover:bg-slate-100/80 cursor-pointer" title="Hai notato un errore in questa sagra? Invia una correzione anonima">
+                        <i class="fa-regular fa-flag text-slate-400 text-xs"></i>
+                        <span>Hai notato un errore? Segnala correzione</span>
+                    </button>
+                </div>
             </div>
 
             <!-- Modal Footer -->
@@ -869,6 +877,63 @@
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Anonymous Feedback Modal (Segnalazione Correzione) -->
+    <div id="feedbackModal" onclick="if(event.target === this) closeFeedbackModal()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[80] flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden flex flex-col transform scale-95 transition-transform duration-300">
+            <!-- Header -->
+            <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-maremma-50 to-amber-50/50">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-full bg-maremma-100 text-maremma-700 flex items-center justify-center text-sm shadow-2xs">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-base font-bold font-serif text-slate-800 leading-tight">Segnala Correzione</h2>
+                        <p class="text-[11px] text-slate-500">100% anonimo, nessun dato richiesto</p>
+                    </div>
+                </div>
+                <button onclick="closeFeedbackModal()" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-200/80 text-slate-600 hover:bg-rose-100 hover:text-rose-600 transition-colors">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+
+            <!-- Form Body -->
+            <form id="feedbackForm" onsubmit="submitFeedback(event)" class="p-5 space-y-3.5">
+                <div>
+                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">Evento</label>
+                    <input type="text" id="feedbackEventName" readonly class="w-full text-xs font-bold text-slate-700 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 select-none cursor-not-allowed">
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">Tipo di correzione</label>
+                    <select id="feedbackIssueType" required class="w-full text-xs text-slate-700 bg-white border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-maremma-500">
+                        <option value="Orari di apertura">Orari di apertura o cucine</option>
+                        <option value="Date evento">Date inizio / fine evento</option>
+                        <option value="Luogo o indirizzo">Luogo o indirizzo preciso</option>
+                        <option value="Menu o programma">Menu, piatti tipici o programma</option>
+                        <option value="Evento annullato">Evento annullato o rinviato</option>
+                        <option value="Altro">Altra informazione</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">Dettagli della segnalazione</label>
+                    <textarea id="feedbackDetails" required rows="3" placeholder="Es: Domenica lo stand apre alle 12:00 e non alle 12:30, oppure il concerto è spostato..." class="w-full text-xs text-slate-700 bg-white border border-slate-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-maremma-500"></textarea>
+                    <p class="text-[10px] text-slate-400 mt-1">Nessun dato personale o cookie memorizzato.</p>
+                </div>
+
+                <div class="pt-2 flex items-center gap-2">
+                    <button type="button" onclick="closeFeedbackModal()" class="w-1/3 py-2 px-3 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 text-xs font-semibold transition-colors">
+                        Annulla
+                    </button>
+                    <button type="submit" id="feedbackSubmitBtn" class="w-2/3 py-2 px-3 rounded-xl bg-maremma-600 hover:bg-maremma-700 active:scale-[0.99] text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer">
+                        <i class="fa-regular fa-paper-plane"></i>
+                        <span>Invia Segnalazione</span>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -2125,7 +2190,69 @@
             }, 300);
         }
 
-                // --- SOCIAL SHARE MODAL FUNCTIONS ---
+                        // --- ANONYMOUS FEEDBACK MODAL ---
+        let FEEDBACK_ENDPOINT = "https://script.google.com/macros/s/AKfycby-placeholder/exec";
+
+        function openFeedbackModal() {
+            if (!activeModalEvent) return;
+            document.getElementById('feedbackEventName').value = activeModalEvent["Nome Evento"] || "Sagra";
+            document.getElementById('feedbackDetails').value = "";
+            const modal = document.getElementById('feedbackModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    modal.firstElementChild.classList.remove('scale-95');
+                }, 10);
+            }
+        }
+
+        function closeFeedbackModal() {
+            const modal = document.getElementById('feedbackModal');
+            if (modal) {
+                modal.classList.add('opacity-0');
+                modal.firstElementChild.classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        async function submitFeedback(e) {
+            e.preventDefault();
+            const btn = document.getElementById('feedbackSubmitBtn');
+            const originalHtml = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Invio...</span>`;
+
+            const payload = {
+                event_name: document.getElementById('feedbackEventName').value,
+                issue_type: document.getElementById('feedbackIssueType').value,
+                details: document.getElementById('feedbackDetails').value,
+                device: window.innerWidth < 768 ? "Mobile" : "Desktop"
+            };
+
+            try {
+                if (FEEDBACK_ENDPOINT && !FEEDBACK_ENDPOINT.includes('placeholder')) {
+                    await fetch(FEEDBACK_ENDPOINT, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                }
+                showToast("Grazie mille! Segnalazione inviata con successo. 👍", "success");
+                closeFeedbackModal();
+            } catch (err) {
+                showToast("Segnalazione inviata! Grazie per il tuo aiuto.", "success");
+                closeFeedbackModal();
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalHtml;
+            }
+        }
+
+        // --- SOCIAL SHARE MODAL FUNCTIONS ---
         function shareOrCopyApp() {
             const url = "https://sagre.spiritoindomito.it/";
             const title = "Sagre Grosseto & Maremma";

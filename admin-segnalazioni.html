@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sagre Grosseto - Gestione Segnalazioni e Correzioni</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    },
+                    colors: {
+                        maremma: {
+                            50: '#fdf8f5',
+                            100: '#fbeee6',
+                            200: '#f5d9ca',
+                            600: '#d96b27',
+                            700: '#b24f1c',
+                            800: '#8c3a16',
+                            900: '#4c1a06',
+                        },
+                        olive: {
+                            50: '#f7f8f4',
+                            100: '#ecefe4',
+                            600: '#606c38',
+                            700: '#4f582f',
+                            800: '#283618',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-olive-800 to-maremma-900 text-white shadow-md py-6 px-4 sm:px-8">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-2 mb-1">
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/20 text-white uppercase tracking-wider">
+                        Pannello Locale
+                    </span>
+                    <span class="text-xs text-amber-200">Sagre Grosseto & Maremma</span>
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-bold font-serif">Raccoglitore Segnalazioni Utenti</h1>
+                <p class="text-xs sm:text-sm text-maremma-100/90 mt-1">
+                    Verifica le correzioni su date, orari, programmi e luoghi inviate dai visitatori dell'app.
+                </p>
+            </div>
+            <div class="flex items-center gap-2.5 shrink-0">
+                <button onclick="fetchReports()" class="py-2.5 px-4 rounded-xl bg-white/15 hover:bg-white/25 active:scale-95 text-white border border-white/25 font-semibold text-xs flex items-center gap-2 transition-all shadow-sm">
+                    <i class="fa-solid fa-arrows-rotate" id="refreshIcon"></i>
+                    <span>Aggiorna Dati</span>
+                </button>
+                <button onclick="exportToCSV()" class="py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-semibold text-xs flex items-center gap-2 transition-all shadow-sm">
+                    <i class="fa-solid fa-file-csv text-sm"></i>
+                    <span>Esporta CSV</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-8 py-8 space-y-6">
+
+        <!-- Stat Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/80 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-inbox"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Totale</p>
+                    <h3 id="statTotal" class="text-xl font-bold text-slate-800">0</h3>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/80 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-clock"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Da Verificare</p>
+                    <h3 id="statPending" class="text-xl font-bold text-amber-600">0</h3>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/80 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Risolte</p>
+                    <h3 id="statResolved" class="text-xl font-bold text-emerald-600">0</h3>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/80 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-maremma-50 text-maremma-600 flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-calendar-check"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Eventi Coinvolti</p>
+                    <h3 id="statEvents" class="text-xl font-bold text-slate-800">0</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter & Search Toolbar -->
+        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="relative w-full sm:w-80">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" id="searchInput" oninput="renderReports()" placeholder="Cerca sagra o testo..." class="w-full pl-9 pr-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-maremma-500/20 focus:border-maremma-500">
+            </div>
+            
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+                <select id="typeFilter" onchange="renderReports()" class="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 text-slate-700 focus:outline-none focus:ring-2 focus:ring-maremma-500">
+                    <option value="all">Tutte le tipologie</option>
+                    <option value="Data">Date errate</option>
+                    <option value="Orario">Orari errati</option>
+                    <option value="Luogo">Luogo / Indirizzo</option>
+                    <option value="Menu">Menu / Stand</option>
+                    <option value="Altro">Altro</option>
+                </select>
+
+                <select id="statusFilter" onchange="renderReports()" class="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 text-slate-700 focus:outline-none focus:ring-2 focus:ring-maremma-500">
+                    <option value="pending">Da Verificare</option>
+                    <option value="all">Tutte (anche risolte)</option>
+                    <option value="resolved">Solo Risolte</option>
+                </select>
+
+                <button onclick="toggleGroupByEvent()" id="groupByBtn" class="py-2 px-3 text-xs rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 font-semibold text-slate-700 flex items-center gap-1.5 transition-colors shrink-0" title="Raggruppa le segnalazioni per lo stesso evento">
+                    <i class="fa-solid fa-layer-group text-slate-500"></i>
+                    <span id="groupByBtnText">Raggruppa Evento</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Google Sheet Connection Box -->
+        <div id="endpointConfigBox" class="bg-amber-50 p-4 rounded-2xl border border-amber-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-amber-900">
+            <div class="flex items-center gap-2.5">
+                <i class="fa-solid fa-plug text-amber-600 text-base"></i>
+                <div>
+                    <p class="font-bold">Stato Collegamento Google Apps Script</p>
+                    <p class="text-amber-700 mt-0.5" id="endpointStatusText">Inserisci l'URL dell'applicazione web per caricare i dati in tempo reale.</p>
+                </div>
+            </div>
+            <button onclick="promptChangeEndpoint()" class="py-1.5 px-3 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-semibold transition-colors shrink-0">
+                Imposta URL Webhook
+            </button>
+        </div>
+
+        <!-- Reports List Container -->
+        <div id="reportsContainer" class="space-y-3">
+            <div class="bg-white p-12 text-center rounded-2xl border border-slate-200/70 text-slate-400">
+                <i class="fa-solid fa-inbox text-4xl mb-3 text-slate-300"></i>
+                <p class="text-sm font-semibold text-slate-600">Nessuna segnalazione da mostrare</p>
+                <p class="text-xs mt-1">Clicca su "Aggiorna Dati" o configura l'URL dello script Google.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Script Logica -->
+    <script>
+        const ENDPOINT_STORAGE_KEY = 'sagre_feedback_endpoint_url';
+        const RESOLVED_STORAGE_KEY = 'sagre_feedback_resolved_ids';
+
+        let reportsData = [];
+        let resolvedIds = JSON.parse(localStorage.getItem(RESOLVED_STORAGE_KEY)) || [];
+        let isGrouped = true;
+
+        function getEndpointUrl() {
+            return localStorage.getItem(ENDPOINT_STORAGE_KEY) || '';
+        }
+
+        function setEndpointUrl(url) {
+            localStorage.setItem(ENDPOINT_STORAGE_KEY, url.trim());
+            updateEndpointStatus();
+        }
+
+        function updateEndpointStatus() {
+            const url = getEndpointUrl();
+            const textEl = document.getElementById('endpointStatusText');
+            if (url) {
+                textEl.innerHTML = `Collegato a: <code class="bg-amber-100/70 px-1 py-0.5 rounded text-[11px]">${url.substring(0, 50)}...</code>`;
+            } else {
+                textEl.textContent = "Nessun URL configurato. Clicca sul pulsante a destra per inserire l'URL di Apps Script.";
+            }
+        }
+
+        function promptChangeEndpoint() {
+            const current = getEndpointUrl();
+            const input = prompt("Incolla qui l'URL dell'Applicazione Web di Google Apps Script (termina con /exec):", current);
+            if (input !== null) {
+                setEndpointUrl(input);
+                fetchReports();
+            }
+        }
+
+        async function fetchReports() {
+            const url = getEndpointUrl();
+            if (!url) {
+                promptChangeEndpoint();
+                return;
+            }
+
+            const icon = document.getElementById('refreshIcon');
+            icon.classList.add('animate-spin');
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (Array.isArray(data)) {
+                    reportsData = data;
+                } else if (data.reports && Array.isArray(data.reports)) {
+                    reportsData = data.reports;
+                } else {
+                    reportsData = [];
+                }
+
+                renderReports();
+            } catch (err) {
+                alert("Errore durante il recupero dei dati da Google Sheets: " + err.message);
+            } finally {
+                icon.classList.remove('animate-spin');
+            }
+        }
+
+        function toggleResolved(id) {
+            const index = resolvedIds.indexOf(id);
+            if (index > -1) {
+                resolvedIds.splice(index, 1);
+            } else {
+                resolvedIds.push(id);
+            }
+            localStorage.setItem(RESOLVED_STORAGE_KEY, JSON.stringify(resolvedIds));
+            renderReports();
+        }
+
+        function toggleGroupByEvent() {
+            isGrouped = !isGrouped;
+            document.getElementById('groupByBtnText').textContent = isGrouped ? "Raggruppa Evento" : "Vista Elenco";
+            renderReports();
+        }
+
+        function renderReports() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const typeFilter = document.getElementById('typeFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+
+            // Filter data
+            const filtered = reportsData.filter(r => {
+                const isResolved = resolvedIds.includes(r.id);
+                if (statusFilter === 'pending' && isResolved) return false;
+                if (statusFilter === 'resolved' && !isResolved) return false;
+
+                if (typeFilter !== 'all' && !(r.issueType || '').toLowerCase().includes(typeFilter.toLowerCase())) {
+                    return false;
+                }
+
+                if (search) {
+                    const matchName = (r.eventName || '').toLowerCase().includes(search);
+                    const matchDetails = (r.details || '').toLowerCase().includes(search);
+                    if (!matchName && !matchDetails) return false;
+                }
+
+                return true;
+            });
+
+            // Update stats
+            const total = reportsData.length;
+            const resolvedCount = reportsData.filter(r => resolvedIds.includes(r.id)).length;
+            const pendingCount = total - resolvedCount;
+            const uniqueEvents = new Set(reportsData.map(r => r.eventName)).size;
+
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statPending').textContent = pendingCount;
+            document.getElementById('statResolved').textContent = resolvedCount;
+            document.getElementById('statEvents').textContent = uniqueEvents;
+
+            const container = document.getElementById('reportsContainer');
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white p-12 text-center rounded-2xl border border-slate-200/70 text-slate-400">
+                        <i class="fa-solid fa-check-double text-4xl mb-3 text-emerald-400"></i>
+                        <p class="text-sm font-semibold text-slate-700">Nessuna segnalazione corrisponde ai filtri selezionati</p>
+                    </div>`;
+                return;
+            }
+
+            if (isGrouped) {
+                // Group by Event Name
+                const groups = {};
+                filtered.forEach(r => {
+                    const name = r.eventName || 'Senza Nome';
+                    if (!groups[name]) groups[name] = [];
+                    groups[name].push(r);
+                });
+
+                // Sort groups by number of reports descending
+                const sortedGroupNames = Object.keys(groups).sort((a,b) => groups[b].length - groups[a].length);
+
+                let html = '';
+                sortedGroupNames.forEach(name => {
+                    const items = groups[name];
+                    const pendingInGroup = items.filter(r => !resolvedIds.includes(r.id)).length;
+
+                    html += `
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200/90 overflow-hidden mb-4">
+                        <div class="p-4 bg-slate-50/80 border-b border-slate-100 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <span class="w-7 h-7 rounded-lg bg-maremma-100 text-maremma-700 font-bold text-xs flex items-center justify-center">
+                                    ${items.length}
+                                </span>
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-sm md:text-base leading-tight">${name}</h4>
+                                    <p class="text-[11px] text-slate-500">${items.length} segnalazion${items.length === 1 ? 'e' : 'i'} ricevut${items.length === 1 ? 'a' : 'e'}</p>
+                                </div>
+                            </div>
+                            ${items.length > 1 ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">Convergenza: ${items.length} utenti</span>` : ''}
+                        </div>
+                        <div class="divide-y divide-slate-100 p-2">
+                    `;
+
+                    items.forEach(r => {
+                        const isResolved = resolvedIds.includes(r.id);
+                        html += `
+                            <div class="p-3.5 flex flex-col md:flex-row md:items-start justify-between gap-3 hover:bg-slate-50/60 rounded-xl transition-colors">
+                                <div class="flex-1 space-y-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+                                            ${r.issueType || 'Generale'}
+                                        </span>
+                                        <span class="text-[11px] text-slate-400">
+                                            <i class="fa-regular fa-clock mr-1"></i>${r.timestamp || 'N.D.'}
+                                        </span>
+                                    </div>
+                                    <p class="text-sm text-slate-700 bg-slate-50 p-2.5 rounded-xl border border-slate-100 leading-relaxed font-mono text-xs">
+                                        ${r.details || 'Nessun dettaglio'}
+                                    </p>
+                                </div>
+                                <div class="flex items-center gap-2 shrink-0 pt-1 md:pt-0">
+                                    <button onclick="toggleResolved(${r.id})" class="px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors ${isResolved ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+                                        <i class="fa-solid ${isResolved ? 'fa-check' : 'fa-circle-check'}"></i>
+                                        <span>${isResolved ? 'Risolto' : 'Segna Risolto'}</span>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    html += `</div></div>`;
+                });
+
+                container.innerHTML = html;
+
+            } else {
+                // Chronological Flat List
+                let html = '<div class="space-y-2.5">';
+                filtered.forEach(r => {
+                    const isResolved = resolvedIds.includes(r.id);
+                    html += `
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col md:flex-row md:items-start justify-between gap-3">
+                        <div class="space-y-1 flex-1">
+                            <div class="flex items-center gap-2">
+                                <h4 class="font-bold text-slate-800 text-sm">${r.eventName}</h4>
+                                <span class="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-slate-100 text-slate-700">
+                                    ${r.issueType || 'Generale'}
+                                </span>
+                            </div>
+                            <p class="text-xs text-slate-600 bg-slate-50 p-2 rounded-lg font-mono">
+                                ${r.details}
+                            </p>
+                            <p class="text-[10px] text-slate-400">Ricevuto: ${r.timestamp}</p>
+                        </div>
+                        <button onclick="toggleResolved(${r.id})" class="px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors ${isResolved ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+                            <i class="fa-solid fa-check"></i>
+                            <span>${isResolved ? 'Risolto' : 'Segna Risolto'}</span>
+                        </button>
+                    </div>
+                    `;
+                });
+                html += '</div>';
+                container.innerHTML = html;
+            }
+        }
+
+        function exportToCSV() {
+            if (reportsData.length === 0) {
+                alert("Nessun dato da esportare!");
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,ID,Data e Ora,Nome Evento,Tipo Segnalazione,Dettagli,Stato\n";
+            reportsData.forEach(r => {
+                const isResolved = resolvedIds.includes(r.id) ? "Risolto" : "Da Verificare";
+                const cleanDetails = (r.details || '').replace(/"/g, '""');
+                csvContent += `"${r.id}","${r.timestamp}","${r.eventName}","${r.issueType}","${cleanDetails}","${isResolved}"\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `segnalazioni_sagre_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Init
+        updateEndpointStatus();
+        if (getEndpointUrl()) {
+            fetchReports();
+        }
+    </script>
+</body>
+</html>
