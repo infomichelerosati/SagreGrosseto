@@ -729,19 +729,25 @@
 
             <!-- Modal Footer -->
             <div class="p-4 bg-slate-50 border-t border-slate-100 flex flex-col gap-3 relative z-10">
-                <div id="modalDefaultActions" class="flex gap-3 w-full">
-                    <button id="modalFavBtn" class="px-3 py-2.5 rounded-xl border border-slate-200 text-rose-500 hover:bg-rose-50 font-medium text-xs transition-all flex items-center gap-1.5 justify-center">
-                        <i class="fa-regular fa-heart"></i> <span class="hidden xs:inline">Pref.</span>
+                <div id="modalDefaultActions" class="flex flex-col gap-2.5 w-full">
+                    <button onclick="triggerCalendarAction()" class="w-full py-2.5 px-3 rounded-xl bg-maremma-600 hover:bg-maremma-700 active:scale-[0.99] text-white font-semibold text-xs sm:text-sm transition-all flex items-center gap-2 justify-center shadow-xs">
+                        <i class="fa-solid fa-calendar-plus text-sm"></i>
+                        <span>Aggiungi al calendario</span>
                     </button>
-                    <button onclick="shareEvent()" class="px-3 py-2.5 rounded-xl border border-slate-200 text-slate-500 hover:bg-slate-100 hover:text-slate-700 font-medium text-xs transition-all flex items-center justify-center" title="Condividi evento">
-                        <i class="fa-solid fa-share-nodes"></i>
-                    </button>
-                    <a id="modalWebpageLink" href="#" target="_blank" class="px-3 py-2.5 rounded-xl border border-slate-200 text-slate-500 hover:bg-slate-100 hover:text-slate-700 font-medium text-xs transition-all flex items-center justify-center" title="Apri scheda web dedicata">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </a>
-                    <button onclick="triggerCalendarAction()" class="flex-1 px-3 py-2.5 rounded-xl bg-maremma-600 hover:bg-maremma-700 text-white font-medium text-xs transition-all flex items-center gap-2 justify-center shadow-sm">
-                        <i class="fa-solid fa-calendar-plus"></i> <span class="truncate">Aggiungi al calendario</span>
-                    </button>
+                    <div class="grid grid-cols-3 gap-2 w-full">
+                        <button id="modalFavBtn" class="py-2 px-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-rose-50 hover:text-rose-500 font-medium text-xs transition-all flex items-center gap-1.5 justify-center">
+                            <i class="fa-regular fa-heart"></i>
+                            <span class="truncate">Preferito</span>
+                        </button>
+                        <button onclick="shareEvent()" class="py-2 px-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-slate-800 font-medium text-xs transition-all flex items-center gap-1.5 justify-center" title="Condividi evento">
+                            <i class="fa-solid fa-share-nodes"></i>
+                            <span class="truncate">Condividi</span>
+                        </button>
+                        <a id="modalWebpageLink" href="#" target="_blank" class="py-2 px-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-slate-800 font-medium text-xs transition-all flex items-center gap-1.5 justify-center" title="Apri scheda web dedicata">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            <span class="truncate">Scheda Web</span>
+                        </a>
+                    </div>
                 </div>
                 
                 <!-- Hidden Calendar Picker -->
@@ -1985,11 +1991,11 @@
             const favBtn = document.getElementById('modalFavBtn');
             favBtn.setAttribute('onclick', `toggleFavoriteFromModal(${ev.id})`);
             if (isFav) {
-                favBtn.innerHTML = `<i class="fa-solid fa-heart"></i> Preferito`;
-                favBtn.className = "px-4 py-2.5 rounded-xl border border-rose-200 text-rose-500 bg-rose-50 font-medium text-xs transition-all flex items-center gap-1.5 justify-center";
+                favBtn.innerHTML = `<i class="fa-solid fa-heart"></i> <span class="truncate">Preferito</span>`;
+                favBtn.className = "py-2 px-2 rounded-xl border border-rose-200 text-rose-500 bg-rose-50 font-medium text-xs transition-all flex items-center gap-1.5 justify-center";
             } else {
-                favBtn.innerHTML = `<i class="fa-regular fa-heart"></i> Pref.`;
-                favBtn.className = "px-4 py-2.5 rounded-xl border border-slate-200 text-slate-500 hover:bg-rose-50 hover:text-rose-500 font-medium text-xs transition-all flex items-center gap-1.5 justify-center";
+                favBtn.innerHTML = `<i class="fa-regular fa-heart"></i> <span class="truncate">Preferito</span>`;
+                favBtn.className = "py-2 px-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-rose-50 hover:text-rose-500 font-medium text-xs transition-all flex items-center gap-1.5 justify-center";
             }
 
             // Display animation
@@ -2081,13 +2087,13 @@
 
             if (index > -1) {
                 favorites.splice(index, 1);
-                favBtn.innerHTML = `<i class="fa-regular fa-heart"></i> Pref.`;
-                favBtn.className = "px-4 py-2.5 rounded-xl border border-slate-200 text-slate-500 hover:bg-rose-50 hover:text-rose-500 font-medium text-xs transition-all flex items-center gap-1.5 justify-center";
+                favBtn.innerHTML = `<i class="fa-regular fa-heart"></i> <span class="truncate">Preferito</span>`;
+                favBtn.className = "py-2 px-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-rose-50 hover:text-rose-500 font-medium text-xs transition-all flex items-center gap-1.5 justify-center";
                 showToast(`Rimosso dai preferiti: ${name}`, "info");
             } else {
                 favorites.push(name);
-                favBtn.innerHTML = `<i class="fa-solid fa-heart"></i> Preferito`;
-                favBtn.className = "px-4 py-2.5 rounded-xl border border-rose-200 text-rose-500 bg-rose-50 font-medium text-xs transition-all flex items-center gap-1.5 justify-center";
+                favBtn.innerHTML = `<i class="fa-solid fa-heart"></i> <span class="truncate">Preferito</span>`;
+                favBtn.className = "py-2 px-2 rounded-xl border border-rose-200 text-rose-500 bg-rose-50 font-medium text-xs transition-all flex items-center gap-1.5 justify-center";
                 showToast(`Aggiunto ai preferiti: ${name}`, "success");
             }
 
