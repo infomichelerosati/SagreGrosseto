@@ -229,22 +229,22 @@
                 Esplora i sapori autentici, la cultura e le feste tradizionali del territorio maremmano.
             </p>
 
-            <!-- Controlli Social e Installazione (Centrati, perfettamente bilanciati su smartphone) -->
-            <div class="grid grid-cols-2 sm:flex sm:flex-row gap-2.5 sm:gap-3 w-full max-w-md sm:w-auto justify-center mt-4 sm:mt-5">
-                <!-- Tasto Installa App PWA -->
-                <button id="pwaHeaderInstallBtn" onclick="triggerPWAInstall()" class="bg-gradient-to-r from-amber-500 to-maremma-600 hover:from-amber-600 hover:to-maremma-700 text-white backdrop-blur-md py-2.5 px-3 sm:py-3 sm:px-5 rounded-xl sm:rounded-2xl border border-amber-300/30 flex items-center justify-center gap-2 sm:gap-3 shadow-md transition-transform hover:scale-105 active:scale-95 cursor-pointer">
+            <!-- Controlli Social e Installazione (Flessibili e sempre perfettamente centrati) -->
+            <div id="headerActionsContainer" class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3.5 w-full sm:w-auto mt-4 sm:mt-5">
+                <!-- Tasto Installa App PWA (nascosto automaticamente se l'app è già installata) -->
+                <button id="pwaHeaderInstallBtn" onclick="triggerPWAInstall()" class="bg-gradient-to-r from-amber-500 to-maremma-600 hover:from-amber-600 hover:to-maremma-700 text-white backdrop-blur-md py-2.5 px-4 sm:py-3 sm:px-5 rounded-xl sm:rounded-2xl border border-amber-300/30 flex items-center justify-center gap-2.5 sm:gap-3 shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer">
                     <i class="fa-solid fa-mobile-screen-button text-base sm:text-xl text-amber-100 shrink-0"></i>
                     <div class="text-left min-w-0">
                         <p class="text-xs sm:text-sm font-semibold leading-tight truncate">Installa App</p>
-                        <p class="text-[10px] sm:text-xs text-amber-100/90 leading-tight truncate">Da Home</p>
+                        <p class="text-[10px] sm:text-xs text-amber-100/90 leading-tight truncate">Sulla Home</p>
                     </div>
                 </button>
-                <!-- Tasto Condividi Sito -->
-                <button onclick="if(navigator.share){navigator.share({title:'Sagre Grosseto', text:'Guarda tutti gli eventi e le sagre in Maremma!', url:window.location.href})}else{alert('Copia questo link: '+window.location.href)}" class="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white backdrop-blur-md py-2.5 px-3 sm:py-3 sm:px-5 rounded-xl sm:rounded-2xl border border-emerald-400/30 flex items-center justify-center gap-2 sm:gap-3 shadow-md transition-transform hover:scale-105 active:scale-95">
-                    <i class="fa-brands fa-whatsapp text-base sm:text-xl shrink-0"></i>
+                <!-- Tasto Condividi App (Grafica coordinata ed elegante, apre la condivisione multicanale) -->
+                <button onclick="openSocialShareModal()" class="bg-white/15 hover:bg-white/25 active:scale-95 text-white backdrop-blur-md py-2.5 px-4 sm:py-3 sm:px-5 rounded-xl sm:rounded-2xl border border-white/25 flex items-center justify-center gap-2.5 sm:gap-3 shadow-md transition-all hover:scale-105 cursor-pointer" title="Condividi Sagre Grosseto sui tuoi social">
+                    <i class="fa-solid fa-share-nodes text-base sm:text-xl text-amber-300 shrink-0"></i>
                     <div class="text-left min-w-0">
                         <p class="text-xs sm:text-sm font-semibold leading-tight truncate">Condividi</p>
-                        <p class="text-[10px] sm:text-xs text-emerald-100/90 leading-tight truncate">Con amici</p>
+                        <p class="text-[10px] sm:text-xs text-amber-100/90 leading-tight truncate">Sui tuoi Social</p>
                     </div>
                 </button>
             </div>
@@ -757,6 +757,96 @@
                         <button onclick="confirmCalendar()" class="bg-maremma-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-maremma-700 transition-colors">Salva</button>
                         <button onclick="cancelCalendarPicker()" class="bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-300 transition-colors"><i class="fa-solid fa-xmark"></i></button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Social Share Modal (Condivisione Multicanale) -->
+    <div id="socialShareModal" onclick="if(event.target === this) closeSocialShareModal()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[70] flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden flex flex-col transform scale-95 transition-transform duration-300">
+            <!-- Header -->
+            <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-maremma-50 to-amber-50/50">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-full bg-maremma-100 text-maremma-700 flex items-center justify-center text-sm shadow-2xs">
+                        <i class="fa-solid fa-share-nodes"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-base font-bold font-serif text-slate-800 leading-tight">Condividi l'App</h2>
+                        <p class="text-[11px] text-slate-500">Fai conoscere Sagre Grosseto</p>
+                    </div>
+                </div>
+                <button onclick="closeSocialShareModal()" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-200/80 text-slate-600 hover:bg-rose-100 hover:text-rose-600 transition-colors">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+            
+            <!-- Body -->
+            <div class="p-5 space-y-3.5">
+                <p class="text-xs text-slate-500 leading-relaxed text-center">
+                    Condividi l'applicazione con amici, familiari e sui tuoi canali social:
+                </p>
+
+                <!-- 4 Grandi Canali Social (Grid 2x2) -->
+                <div class="grid grid-cols-2 gap-2.5">
+                    <!-- WhatsApp -->
+                    <a href="#" id="shareWaBtn" target="_blank" class="p-3 rounded-2xl bg-emerald-50 hover:bg-emerald-100/80 border border-emerald-200/80 text-emerald-800 flex items-center gap-2.5 transition-all group">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-base shadow-2xs group-hover:scale-105 transition-transform">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs font-bold leading-tight">WhatsApp</p>
+                            <p class="text-[10px] text-emerald-600 truncate">Chat & Gruppi</p>
+                        </div>
+                    </a>
+
+                    <!-- Facebook -->
+                    <a href="#" id="shareFbBtn" target="_blank" class="p-3 rounded-2xl bg-blue-50 hover:bg-blue-100/80 border border-blue-200/80 text-blue-800 flex items-center gap-2.5 transition-all group">
+                        <div class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center text-base shadow-2xs group-hover:scale-105 transition-transform">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs font-bold leading-tight">Facebook</p>
+                            <p class="text-[10px] text-blue-600 truncate">Post & Feed</p>
+                        </div>
+                    </a>
+
+                    <!-- Telegram -->
+                    <a href="#" id="shareTgBtn" target="_blank" class="p-3 rounded-2xl bg-sky-50 hover:bg-sky-100/80 border border-sky-200/80 text-sky-800 flex items-center gap-2.5 transition-all group">
+                        <div class="w-8 h-8 rounded-xl bg-sky-500 text-white flex items-center justify-center text-base shadow-2xs group-hover:scale-105 transition-transform">
+                            <i class="fa-brands fa-telegram"></i>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs font-bold leading-tight">Telegram</p>
+                            <p class="text-[10px] text-sky-600 truncate">Canali & Chat</p>
+                        </div>
+                    </a>
+
+                    <!-- X / Twitter -->
+                    <a href="#" id="shareXBtn" target="_blank" class="p-3 rounded-2xl bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-800 flex items-center gap-2.5 transition-all group">
+                        <div class="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center text-sm shadow-2xs group-hover:scale-105 transition-transform">
+                            <i class="fa-brands fa-x-twitter"></i>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs font-bold leading-tight">X / Twitter</p>
+                            <p class="text-[10px] text-slate-500 truncate">Post su X</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Tasto Condivisione Nativa per tutte le altre app (Instagram, Messaggi, ecc.) -->
+                <button id="shareNativeDeviceBtn" onclick="triggerNativeShare()" class="w-full py-2.5 px-3 rounded-xl bg-maremma-600 hover:bg-maremma-700 active:scale-[0.99] text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-xs transition-colors">
+                    <i class="fa-solid fa-ellipsis"></i>
+                    <span>Altre App (Instagram, Messaggi...)</span>
+                </button>
+
+                <!-- Barra Copia Link Diretto -->
+                <div class="pt-2 border-t border-slate-100 flex items-center gap-2">
+                    <input type="text" id="shareUrlInput" readonly class="flex-1 text-[11px] bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-2 text-slate-600 select-all focus:outline-none">
+                    <button onclick="copyShareUrl()" class="py-2 px-3 rounded-lg bg-slate-800 hover:bg-black text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shrink-0">
+                        <i class="fa-regular fa-copy text-xs"></i>
+                        <span>Copia</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -2013,6 +2103,84 @@
             setTimeout(() => {
                 modal.classList.add('hidden');
             }, 300);
+        }
+
+                // --- SOCIAL SHARE MODAL FUNCTIONS ---
+        function openSocialShareModal() {
+            const url = "https://sagre.spiritoindomito.it/";
+            const text = "Scopri tutte le sagre e feste tradizionali a Grosseto e in Maremma con date, orari, menu e navigatore GPS!";
+
+            const waBtn = document.getElementById('shareWaBtn');
+            const fbBtn = document.getElementById('shareFbBtn');
+            const tgBtn = document.getElementById('shareTgBtn');
+            const xBtn = document.getElementById('shareXBtn');
+            const urlInput = document.getElementById('shareUrlInput');
+            const nativeBtn = document.getElementById('shareNativeDeviceBtn');
+
+            if (waBtn) waBtn.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(text + " " + url)}`;
+            if (fbBtn) fbBtn.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+            if (tgBtn) tgBtn.href = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+            if (xBtn) xBtn.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+            if (urlInput) urlInput.value = url;
+
+            if (nativeBtn) {
+                if (navigator.share) {
+                    nativeBtn.classList.remove('hidden');
+                } else {
+                    nativeBtn.classList.add('hidden');
+                }
+            }
+
+            const modal = document.getElementById('socialShareModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    modal.firstElementChild.classList.remove('scale-95');
+                }, 10);
+            }
+        }
+
+        function closeSocialShareModal() {
+            const modal = document.getElementById('socialShareModal');
+            if (modal) {
+                modal.classList.add('opacity-0');
+                modal.firstElementChild.classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        function triggerNativeShare() {
+            const url = "https://sagre.spiritoindomito.it/";
+            const title = "Sagre Grosseto & Maremma";
+            const text = "Scopri tutte le sagre e feste tradizionali a Grosseto e in Maremma con date, orari, menu e navigatore GPS!";
+            if (navigator.share) {
+                navigator.share({ title, text, url }).catch(() => {});
+            }
+        }
+
+        function copyShareUrl() {
+            const url = "https://sagre.spiritoindomito.it/";
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(() => {
+                    showToast("Link copiato negli appunti! 📋", "success");
+                }).catch(() => {
+                    fallbackCopyUrl(url);
+                });
+            } else {
+                fallbackCopyUrl(url);
+            }
+        }
+
+        function fallbackCopyUrl(url) {
+            const input = document.getElementById('shareUrlInput');
+            if (input) {
+                input.select();
+                document.execCommand('copy');
+                showToast("Link copiato negli appunti! 📋", "success");
+            }
         }
 
         // --- LIST MODAL ---
