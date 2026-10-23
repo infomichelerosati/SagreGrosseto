@@ -2223,7 +2223,7 @@
             const btn = document.getElementById('feedbackSubmitBtn');
             const originalHtml = btn.innerHTML;
             btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Invio...</span>`;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> <span>Invio in corso...</span>`;
 
             const payload = {
                 event_name: document.getElementById('feedbackEventName').value,
@@ -2234,22 +2234,32 @@
 
             try {
                 if (FEEDBACK_ENDPOINT && !FEEDBACK_ENDPOINT.includes('placeholder')) {
-                    await fetch(FEEDBACK_ENDPOINT, {
+                    const fetchPromise = fetch(FEEDBACK_ENDPOINT, {
                         method: 'POST',
                         mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify(payload),
+                        keepalive: true
                     });
+                    
+                    // Timeout di 900ms: Apps Script riceve il payload all'istante, ma il redirect 302 di Google
+                    // in no-cors puo far rimanere la promise in sospeso per oltre 10 secondi nel browser.
+                    await Promise.race([
+                        fetchPromise,
+                        new Promise(resolve => setTimeout(resolve, 900))
+                    ]);
                 }
-                showToast("Grazie mille! Segnalazione inviata con successo. 👍", "success");
-                closeFeedbackModal();
             } catch (err) {
-                showToast("Segnalazione inviata! Grazie per il tuo aiuto.", "success");
-                closeFeedbackModal();
-            } finally {
+                console.warn("Feedback dispatch:", err);
+            }
+
+            showToast("Grazie mille! Segnalazione inviata con successo. 👍", "success");
+            closeFeedbackModal();
+            document.getElementById('feedbackDetails').value = "";
+            setTimeout(() => {
                 btn.disabled = false;
                 btn.innerHTML = originalHtml;
-            }
+            }, 300);
         }
 
         // --- SOCIAL SHARE MODAL FUNCTIONS ---
