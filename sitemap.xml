@@ -181,6 +181,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/festa-del-marrone-santafiorese-santa-fiora.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://sagre.spiritoindomito.it/eventi/sagra-della-castagna-di-montieri-montieri.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -221,22 +226,17 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sagre.spiritoindomito.it/eventi/festa-del-marrone-santafiorese-santa-fiora.html</loc>
+    <loc>https://sagre.spiritoindomito.it/eventi/gustatus-21-edizione-orbetello.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sagre.spiritoindomito.it/eventi/gustatus-orbetello.html</loc>
+    <loc>https://sagre.spiritoindomito.it/eventi/festa-delle-cantine-di-sorano-sorano.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sagre.spiritoindomito.it/eventi/festa-delle-cantine-sorano.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sagre.spiritoindomito.it/eventi/festa-delle-streghe-manciano-fraz-montemerano.html</loc>
+    <loc>https://sagre.spiritoindomito.it/eventi/festa-delle-streghe-15-edizione-manciano-fraz-montemerano.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -251,22 +251,22 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sagre.spiritoindomito.it/eventi/festa-del-buco-unto-civitella-paganico-fraz-civitella-marittima.html</loc>
+    <loc>https://sagre.spiritoindomito.it/eventi/festa-del-buco-unto-19-edizione-civitella-paganico-fraz-civitella-marittima.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sagre.spiritoindomito.it/eventi/festa-dellolio-novo-manciano-fraz-marsiliana.html</loc>
+    <loc>https://sagre.spiritoindomito.it/eventi/santi-vinai-festa-del-vino-novello-e-dellolio-nuovo-pitigliano.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sagre.spiritoindomito.it/eventi/santi-vinai-pitigliano.html</loc>
+    <loc>https://sagre.spiritoindomito.it/eventi/festa-dellolio-novo-di-marsiliana-manciano-fraz-marsiliana.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sagre.spiritoindomito.it/eventi/sapori-dautunno-massa-marittima-fraz-tatti.html</loc>
+    <loc>https://sagre.spiritoindomito.it/eventi/sapori-dautunno-29-edizione-massa-marittima-fraz-tatti.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
