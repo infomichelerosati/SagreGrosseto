@@ -3,30 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sagre Grosseto - Gestione Segnalazioni e Correzioni</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
+    <title>Pannello Amministrazione Segnalazioni - Sagre Grosseto</title>
+    <!-- Favicon & Icons -->
+    <link rel="icon" type="image/png" href="Logo.png">
+    <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                        serif: ['"Playfair Display"', 'serif'],
+                        serif: ['"Cinzel"', 'serif'],
                     },
                     colors: {
                         maremma: {
-                            50: '#fdf8f5',
-                            100: '#fbeee6',
-                            200: '#f5d9ca',
-                            600: '#d96b27',
+                            50: '#fbf8f3',
+                            100: '#f4ede0',
+                            500: '#d97736',
+                            600: '#c35b23',
                             700: '#b24f1c',
                             800: '#8c3a16',
                             900: '#4c1a06',
@@ -61,7 +61,11 @@
                     Verifica le correzioni su date, orari, programmi e luoghi inviate dai visitatori dell'app.
                 </p>
             </div>
-            <div class="flex items-center gap-2.5 shrink-0">
+            <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+                <a href="https://docs.google.com/spreadsheets/d/1wMb6K1GmFs4VpjZan_E-J3S1DiNr_LNR3UVceV87GqY/edit" target="_blank" class="py-2.5 px-4 rounded-xl bg-white text-slate-800 hover:bg-slate-100 active:scale-95 font-semibold text-xs flex items-center gap-2 transition-all shadow-sm">
+                    <i class="fa-solid fa-table text-emerald-600 text-sm"></i>
+                    <span>Apri Foglio Google</span>
+                </a>
                 <button onclick="fetchReports()" class="py-2.5 px-4 rounded-xl bg-white/15 hover:bg-white/25 active:scale-95 text-white border border-white/25 font-semibold text-xs flex items-center gap-2 transition-all shadow-sm">
                     <i class="fa-solid fa-arrows-rotate" id="refreshIcon"></i>
                     <span>Aggiorna Dati</span>
@@ -78,7 +82,7 @@
     <main class="max-w-6xl mx-auto px-4 sm:px-8 py-8 space-y-6">
 
         <!-- Stat Cards -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/80 flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg">
                     <i class="fa-solid fa-inbox"></i>
@@ -107,6 +111,15 @@
                 </div>
             </div>
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/80 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-trash-can"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Cestino</p>
+                    <h3 id="statDeleted" class="text-xl font-bold text-rose-600">0</h3>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/80 flex items-center gap-3 col-span-2 md:col-span-1">
                 <div class="w-10 h-10 rounded-xl bg-maremma-50 text-maremma-600 flex items-center justify-center text-lg">
                     <i class="fa-solid fa-calendar-check"></i>
                 </div>
@@ -124,25 +137,32 @@
                 <input type="text" id="searchInput" oninput="renderReports()" placeholder="Cerca sagra o testo..." class="w-full pl-9 pr-3 py-2 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-maremma-500/20 focus:border-maremma-500">
             </div>
             
-            <div class="flex items-center gap-2 w-full sm:w-auto">
+            <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
                 <select id="typeFilter" onchange="renderReports()" class="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 text-slate-700 focus:outline-none focus:ring-2 focus:ring-maremma-500">
                     <option value="all">Tutte le tipologie</option>
-                    <option value="Data">Date errate</option>
-                    <option value="Orario">Orari errati</option>
+                    <option value="Orari">Orari</option>
+                    <option value="Date">Date evento</option>
                     <option value="Luogo">Luogo / Indirizzo</option>
                     <option value="Menu">Menu / Stand</option>
+                    <option value="annullato">Annullato / Rinviato</option>
                     <option value="Altro">Altro</option>
                 </select>
 
                 <select id="statusFilter" onchange="renderReports()" class="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 text-slate-700 focus:outline-none focus:ring-2 focus:ring-maremma-500">
                     <option value="pending">Da Verificare</option>
-                    <option value="all">Tutte (anche risolte)</option>
                     <option value="resolved">Solo Risolte</option>
+                    <option value="all">Tutte (anche risolte)</option>
+                    <option value="deleted">Cestino (eliminate)</option>
                 </select>
 
                 <button onclick="toggleGroupByEvent()" id="groupByBtn" class="py-2 px-3 text-xs rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 font-semibold text-slate-700 flex items-center gap-1.5 transition-colors shrink-0" title="Raggruppa le segnalazioni per lo stesso evento">
                     <i class="fa-solid fa-layer-group text-slate-500"></i>
                     <span id="groupByBtnText">Raggruppa Evento</span>
+                </button>
+
+                <button onclick="clearAllResolved()" id="clearResolvedBtn" class="py-2 px-3 text-xs rounded-xl border border-rose-200 bg-rose-50 hover:bg-rose-100 font-semibold text-rose-700 flex items-center gap-1.5 transition-colors shrink-0" title="Sposta tutte le segnalazioni già risolte nel cestino">
+                    <i class="fa-regular fa-trash-can"></i>
+                    <span>Cestina Risolte</span>
                 </button>
             </div>
         </div>
@@ -176,12 +196,15 @@
     <script>
         const ENDPOINT_STORAGE_KEY = 'sagre_feedback_endpoint_url';
         const RESOLVED_STORAGE_KEY = 'sagre_feedback_resolved_ids';
+        const DELETED_STORAGE_KEY = 'sagre_feedback_deleted_ids';
 
         let reportsData = [];
         let resolvedIds = JSON.parse(localStorage.getItem(RESOLVED_STORAGE_KEY)) || [];
+        let deletedIds = JSON.parse(localStorage.getItem(DELETED_STORAGE_KEY)) || [];
         let isGrouped = true;
 
         const DEFAULT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwTXtHbVDeXjRw0XjOBMb5m1uvqMKcTU55-2f6FAEK1TkO3RvoH-Qaavb0OXGh5nhgfBA/exec';
+        
         function getEndpointUrl() {
             return localStorage.getItem(ENDPOINT_STORAGE_KEY) || DEFAULT_ENDPOINT;
         }
@@ -195,7 +218,7 @@
             const url = getEndpointUrl();
             const textEl = document.getElementById('endpointStatusText');
             if (url) {
-                textEl.innerHTML = `Collegato a: <code class="bg-amber-100/70 px-1 py-0.5 rounded text-[11px]">${url.substring(0, 50)}...</code>`;
+                textEl.innerHTML = `Collegato a: <code class="bg-amber-100/70 px-1 py-0.5 rounded text-[11px]">${url.substring(0, 55)}...</code>`;
             } else {
                 textEl.textContent = "Nessun URL configurato. Clicca sul pulsante a destra per inserire l'URL di Apps Script.";
             }
@@ -251,6 +274,46 @@
             renderReports();
         }
 
+        function deleteReport(id) {
+            if (!deletedIds.includes(id)) {
+                deletedIds.push(id);
+                localStorage.setItem(DELETED_STORAGE_KEY, JSON.stringify(deletedIds));
+                renderReports();
+            }
+        }
+
+        function restoreReport(id) {
+            const index = deletedIds.indexOf(id);
+            if (index > -1) {
+                deletedIds.splice(index, 1);
+                localStorage.setItem(DELETED_STORAGE_KEY, JSON.stringify(deletedIds));
+                renderReports();
+            }
+        }
+
+        function emptyTrash() {
+            if (confirm("Vuoi svuotare definitivamente il cestino della dashboard?")) {
+                deletedIds = [];
+                localStorage.setItem(DELETED_STORAGE_KEY, JSON.stringify(deletedIds));
+                renderReports();
+            }
+        }
+
+        function clearAllResolved() {
+            const activeResolved = reportsData.filter(r => resolvedIds.includes(r.id) && !deletedIds.includes(r.id));
+            if (activeResolved.length === 0) {
+                alert("Non ci sono segnalazioni risolte da cestinare.");
+                return;
+            }
+            if (confirm(`Vuoi spostare nel cestino ${activeResolved.length} segnalazioni già verificate/risolte?`)) {
+                activeResolved.forEach(r => {
+                    if (!deletedIds.includes(r.id)) deletedIds.push(r.id);
+                });
+                localStorage.setItem(DELETED_STORAGE_KEY, JSON.stringify(deletedIds));
+                renderReports();
+            }
+        }
+
         function toggleGroupByEvent() {
             isGrouped = !isGrouped;
             document.getElementById('groupByBtnText').textContent = isGrouped ? "Raggruppa Evento" : "Vista Elenco";
@@ -262,11 +325,32 @@
             const typeFilter = document.getElementById('typeFilter').value;
             const statusFilter = document.getElementById('statusFilter').value;
 
+            // Stats calculation
+            const nonDeleted = reportsData.filter(r => !deletedIds.includes(r.id));
+            const total = nonDeleted.length;
+            const resolvedCount = nonDeleted.filter(r => resolvedIds.includes(r.id)).length;
+            const pendingCount = total - resolvedCount;
+            const deletedCount = reportsData.filter(r => deletedIds.includes(r.id)).length;
+            const uniqueEvents = new Set(nonDeleted.map(r => r.eventName)).size;
+
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statPending').textContent = pendingCount;
+            document.getElementById('statResolved').textContent = resolvedCount;
+            document.getElementById('statDeleted').textContent = deletedCount;
+            document.getElementById('statEvents').textContent = uniqueEvents;
+
             // Filter data
             const filtered = reportsData.filter(r => {
                 const isResolved = resolvedIds.includes(r.id);
-                if (statusFilter === 'pending' && isResolved) return false;
-                if (statusFilter === 'resolved' && !isResolved) return false;
+                const isDeleted = deletedIds.includes(r.id);
+
+                if (statusFilter === 'deleted') {
+                    if (!isDeleted) return false;
+                } else {
+                    if (isDeleted) return false;
+                    if (statusFilter === 'pending' && isResolved) return false;
+                    if (statusFilter === 'resolved' && !isResolved) return false;
+                }
 
                 if (typeFilter !== 'all' && !(r.issueType || '').toLowerCase().includes(typeFilter.toLowerCase())) {
                     return false;
@@ -281,17 +365,6 @@
                 return true;
             });
 
-            // Update stats
-            const total = reportsData.length;
-            const resolvedCount = reportsData.filter(r => resolvedIds.includes(r.id)).length;
-            const pendingCount = total - resolvedCount;
-            const uniqueEvents = new Set(reportsData.map(r => r.eventName)).size;
-
-            document.getElementById('statTotal').textContent = total;
-            document.getElementById('statPending').textContent = pendingCount;
-            document.getElementById('statResolved').textContent = resolvedCount;
-            document.getElementById('statEvents').textContent = uniqueEvents;
-
             const container = document.getElementById('reportsContainer');
 
             if (filtered.length === 0) {
@@ -299,11 +372,23 @@
                     <div class="bg-white p-12 text-center rounded-2xl border border-slate-200/70 text-slate-400">
                         <i class="fa-solid fa-check-double text-4xl mb-3 text-emerald-400"></i>
                         <p class="text-sm font-semibold text-slate-700">Nessuna segnalazione corrisponde ai filtri selezionati</p>
+                        ${statusFilter === 'deleted' ? '<p class="text-xs text-slate-400 mt-1">Il cestino è vuoto.</p>' : ''}
                     </div>`;
                 return;
             }
 
-            if (isGrouped) {
+            if (statusFilter === 'deleted') {
+                // Header for trash view
+                let trashHtml = `
+                <div class="flex items-center justify-between bg-rose-50 p-3 px-4 rounded-xl border border-rose-200 mb-2">
+                    <span class="text-xs text-rose-800 font-medium"><i class="fa-solid fa-trash-can mr-1.5"></i> Stai visualizzando le segnalazioni nel cestino</span>
+                    <button onclick="emptyTrash()" class="text-xs bg-rose-600 hover:bg-rose-700 text-white font-semibold px-3 py-1 rounded-lg transition-colors">Svuota Cestino</button>
+                </div>
+                `;
+                container.innerHTML = trashHtml;
+            }
+
+            if (isGrouped && statusFilter !== 'deleted') {
                 // Group by Event Name
                 const groups = {};
                 filtered.forEach(r => {
@@ -318,7 +403,6 @@
                 let html = '';
                 sortedGroupNames.forEach(name => {
                     const items = groups[name];
-                    const pendingInGroup = items.filter(r => !resolvedIds.includes(r.id)).length;
 
                     html += `
                     <div class="bg-white rounded-2xl shadow-sm border border-slate-200/90 overflow-hidden mb-4">
@@ -332,7 +416,7 @@
                                     <p class="text-[11px] text-slate-500">${items.length} segnalazion${items.length === 1 ? 'e' : 'i'} ricevut${items.length === 1 ? 'a' : 'e'}</p>
                                 </div>
                             </div>
-                            ${items.length > 1 ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">Convergenza: ${items.length} utenti</span>` : ''}
+                            ${items.length > 1 ? `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200"><i class="fa-solid fa-fire text-amber-600 mr-1"></i>Convergenza: ${items.length} utenti</span>` : ''}
                         </div>
                         <div class="divide-y divide-slate-100 p-2">
                     `;
@@ -349,15 +433,19 @@
                                         <span class="text-[11px] text-slate-400">
                                             <i class="fa-regular fa-clock mr-1"></i>${r.timestamp || 'N.D.'}
                                         </span>
+                                        ${r.device ? `<span class="text-[10px] text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">${r.device}</span>` : ''}
                                     </div>
                                     <p class="text-sm text-slate-700 bg-slate-50 p-2.5 rounded-xl border border-slate-100 leading-relaxed font-mono text-xs">
                                         ${r.details || 'Nessun dettaglio'}
                                     </p>
                                 </div>
-                                <div class="flex items-center gap-2 shrink-0 pt-1 md:pt-0">
+                                <div class="flex items-center gap-1.5 shrink-0 pt-1 md:pt-0">
                                     <button onclick="toggleResolved(${r.id})" class="px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors ${isResolved ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
                                         <i class="fa-solid ${isResolved ? 'fa-check' : 'fa-circle-check'}"></i>
                                         <span>${isResolved ? 'Risolto' : 'Segna Risolto'}</span>
+                                    </button>
+                                    <button onclick="deleteReport(${r.id})" title="Sposta nel cestino" class="p-1.5 px-2 rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors text-slate-400 hover:text-rose-600 hover:bg-rose-50">
+                                        <i class="fa-regular fa-trash-can"></i>
                                     </button>
                                 </div>
                             </div>
@@ -371,9 +459,10 @@
 
             } else {
                 // Chronological Flat List
-                let html = '<div class="space-y-2.5">';
+                let html = (statusFilter === 'deleted') ? container.innerHTML + '<div class="space-y-2.5">' : '<div class="space-y-2.5">';
                 filtered.forEach(r => {
                     const isResolved = resolvedIds.includes(r.id);
+                    const isDeleted = deletedIds.includes(r.id);
                     html += `
                     <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col md:flex-row md:items-start justify-between gap-3">
                         <div class="space-y-1 flex-1">
@@ -382,16 +471,29 @@
                                 <span class="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-slate-100 text-slate-700">
                                     ${r.issueType || 'Generale'}
                                 </span>
+                                ${isResolved ? '<span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-semibold">Risolto</span>' : ''}
                             </div>
                             <p class="text-xs text-slate-600 bg-slate-50 p-2 rounded-lg font-mono">
                                 ${r.details}
                             </p>
-                            <p class="text-[10px] text-slate-400">Ricevuto: ${r.timestamp}</p>
+                            <p class="text-[10px] text-slate-400">Ricevuto: ${r.timestamp} ${r.device ? `(${r.device})` : ''}</p>
                         </div>
-                        <button onclick="toggleResolved(${r.id})" class="px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors ${isResolved ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
-                            <i class="fa-solid fa-check"></i>
-                            <span>${isResolved ? 'Risolto' : 'Segna Risolto'}</span>
-                        </button>
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            ${isDeleted ? `
+                                <button onclick="restoreReport(${r.id})" class="px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors bg-blue-50 text-blue-600 hover:bg-blue-100">
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                    <span>Ripristina</span>
+                                </button>
+                            ` : `
+                                <button onclick="toggleResolved(${r.id})" class="px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors ${isResolved ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+                                    <i class="fa-solid ${isResolved ? 'fa-check' : 'fa-circle-check'}"></i>
+                                    <span>${isResolved ? 'Risolto' : 'Segna Risolto'}</span>
+                                </button>
+                                <button onclick="deleteReport(${r.id})" title="Sposta nel cestino" class="p-1.5 px-2 rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors text-slate-400 hover:text-rose-600 hover:bg-rose-50">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                            `}
+                        </div>
                     </div>
                     `;
                 });
@@ -401,16 +503,19 @@
         }
 
         function exportToCSV() {
-            if (reportsData.length === 0) {
-                alert("Nessun dato da esportare!");
+            const active = reportsData.filter(r => !deletedIds.includes(r.id));
+            if (active.length === 0) {
+                alert("Nessun dato attivo da esportare!");
                 return;
             }
 
-            let csvContent = "data:text/csv;charset=utf-8,ID,Data e Ora,Nome Evento,Tipo Segnalazione,Dettagli,Stato\n";
-            reportsData.forEach(r => {
+            let csvContent = "data:text/csv;charset=utf-8,ID,Data e Ora,Nome Evento,Tipo Segnalazione,Dettagli,Stato
+";
+            active.forEach(r => {
                 const isResolved = resolvedIds.includes(r.id) ? "Risolto" : "Da Verificare";
                 const cleanDetails = (r.details || '').replace(/"/g, '""');
-                csvContent += `"${r.id}","${r.timestamp}","${r.eventName}","${r.issueType}","${cleanDetails}","${isResolved}"\n`;
+                csvContent += `"${r.id}","${r.timestamp}","${r.eventName}","${r.issueType}","${cleanDetails}","${isResolved}"
+`;
             });
 
             const encodedUri = encodeURI(csvContent);
