@@ -181,8 +181,9 @@
         let resolvedIds = JSON.parse(localStorage.getItem(RESOLVED_STORAGE_KEY)) || [];
         let isGrouped = true;
 
+        const DEFAULT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwTXtHbVDeXjRw0XjOBMb5m1uvqMKcTU55-2f6FAEK1TkO3RvoH-Qaavb0OXGh5nhgfBA/exec';
         function getEndpointUrl() {
-            return localStorage.getItem(ENDPOINT_STORAGE_KEY) || '';
+            return localStorage.getItem(ENDPOINT_STORAGE_KEY) || DEFAULT_ENDPOINT;
         }
 
         function setEndpointUrl(url) {
