@@ -93,7 +93,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <!-- PapaParse for robust CSV parsing -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <!-- Flatpickr for Date Picker -->
@@ -254,9 +254,11 @@
                     <a href="https://t.me/share/url?url=https%3A%2F%2Fsagre.spiritoindomito.it%2F&text=Scopri%20tutte%20le%20sagre%20e%20feste%20tradizionali%20in%20Maremma!" target="_blank" rel="noopener" class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#229ED9] hover:bg-[#1e8ec3] active:scale-95 text-white flex items-center justify-center text-lg sm:text-xl shadow-md transition-all hover:scale-110" title="Condividi su Telegram">
                         <i class="fa-brands fa-telegram"></i>
                     </a>
-                    <!-- X / Twitter -->
-                    <a href="https://twitter.com/intent/tweet?text=Scopri%20tutte%20le%20sagre%20e%20feste%20tradizionali%20a%20Grosseto%20e%20in%20Maremma!&url=https%3A%2F%2Fsagre.spiritoindomito.it%2F" target="_blank" rel="noopener" class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-black hover:bg-neutral-900 active:scale-95 text-white border border-white/20 flex items-center justify-center text-base sm:text-lg shadow-md transition-all hover:scale-110" title="Condividi su X (Twitter)">
-                        <i class="fa-brands fa-x-twitter"></i>
+                    <!-- X / Twitter (Logo Ufficiale SVG) -->
+                    <a href="https://twitter.com/intent/tweet?text=Scopri%20tutte%20le%20sagre%20e%20feste%20tradizionali%20a%20Grosseto%20e%20in%20Maremma!&url=https%3A%2F%2Fsagre.spiritoindomito.it%2F" target="_blank" rel="noopener" class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-black hover:bg-neutral-900 active:scale-95 text-white border border-white/20 flex items-center justify-center shadow-md transition-all hover:scale-110" title="Condividi su X (Twitter)">
+                        <svg class="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-current text-white" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                        </svg>
                     </a>
                     <!-- Tutte le altre App / Copia Link -->
                     <button onclick="shareOrCopyApp()" class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white/20 hover:bg-white/30 active:scale-95 text-white backdrop-blur-md border border-white/30 flex items-center justify-center text-base sm:text-lg shadow-md transition-all hover:scale-110 cursor-pointer" title="Condividi su altre app (Instagram, Messaggi...) o copia link">
@@ -840,8 +842,10 @@
 
                     <!-- X / Twitter -->
                     <a href="#" id="shareXBtn" target="_blank" class="p-3 rounded-2xl bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-800 flex items-center gap-2.5 transition-all group">
-                        <div class="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center text-sm shadow-2xs group-hover:scale-105 transition-transform">
-                            <i class="fa-brands fa-x-twitter"></i>
+                        <div class="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform">
+                            <svg class="w-3.5 h-3.5 fill-current text-white" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                            </svg>
                         </div>
                         <div class="min-w-0 flex-1">
                             <p class="text-xs font-bold leading-tight">X / Twitter</p>
