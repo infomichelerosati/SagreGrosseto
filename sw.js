@@ -1,6 +1,6 @@
 // Service Worker per Sagre Grosseto e Maremma
 // Strategia "Auto-Updating": Network-First per dati e HTML, per evitare cache bloccate
-const CACHE_VERSION = 'sagre-v1.3.1-20261023';
+const CACHE_VERSION = 'sagre-v1.3.2-20261025';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DATA_CACHE = `${CACHE_VERSION}-data`;
 

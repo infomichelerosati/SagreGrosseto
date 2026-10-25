@@ -562,6 +562,31 @@
             document.body.removeChild(link);
         }
 
+
+        function copyEventTemplate(name, details) {
+            // Estrae location o usa default
+            let comune = "Grosseto";
+            let date = "TBD";
+            if (details.includes("Comune:")) {
+                const matchComune = details.match(/Comune:\s*([^|\n]+)/);
+                if (matchComune) comune = matchComune[1].trim();
+            }
+            if (details.includes("Date:")) {
+                const matchDate = details.match(/Date:\s*([^|\n]+)/);
+                if (matchDate) date = matchDate[1].trim();
+            }
+            const cleanName = name.replace(/"/g, '""');
+            const cleanComune = comune.replace(/"/g, '""');
+            const cleanDetails = details.replace(/"/g, '""');
+            const csvRow = `"${cleanName}","${cleanComune}","${date}","12:30 / 19:30","Enogastronomia","4.5","${cleanDetails}","42.7635","11.1118","https://sagre.spiritoindomito.it/"`;
+            
+            navigator.clipboard.writeText(csvRow).then(() => {
+                alert("Riga CSV copiata negli appunti!\nPuoi incollarla direttamente in fondo a sagre.csv.");
+            }).catch(() => {
+                prompt("Copia questa riga per sagre.csv:", csvRow);
+            });
+        }
+
         // Init
         updateEndpointStatus();
         if (getEndpointUrl()) {
