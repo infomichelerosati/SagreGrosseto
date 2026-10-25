@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+Sitemap: https://sagre.spiritoindomito.it/sitemap.xml
 Sitemap: https://infomichelerosati.github.io/SagreGrosseto/sitemap.xml
