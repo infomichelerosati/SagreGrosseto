@@ -246,6 +246,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/halloween-nel-borgo-grosseto-fraz-istia-dombrone.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://sagre.spiritoindomito.it/eventi/cantine-aperte-a-san-martino-varie-localita-provincia-di-grosseto.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -316,6 +321,16 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/natale-a-grosseto-e-mercatini-nelle-mura-medicee-grosseto.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/natale-a-porto-santo-stefano-mercatino-sul-mare-monte-argentario-fraz-porto-santo-stefano.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://sagre.spiritoindomito.it/eventi/luci-e-sapori-dinverno-castel-del-piano.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -352,6 +367,11 @@
   </url>
   <url>
     <loc>https://sagre.spiritoindomito.it/eventi/capodanno-in-piazza-grosseto.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/la-tradizionale-befanata-maremmana-canto-della-befana-e-fuochi-dellepifania-varie-localita-sorano-pitigliano-manciano-braccagni-grosseto.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
