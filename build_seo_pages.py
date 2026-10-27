@@ -3,6 +3,7 @@ import csv
 import os
 import re
 import glob
+from datetime import datetime
 
 def slugify(text):
     text = text.lower()
@@ -73,9 +74,9 @@ html_template = """<!DOCTYPE html>
     <header class="bg-gradient-to-r from-[#283618] to-[#4c1a06] text-white py-6 shadow-lg">
         <div class="max-w-4xl mx-auto px-4 text-center">
             <nav class="text-xs text-[#f5d9ca] mb-2 flex items-center justify-center gap-1.5" aria-label="Breadcrumb">
-                <a href="../index.html" class="hover:underline">Home</a>
+                <a href="https://sagre.spiritoindomito.it/" class="hover:underline">Home</a>
                 <span>&gt;</span>
-                <a href="../index.html" class="hover:underline">Sagre Grosseto</a>
+                <a href="https://sagre.spiritoindomito.it/" class="hover:underline">Sagre Grosseto</a>
                 <span>&gt;</span>
                 <span class="text-white font-medium">{name}</span>
             </nav>
@@ -107,7 +108,7 @@ html_template = """<!DOCTYPE html>
             {related_section}
 
             <div class="mt-10 text-center">
-                <a href="../index.html" class="inline-block bg-[#d96b27] hover:bg-[#b24f1c] text-white font-bold py-3 px-8 rounded-xl transition-all shadow-md hover:shadow-lg">
+                <a href="https://sagre.spiritoindomito.it/" class="inline-block bg-[#d96b27] hover:bg-[#b24f1c] text-white font-bold py-3 px-8 rounded-xl transition-all shadow-md hover:shadow-lg">
                     ← Torna al calendario completo di tutte le sagre
                 </a>
             </div>
@@ -297,8 +298,52 @@ with open('sitemap.xml', 'w', encoding='utf-8') as f_sitemap:
 
 print(f"Generated {len(events)} SEO static pages with internal cross-links and updated sitemap.xml.")
 
-# --- INJECT INTERNAL DIRECTORY INTO index.html ---
-# Build directory links sorted alphabetically by event name
+# --- INJECT STATIC PRE-RENDERED CARDS & INTERNAL DIRECTORY INTO index.html ---
+# 1. Pre-render upcoming/current events directly inside #eventsContainer for immediate SSR/Googlebot visibility
+today_dt = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+upcoming_for_ssr = []
+for ev in events:
+    end_str = ev.get("Data Fine", "").strip()
+    try:
+        end_dt = datetime.strptime(end_str, "%d/%m/%Y")
+        if end_dt >= today_dt:
+            upcoming_for_ssr.append(ev)
+    except:
+        upcoming_for_ssr.append(ev)
+
+if not upcoming_for_ssr:
+    upcoming_for_ssr = events[:24]
+
+ssr_cards = []
+for ev in upcoming_for_ssr[:36]:
+    n = ev.get("Nome Evento", "")
+    c = ev.get("Comune / Frazione", "")
+    d_start = ev.get("Data Inizio", "")
+    d_end = ev.get("Data Fine", "")
+    desc = ev.get("Descrizione dell'Evento", "")
+    luogo = ev.get("Luogo Esatto", "") or c
+    s = ev.get("slug", "")
+    date_label = d_start if d_start == d_end else f"{d_start} - {d_end}"
+    ssr_cards.append(f"""            <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
+                        <span><i class="fa-regular fa-calendar mr-1"></i>{date_label}</span>
+                        <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>{c}</span>
+                    </div>
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                        <a href="eventi/{s}.html" class="hover:text-maremma-600 transition-colors">{n}</a>
+                    </h3>
+                    <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">{desc}</p>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                    <span class="text-slate-400 truncate max-w-[65%]">{luogo}</span>
+                    <a href="eventi/{s}.html" class="font-bold text-maremma-600 hover:text-maremma-800">Programma & Menu →</a>
+                </div>
+            </article>""")
+
+ssr_cards_html = "\n".join(ssr_cards)
+
+# 2. Build directory links sorted alphabetically by event name (with <details open> for full crawlability)
 sorted_events = sorted(events, key=lambda x: x.get('Nome Evento', '').lower())
 dir_links = []
 for ev in sorted_events:
@@ -311,7 +356,7 @@ dir_grid_html = "\n".join(dir_links)
 
 directory_block = f"""<!-- SEO_EVENT_DIRECTORY_START -->
             <div class="pt-6 border-t border-slate-100">
-                <details class="group bg-slate-50 p-4 rounded-2xl border border-slate-200/60 cursor-pointer">
+                <details open class="group bg-slate-50 p-4 rounded-2xl border border-slate-200/60 cursor-pointer">
                     <summary class="font-semibold text-slate-800 list-none flex justify-between items-center text-sm sm:text-base">
                         <span class="flex items-center gap-2">
                             <i class="fa-solid fa-book-open text-maremma-600"></i>
@@ -335,6 +380,14 @@ if os.path.exists('index.html'):
 
     idx_norm = idx_content.replace('\r\n', '\n')
 
+    # Update static pre-rendered cards inside #eventsContainer
+    idx_norm = re.sub(
+        r'(<div id="eventsContainer"[^>]*>)(.*?)(</div>\s*<!-- Empty State -->)',
+        lambda m: f"{m.group(1)}\n{ssr_cards_html}\n        {m.group(3)}",
+        idx_norm,
+        flags=re.DOTALL
+    )
+
     if '<!-- SEO_EVENT_DIRECTORY_START -->' in idx_norm:
         # Replace existing directory
         idx_norm = re.sub(
@@ -343,9 +396,8 @@ if os.path.exists('index.html'):
             idx_norm,
             flags=re.DOTALL
         )
-        print("Updated SEO event directory in index.html")
+        print("Updated SEO event directory and static SSR cards in index.html")
     else:
-        # Insert before `<hr class="border-slate-100 my-4">` inside the SEO section
         insert_marker = '<hr class="border-slate-100 my-4">'
         if insert_marker in idx_norm:
             idx_norm = idx_norm.replace(insert_marker, directory_block + "\n\n            " + insert_marker, 1)
