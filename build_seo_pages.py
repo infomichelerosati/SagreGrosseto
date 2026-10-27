@@ -258,6 +258,10 @@ for idx, ev in enumerate(events):
             "availability": "https://schema.org/InStock",
             "url": "{page_url}",
             "validFrom": "{iso_start}"
+          }},
+          "performer": {{
+            "@type": "PerformingGroup",
+            "name": "Comitato e Artisti Locali {comune.replace('"', '&quot;')}"
           }}
         }}
       ]
