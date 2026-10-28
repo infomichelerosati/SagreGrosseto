@@ -292,6 +292,40 @@ for idx, ev in enumerate(events):
     <priority>0.8</priority>
   </url>""")
 
+# --- GENERAZIONE REDIRECT STORICI PER VECCHI SLUG INDICIZZATI DA GOOGLE ---
+HISTORICAL_REDIRECTS = {
+    'sapori-dautunno-massa-marittima-fraz-tatti': 'sapori-dautunno-29-edizione-massa-marittima-fraz-tatti',
+    'gustatus-orbetello': 'gustatus-21-edizione-orbetello',
+    'festa-del-buco-unto-civitella-paganico-fraz-civitella-marittima': 'festa-del-buco-unto-19-edizione-civitella-paganico-fraz-civitella-marittima',
+    'festa-delle-streghe-manciano-fraz-montemerano': 'festa-delle-streghe-15-edizione-manciano-fraz-montemerano',
+    'festa-delle-cantine-sorano': 'festa-delle-cantine-di-sorano-sorano',
+    'festa-dellolio-novo-manciano-fraz-marsiliana': 'festa-dellolio-novo-di-marsiliana-manciano-fraz-marsiliana',
+    'santi-vinai-pitigliano': 'santi-vinai-festa-del-vino-novello-e-dellolio-nuovo-pitigliano',
+    'festa-delle-cantine-santi-vinai-pitigliano': 'santi-vinai-festa-del-vino-novello-e-dellolio-nuovo-pitigliano',
+    'cantine-aperte-a-san-martino-varie-localit-provincia-di-grosseto': 'cantine-aperte-a-san-martino-varie-localita-provincia-di-grosseto',
+    'sagra-del-baccal-magliano-in-toscana-fraz-santandrea': 'sagra-del-baccala-magliano-in-toscana-fraz-santandrea'
+}
+
+for old_slug, target_slug in HISTORICAL_REDIRECTS.items():
+    redir_html = f"""<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0; url={site_url}/eventi/{target_slug}.html">
+    <link rel="canonical" href="{site_url}/eventi/{target_slug}.html">
+    <title>Reindirizzamento in corso...</title>
+    <script>window.location.replace("{site_url}/eventi/{target_slug}.html");</script>
+</head>
+<body style="font-family:'Plus Jakarta Sans',sans-serif; text-align:center; padding:60px 20px; color:#475569; background-color:#fdf8f5;">
+    <p style="font-size:18px; font-weight:bold; margin-bottom:12px;">Reindirizzamento alla scheda evento aggiornata...</p>
+    <p><a href="{site_url}/eventi/{target_slug}.html" style="color:#c35b23; font-weight:bold; text-decoration:underline;">Clicca qui se non vieni reindirizzato automaticamente</a></p>
+</body>
+</html>"""
+    with open(os.path.join(out_dir, f"{old_slug}.html"), 'w', encoding='utf-8') as f_redir:
+        f_redir.write(redir_html)
+
+print(f"Generated {len(HISTORICAL_REDIRECTS)} historical 301/refresh redirect files.")
+
 # Scrive sitemap.xml
 sitemap_content = """<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina Non Trovata | Sagre Grosseto e Maremma</title>
+    <link rel="icon" type="image/png" href="/Logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+    </style>
+    <script>
+        // Gestione automatica redirect intelligente per vecchi slug modificati
+        (function() {
+            const path = window.location.pathname;
+            if (path.includes('/eventi/')) {
+                const parts = path.split('/');
+                let slug = parts[parts.length - 1].replace('.html', '');
+                
+                // Mappa redirect storici noti
+                const redirects = {
+                    'sapori-dautunno-massa-marittima-fraz-tatti': 'sapori-dautunno-29-edizione-massa-marittima-fraz-tatti',
+                    'gustatus-orbetello': 'gustatus-21-edizione-orbetello',
+                    'festa-del-buco-unto-civitella-paganico-fraz-civitella-marittima': 'festa-del-buco-unto-19-edizione-civitella-paganico-fraz-civitella-marittima',
+                    'festa-delle-streghe-manciano-fraz-montemerano': 'festa-delle-streghe-15-edizione-manciano-fraz-montemerano',
+                    'festa-delle-cantine-sorano': 'festa-delle-cantine-di-sorano-sorano',
+                    'festa-dellolio-novo-manciano-fraz-marsiliana': 'festa-dellolio-novo-di-marsiliana-manciano-fraz-marsiliana',
+                    'santi-vinai-pitigliano': 'santi-vinai-festa-del-vino-novello-e-dellolio-nuovo-pitigliano',
+                    'cantine-aperte-a-san-martino-varie-localit-provincia-di-grosseto': 'cantine-aperte-a-san-martino-varie-localita-provincia-di-grosseto',
+                    'sagra-del-baccal-magliano-in-toscana-fraz-santandrea': 'sagra-del-baccala-magliano-in-toscana-fraz-santandrea'
+                };
+
+                if (redirects[slug]) {
+                    window.location.replace('/eventi/' + redirects[slug] + '.html');
+                }
+            }
+        })();
+    </script>
+</head>
+<body class="bg-[#fdf8f5] text-slate-800 min-h-screen flex flex-col justify-between">
+
+    <!-- Header Semplice -->
+    <header class="bg-gradient-to-r from-[#283618] to-[#4c1a06] text-white py-4 px-4 shadow-md">
+        <div class="max-w-4xl mx-auto flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2.5 hover:opacity-90 transition-opacity">
+                <img src="/Logo.png" alt="Logo Sagre Grosseto" class="w-9 h-9 rounded-xl shadow-xs">
+                <span class="font-serif font-bold text-lg tracking-wide text-amber-100">Sagre Grosseto & Maremma</span>
+            </a>
+            <a href="/" class="text-xs bg-white/15 hover:bg-white/25 px-3 py-1.5 rounded-xl border border-white/20 font-semibold transition-all">
+                <i class="fa-solid fa-house mr-1"></i>Home
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Error Card -->
+    <main class="flex-grow flex items-center justify-center p-4">
+        <div class="max-w-md w-full bg-white rounded-3xl shadow-xl border border-slate-100 p-8 text-center space-y-5">
+            <div class="w-16 h-16 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center mx-auto text-2xl shadow-inner">
+                <i class="fa-solid fa-map-location-dot"></i>
+            </div>
+
+            <div>
+                <span class="text-xs font-bold text-amber-700 uppercase tracking-wider bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
+                    Errore 404
+                </span>
+                <h1 class="text-2xl font-bold font-serif text-slate-800 mt-3">Pagina o Evento Non Trovato</h1>
+                <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+                    L'evento che stavi cercando potrebbe essere stato rinominato, aggiornato nelle date oppure la sagra potrebbe essersi conclusa.
+                </p>
+            </div>
+
+            <div class="pt-2">
+                <a href="/" class="inline-flex items-center justify-center gap-2 w-full py-3 px-5 rounded-2xl bg-gradient-to-r from-[#c35b23] to-[#8c3a16] text-white font-semibold text-xs shadow-md hover:shadow-lg active:scale-98 transition-all">
+                    <i class="fa-solid fa-compass"></i>
+                    <span>Vai al Calendario Completo delle Sagre</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 text-xs text-slate-400 border-t border-slate-100">
+        <p>© 2026 Sagre Grosseto & Maremma • Guida Turistica Indipendente</p>
+    </footer>
+
+</body>
+</html>
