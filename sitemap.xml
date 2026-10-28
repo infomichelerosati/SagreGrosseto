@@ -470,4 +470,19 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/batignano-e-i-suoi-presepi-mostra-dei-presepi-nelle-cantine-grosseto-fraz-batignano.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/christmas-time-e-mercatini-a-castiglione-della-pescaia-castiglione-della-pescaia.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/il-tradizionale-tuffo-di-capodanno-a-follonica-follonica.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
