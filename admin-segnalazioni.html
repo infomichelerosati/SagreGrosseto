@@ -208,6 +208,55 @@
 
     </main>
 
+    <!-- Modal Prompt per Gemini -->
+    <div id="geminiPromptModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300" onclick="if(event.target === this) closeGeminiModal()">
+        <div class="relative bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl border border-slate-100 flex flex-col transform scale-95 transition-transform duration-300">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-base">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-base">Prompt per Verifica con Gemini</h3>
+                        <p class="text-[11px] text-slate-500">Copiato automaticamente! Incollalo nella chat di Gemini</p>
+                    </div>
+                </div>
+                <button onclick="closeGeminiModal()" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-rose-100 hover:text-rose-600 transition-colors">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+
+            <!-- Copied Notice -->
+            <div id="geminiCopiedBadge" class="mb-3 px-3 py-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center gap-2">
+                <i class="fa-solid fa-circle-check text-emerald-600 text-sm"></i>
+                <span>Testo pronto e già copiato negli appunti! Incollalo direttamente nella chat con Gemini.</span>
+            </div>
+
+            <!-- Prompt Textarea -->
+            <div class="relative mb-4">
+                <textarea id="geminiPromptTextarea" rows="10" class="w-full text-xs font-mono text-slate-700 bg-slate-50 border border-slate-200 rounded-xl p-3.5 focus:outline-none focus:ring-2 focus:ring-purple-500/30 leading-relaxed"></textarea>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center justify-between gap-2">
+                <span class="text-[11px] text-slate-400">
+                    <i class="fa-solid fa-keyboard mr-1"></i>Premi Ctrl+V nella chat di Gemini
+                </span>
+                <div class="flex items-center gap-2">
+                    <button onclick="closeGeminiModal()" class="py-2 px-4 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 text-xs font-semibold transition-colors">
+                        Chiudi
+                    </button>
+                    <button onclick="copyGeminiPromptAgain()" id="copyAgainBtn" class="py-2 px-4 rounded-xl bg-purple-600 hover:bg-purple-700 active:scale-95 text-white text-xs font-semibold flex items-center gap-2 transition-all shadow-sm">
+                        <i class="fa-regular fa-copy"></i>
+                        <span>Copia di nuovo</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!-- Script Logica -->
     <script>
         const ENDPOINT_STORAGE_KEY = 'sagre_feedback_endpoint_url';
@@ -477,6 +526,10 @@
                                     </p>
                                 </div>
                                 <div class="flex items-center gap-1.5 shrink-0 pt-1 md:pt-0">
+                                    <button onclick="openPromptForGemini(${r.id})" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200 active:scale-95 shadow-2xs" title="Copia prompt per verificare con Gemini">
+                                        <i class="fa-solid fa-wand-magic-sparkles text-purple-600"></i>
+                                        <span>Prompt Gemini</span>
+                                    </button>
                                     <button onclick="toggleResolved(${r.id})" class="px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors ${isResolved ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
                                         <i class="fa-solid ${isResolved ? 'fa-check' : 'fa-circle-check'}"></i>
                                         <span>${isResolved ? 'Risolto' : 'Segna Risolto'}</span>
@@ -522,6 +575,10 @@
                                     <span>Ripristina</span>
                                 </button>
                             ` : `
+                                <button onclick="openPromptForGemini(${r.id})" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200 active:scale-95 shadow-2xs" title="Copia prompt per verificare con Gemini">
+                                    <i class="fa-solid fa-wand-magic-sparkles text-purple-600"></i>
+                                    <span>Prompt Gemini</span>
+                                </button>
                                 <button onclick="toggleResolved(${r.id})" class="px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors ${isResolved ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
                                     <i class="fa-solid ${isResolved ? 'fa-check' : 'fa-circle-check'}"></i>
                                     <span>${isResolved ? 'Risolto' : 'Segna Risolto'}</span>
@@ -592,6 +649,96 @@
         if (getEndpointUrl()) {
             fetchReports();
         }
+    
+        function generateGeminiPrompt(r) {
+            const issueLower = (r.issueType || '').toLowerCase();
+            const nameLower = (r.eventName || '').toLowerCase();
+            const detailsText = r.details || '';
+            const isNewEvent = issueLower.includes('nuov') || 
+                               nameLower.includes('nuova sagra') || 
+                               detailsText.includes('Località:') ||
+                               detailsText.includes('Periodo:');
+
+            if (isNewEvent) {
+                return `Ciao Gemini, ho ricevuto una segnalazione dagli utenti per l'inserimento di una NUOVA SAGRA / EVENTO su Sagre Grosseto:
+
+📌 Dati della segnalazione:
+- Evento / Sagra: ${r.eventName || 'Nuova Sagra'}
+- Tipologia: ${r.issueType || 'Nuova Sagra'}
+- Dettagli ricevuti: ${detailsText}
+- Data/Ora segnalazione: ${r.timestamp || 'N.D.'}
+
+🎯 Cosa fare:
+1. Verifica online (siti dei Comuni della provincia di Grosseto, pagine ufficiali Pro Loco, Sagre Toscane, quotidiani locali maremmani) date esatte, luogo/indirizzo, orari di apertura stand, programma dettagliato e piatti tipici.
+2. Prepara la riga formattata per 'sagre.csv' rispettando le colonne del progetto e la codifica UTF-8 rigorosa.
+3. Aggiungi l'evento nel CSV, ricompila le pagine statiche e la sitemap con 'python build_seo_pages.py', incrementa 'CACHE_VERSION' in 'sw.js' e pubblica l'aggiornamento con git push.`;
+            } else {
+                return `Ciao Gemini, ho ricevuto una segnalazione di correzione per un evento esistente su Sagre Grosseto:
+
+📌 Dati della segnalazione:
+- Evento coinvolto: ${r.eventName}
+- Tipo di correzione: ${r.issueType || 'Correzione generale'}
+- Dettagli segnalati dall'utente: ${detailsText}
+- Data/Ora segnalazione: ${r.timestamp || 'N.D.'}
+
+🎯 Cosa fare:
+1. Controlla la riga di questo evento in 'sagre.csv' e verifica online (Pro Loco, fonti ufficiali) se la correzione segnalata è confermata (es. variazione orari, date spostate, luogo, menu o annullamento evento).
+2. Se confermata, applica la correzione in 'sagre.csv'.
+3. Ricompila le pagine statiche e la sitemap con 'python build_seo_pages.py', incrementa 'CACHE_VERSION' in 'sw.js' e pubblica l'aggiornamento con git push.`;
+            }
+        }
+
+        function openPromptForGemini(id) {
+            const report = reportsData.find(r => r.id === id);
+            if (!report) return;
+
+            const promptText = generateGeminiPrompt(report);
+            const textarea = document.getElementById('geminiPromptTextarea');
+            if (textarea) textarea.value = promptText;
+
+            // Copia automatica negli appunti
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(promptText).catch(() => {});
+            }
+
+            // Mostra Modal
+            const modal = document.getElementById('geminiPromptModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                requestAnimationFrame(() => {
+                    modal.classList.remove('opacity-0');
+                    const innerBox = modal.querySelector('div');
+                    if (innerBox) innerBox.classList.remove('scale-95');
+                });
+            }
+        }
+
+        function closeGeminiModal() {
+            const modal = document.getElementById('geminiPromptModal');
+            if (modal) {
+                modal.classList.add('opacity-0');
+                const innerBox = modal.querySelector('div');
+                if (innerBox) innerBox.classList.add('scale-95');
+                setTimeout(() => modal.classList.add('hidden'), 200);
+            }
+        }
+
+        function copyGeminiPromptAgain() {
+            const textarea = document.getElementById('geminiPromptTextarea');
+            if (textarea) {
+                navigator.clipboard.writeText(textarea.value).then(() => {
+                    const btn = document.getElementById('copyAgainBtn');
+                    const orig = btn.innerHTML;
+                    btn.innerHTML = `<i class="fa-solid fa-check"></i> <span>Copiato!</span>`;
+                    btn.className = btn.className.replace('bg-purple-600', 'bg-emerald-600').replace('hover:bg-purple-700', 'hover:bg-emerald-700');
+                    setTimeout(() => {
+                        btn.innerHTML = orig;
+                        btn.className = btn.className.replace('bg-emerald-600', 'bg-purple-600').replace('hover:bg-emerald-700', 'hover:bg-purple-700');
+                    }, 2000);
+                });
+            }
+        }
+
     </script>
 </body>
 </html>
