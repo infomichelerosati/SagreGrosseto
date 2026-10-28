@@ -35,3 +35,11 @@
 - **Host n8n:** `https://n8n.spiritoindomito.it` (protetto dietro Caddy su `127.0.0.1:5678`)
 - **Workflow n8n:** ID `cNDxe4L0QaQyxTBA` ("Segnalazioni Sagre Grosseto - Notifica Email").
 - Il server MCP e l'API di n8n sono predisposti qualora si desideri espandere il flusso verso notifiche push Telegram, bot WhatsApp o database esterni.
+
+## 6. Fonti di Riferimento per Ricerca Eventi e Sagre (100% Gratuiti)
+- **Virgilio Eventi Grosseto:** `https://www.virgilio.it/italia/grosseto/eventi/` (calendario mensile con mercatini, mostre, antiquariato e manifestazioni cittadine).
+- **Sagre Toscane:** `https://www.sagretoscane.com/` (portale principe per sagre enogastronomiche, stand aperti e menu tipici).
+- **TuttoMaremma & Maremma.name:** `https://www.tuttomaremma.com/` (feste popolari, riti del fuoco e tradizioni dei borghi).
+- **Testate Locali della Maremma:** `https://www.ilgiunco.net/`, `https://www.maremmaoggi.net/`, `https://www.grossetonotizie.com/`.
+- **Canali Istituzionali:** Siti ufficiali dei 28 Comuni della provincia di Grosseto, pagine ufficiali Pro Loco e `https://www.visittuscany.com/`.
+- **Criterio vincolante:** Includere solo manifestazioni ad accesso libero e gratuito per il pubblico.
