@@ -32,6 +32,6 @@
   - Pulsante rapido "Apri Foglio Google" per accesso diretto al database.
 
 ## 5. Server VPS ed Ecosistema n8n
-- **Host VPS:** `212.237.9.167:5678`
+- **Host n8n:** `https://n8n.spiritoindomito.it` (protetto dietro Caddy su `127.0.0.1:5678`)
 - **Workflow n8n:** ID `cNDxe4L0QaQyxTBA` ("Segnalazioni Sagre Grosseto - Notifica Email").
 - Il server MCP e l'API di n8n sono predisposti qualora si desideri espandere il flusso verso notifiche push Telegram, bot WhatsApp o database esterni.
