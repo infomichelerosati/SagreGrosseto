@@ -510,4 +510,24 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/rocca-before-christmas-a-roccatederighi-roccastrada-fraz-roccatederighi.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/presepe-vivente-rinascimentale-a-orbetello-orbetello.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/natale-nel-borgo-e-presepi-a-magliano-in-toscana-magliano-in-toscana.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/aria-di-natale-a-montieri-e-presepi-nel-borgo-di-gerfalco-montieri-fraz-gerfalco.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
