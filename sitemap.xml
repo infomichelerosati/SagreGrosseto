@@ -535,4 +535,19 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/mercati-straordinari-di-natale-a-grosseto-grosseto.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/presepi-nel-borgo-e-torneo-del-panforte-a-cinigiano-cinigiano-fraz-sasso-dombrone-e-monticello-amiata.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sagre.spiritoindomito.it/eventi/natale-a-scarlino-e-borgo-in-festa-scarlino.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
