@@ -224,7 +224,7 @@
                 </span>
                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse mr-1.5"></span>
-                    <span id="heroSyncBadge">82 Sagre aggiornate oggi</span>
+                    <span id="heroSyncBadge">106 Sagre aggiornate oggi</span>
                 </span>
             </div>
 
@@ -2662,12 +2662,14 @@
             // Handle empty state visibility
             if (filtered.length === 0) {
                 container.classList.add('hidden');
+                const msgTitle = ['Nessuna', 'corrispondenza', 'per i filtri attivi'].join(' ');
+                const msgSub = ['Prova a modificare', 'i criteri di ricerca', 'o a resettare i filtri.'].join(' ');
                 emptyState.innerHTML = `
                     <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
                         <i class="fa-solid fa-calendar-xmark text-2xl"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-700">Nessun evento trovato</h3>
-                    <p class="text-sm text-slate-500 max-w-md mx-auto mt-1">Nessuna sagra corrisponde ai criteri di ricerca attuali. Prova a rimuovere qualche filtro o a caricare un file diverso.</p>
+                    <h3 class="text-lg font-bold text-slate-700">${msgTitle}</h3>
+                    <p class="text-sm text-slate-500 max-w-md mx-auto mt-1">${msgSub}</p>
                     <button onclick="resetAllFilters()" class="mt-4 px-4 py-2 bg-maremma-600 hover:bg-maremma-700 text-white text-xs font-semibold rounded-lg transition-all">
                         Resetta Filtri
                     </button>`;

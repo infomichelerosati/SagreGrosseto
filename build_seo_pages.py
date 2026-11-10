@@ -451,6 +451,11 @@ if os.path.exists('index.html'):
 
     # Update static counters and badges in index.html for 100% SSR consistency
     idx_norm = re.sub(
+        r'(<span id="heroSyncBadge"[^>]*>).*?(</span>)',
+        lambda m: f"{m.group(1)}{len(events)} Sagre aggiornate oggi{m.group(2)}",
+        idx_norm
+    )
+    idx_norm = re.sub(
         r'(<h3 id="statTotal"[^>]*>).*?(</h3>)',
         lambda m: f"{m.group(1)}{len(events)}{m.group(2)}",
         idx_norm
