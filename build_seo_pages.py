@@ -346,20 +346,45 @@ print(f"Generated {len(events)} SEO static pages with internal cross-links and u
 # 1. Pre-render upcoming/current events directly inside #eventsContainer for immediate SSR/Googlebot visibility
 today_dt = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
 upcoming_for_ssr = []
+active_now_count = 0
+top_rating_val = -1.0
+top_rating_name = "-"
+comuni_counts = {}
+
 for ev in events:
+    start_str = ev.get("Data Inizio", "").strip()
     end_str = ev.get("Data Fine", "").strip()
     try:
+        start_dt = datetime.strptime(start_str, "%d/%m/%Y")
         end_dt = datetime.strptime(end_str, "%d/%m/%Y")
         if end_dt >= today_dt:
             upcoming_for_ssr.append(ev)
+        if start_dt <= today_dt <= end_dt:
+            active_now_count += 1
     except:
         upcoming_for_ssr.append(ev)
 
+    # Top Rating calculation
+    r_str = ev.get("Valutazione", "")
+    r_match = re.search(r'\((\d+(?:\.\d+)?)\)', r_str) or re.search(r'(\d+(?:\.\d+)?)', r_str)
+    if r_match:
+        r_val = float(r_match.group(1))
+        if r_val > top_rating_val:
+            top_rating_val = r_val
+            top_rating_name = ev.get("Nome Evento", "-")
+
+    # Top Comune calculation
+    c_pure = ev.get("Comune / Frazione", "").split('(')[0].strip()
+    if c_pure:
+        comuni_counts[c_pure] = comuni_counts.get(c_pure, 0) + 1
+
+top_comune_name = max(comuni_counts, key=comuni_counts.get) if comuni_counts else "-"
+
 if not upcoming_for_ssr:
-    upcoming_for_ssr = events[:24]
+    upcoming_for_ssr = events
 
 ssr_cards = []
-for ev in upcoming_for_ssr[:36]:
+for ev in upcoming_for_ssr:
     n = ev.get("Nome Evento", "")
     c = ev.get("Comune / Frazione", "")
     d_start = ev.get("Data Inizio", "")
@@ -423,6 +448,33 @@ if os.path.exists('index.html'):
         idx_content = f.read()
 
     idx_norm = idx_content.replace('\r\n', '\n')
+
+    # Update static counters and badges in index.html for 100% SSR consistency
+    idx_norm = re.sub(
+        r'(<h3 id="statTotal"[^>]*>).*?(</h3>)',
+        lambda m: f"{m.group(1)}{len(events)}{m.group(2)}",
+        idx_norm
+    )
+    idx_norm = re.sub(
+        r'(<h3 id="statActive"[^>]*>).*?(</h3>)',
+        lambda m: f"{m.group(1)}{active_now_count}{m.group(2)}",
+        idx_norm
+    )
+    idx_norm = re.sub(
+        r'(<h3 id="statTopRating"[^>]*>).*?(</h3>)',
+        lambda m: f"{m.group(1)}{top_rating_name}{m.group(2)}",
+        idx_norm
+    )
+    idx_norm = re.sub(
+        r'(<h3 id="statTopComune"[^>]*>).*?(</h3>)',
+        lambda m: f"{m.group(1)}{top_comune_name}{m.group(2)}",
+        idx_norm
+    )
+    idx_norm = re.sub(
+        r'(<span id="eventsCountBadge"[^>]*>).*?(</span>)',
+        lambda m: f"{m.group(1)}{len(upcoming_for_ssr)}{m.group(2)}",
+        idx_norm
+    )
 
     # Update static pre-rendered cards inside #eventsContainer
     idx_norm = re.sub(
