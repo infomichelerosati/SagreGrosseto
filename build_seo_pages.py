@@ -52,13 +52,19 @@ html_template = """<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
-    <link rel="icon" href="/icons/icon-192x192.png" type="image/png">
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" href="/icons/favicon-48x48.png" type="image/png" sizes="48x48">
+    <link rel="icon" href="/icons/icon-192x192.png" type="image/png" sizes="192x192">
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
     <meta name="description" content="{description}">
     <link rel="canonical" href="{url}">
     <meta property="og:title" content="{title}">
     <meta property="og:description" content="{description}">
     <meta property="og:url" content="{url}">
     <meta property="og:type" content="article">
+    <meta property="og:image" content="https://sagre.spiritoindomito.it/icons/icon-512x512.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://sagre.spiritoindomito.it/icons/icon-512x512.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">

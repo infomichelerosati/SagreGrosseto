@@ -6,7 +6,7 @@
 - Ad ogni modifica a script o dati, incrementare sempre la variabile `CACHE_VERSION` in `sw.js` per aggiornare tempestivamente la Service Worker cache della PWA.
 - Quando si aggiorna la directory eventi o i dati, eseguire `python build_seo_pages.py` per sincronizzare le pagine statiche e la sitemap.
 - **Formato Valutazione in `sagre.csv`:** Usare sempre la sintassi con stelline e punteggio tra parentesi (es. `⭐⭐⭐⭐⭐ (4.8)` o `⭐⭐⭐⭐½ (4.7)`) per garantire uniformità grafica su card, modali e pagine SEO statiche.
-- **Dominio Ufficiale e SEO:** Il dominio primario è `https://sagre.spiritoindomito.it`. Tutti i tag canonical e la sitemap devono fare riferimento a questo dominio. L'URL GitHub Pages originario (`infomichelerosati.github.io/SagreGrosseto`) è reindirizzato con canonical e temporaneamente escluso su Google Search Console per evitare duplicati.
+- **Dominio Ufficiale e SEO:** Il dominio primario è `https://sagre.spiritoindomito.it`. Tutti i tag canonical e la sitemap devono fare riferimento a questo dominio. L'URL GitHub Pages originario (`infomichelerosati.github.io/SagreGrosseto`) esegue già nativamente un `301 Moved Permanently` automatico verso `https://sagre.spiritoindomito.it/`. **REGOLA CRITICA:** NON usare mai lo strumento "Rimozioni" di Google Search Console sul vecchio URL GitHub Pages, perché l'oscuramento su un URL con redirect 301 / canonical condiviso nasconde dai risultati di ricerca l'intero cluster canonico (incluso `sagre.spiritoindomito.it`).
 
 ## 2. Sistema Segnalazioni Utenti Anonime & Foglio Google
 - **Google Sheet Master:** ID `1wMb6K1GmFs4VpjZan_E-J3S1DiNr_LNR3UVceV87GqY` (Foglio "Segnalazioni Sagre").
