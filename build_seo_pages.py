@@ -86,6 +86,7 @@ html_template = """<!DOCTYPE html>
                 <span>&gt;</span>
                 <span class="text-white font-medium">{name}</span>
             </nav>
+            {new_badge_header}
             <h1 class="text-3xl md:text-4xl font-bold mt-2">{name}</h1>
             <p class="mt-2 text-[#fbeee6] text-lg">{location}</p>
         </div>
@@ -273,6 +274,9 @@ for idx, ev in enumerate(events):
       ]
     }}"""
 
+    is_new = ev.get("Novità", "").strip().upper() in ["NEW", "SI", "SÌ"]
+    new_badge_header = """<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-500 text-white text-xs font-black tracking-wider uppercase shadow-md border-2 border-white transform -rotate-2 my-2 select-none"><i class="fa-solid fa-bolt text-yellow-200 text-xs animate-pulse"></i><span>NOVITÀ / NEW • Ultima sagra inserita</span></div>""" if is_new else ""
+
     full_html = html_template.format(
         title=page_title,
         description=clean_desc,
@@ -286,6 +290,7 @@ for idx, ev in enumerate(events):
         rating=rating if rating else "Non disponibile",
         rich_program=rich_program,
         related_section=related_section_html,
+        new_badge_header=new_badge_header,
         json_ld=json_ld
     )
 
@@ -392,11 +397,17 @@ for ev in upcoming_for_ssr:
     desc = ev.get("Descrizione dell'Evento", "")
     luogo = ev.get("Luogo Esatto", "") or c
     s = ev.get("slug", "")
+    is_new = ev.get("Novità", "").strip().upper() in ["NEW", "SI", "SÌ"]
+    new_badge_ssr = """<span class="relative inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-500 text-white font-black text-[9px] tracking-wider uppercase shadow-xs border border-white transform -rotate-2 select-none"><i class="fa-solid fa-bolt text-yellow-200 text-[8px]"></i> NEW!</span>""" if is_new else ""
     date_label = d_start if d_start == d_end else f"{d_start} - {d_end}"
-    ssr_cards.append(f"""            <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
+    border_class = "border-orange-300 ring-2 ring-orange-400/20 shadow-orange-500/10" if is_new else "border-slate-100"
+    ssr_cards.append(f"""            <article class="bg-white rounded-2xl border {border_class} shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <span><i class="fa-regular fa-calendar mr-1"></i>{date_label}</span>
+                        <div class="flex items-center gap-1.5 flex-wrap">
+                            <span><i class="fa-regular fa-calendar mr-1"></i>{date_label}</span>
+                            {new_badge_ssr}
+                        </div>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>{c}</span>
                     </div>
                     <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
