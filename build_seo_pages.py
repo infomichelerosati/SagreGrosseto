@@ -419,24 +419,34 @@ for ev in upcoming_for_ssr:
     luogo = ev.get("Luogo Esatto", "") or c
     s = ev.get("slug", "")
     is_new = ev.get("Novità", "").strip().upper() in ["NEW", "SI", "SÌ"]
-    new_badge_ssr = """<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-400 text-white font-black text-[10px] tracking-wider uppercase shadow-xs border border-white select-none animate-comic-bubble"><i class="fa-solid fa-bolt text-yellow-200 text-[8px] animate-comic-sparkle"></i> NEW!</span>""" if is_new else ""
+    top_banner_ssr = '<div class="h-3.5 bg-gradient-to-r from-red-600 via-orange-500 to-amber-500 relative"></div>' if is_new else '<div class="h-3 relative bg-gradient-to-r from-maremma-600 to-olive-600"></div>'
+    new_badge_ssr = """        <div class="absolute top-1.5 left-4 z-20 pointer-events-none">
+            <span class="relative inline-flex items-center gap-1 px-3 py-0.5 rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-400 text-white font-black text-[11px] tracking-wider uppercase shadow-md border-2 border-white select-none animate-comic-bubble">
+                <i class="fa-solid fa-bolt text-yellow-200 text-[10px] animate-comic-sparkle"></i>
+                <span>NEW!</span>
+                <span class="absolute -bottom-1 left-3 w-1.5 h-1.5 bg-orange-600 rotate-45 transform pointer-events-none"></span>
+            </span>
+        </div>""" if is_new else ""
     date_label = d_start if d_start == d_end else f"{d_start} - {d_end}"
     border_class = "border-orange-300 ring-2 ring-orange-400/20 shadow-orange-500/10" if is_new else "border-slate-100"
-    ssr_cards.append(f"""            <article class="bg-white rounded-2xl border {border_class} shadow-sm p-5 flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <span><i class="fa-regular fa-calendar mr-1"></i>{date_label}</span>
-                        <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>{c}</span>
+    ssr_cards.append(f"""            <article class="bg-white rounded-2xl border {border_class} shadow-sm relative flex flex-col justify-between overflow-hidden">
+                {top_banner_ssr}
+                {new_badge_ssr}
+                <div class="p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2 pt-1">
+                            <span><i class="fa-regular fa-calendar mr-1"></i>{date_label}</span>
+                            <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>{c}</span>
+                        </div>
+                        <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                            <a href="eventi/{s}.html" class="hover:text-maremma-600 transition-colors">{n}</a>
+                        </h3>
+                        <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">{desc}</p>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
-                        <a href="eventi/{s}.html" class="hover:text-maremma-600 transition-colors">{n}</a>
-                        {new_badge_ssr}
-                    </h3>
-                    <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">{desc}</p>
-                </div>
-                <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                    <span class="text-slate-400 truncate max-w-[65%]">{luogo}</span>
-                    <a href="eventi/{s}.html" class="font-bold text-maremma-600 hover:text-maremma-800">Programma & Menu →</a>
+                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                        <span class="text-slate-400 truncate max-w-[65%]">{luogo}</span>
+                        <a href="eventi/{s}.html" class="font-bold text-maremma-600 hover:text-maremma-800">Programma & Menu →</a>
+                    </div>
                 </div>
             </article>""")
 
