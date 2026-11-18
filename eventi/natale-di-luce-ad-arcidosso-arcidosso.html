@@ -23,6 +23,27 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        @keyframes comicPopPulse {
+            0%, 100% {
+                transform: scale(1) rotate(-3deg);
+                box-shadow: 0 4px 10px rgba(234, 88, 12, 0.45);
+            }
+            50% {
+                transform: scale(1.08) rotate(-1deg);
+                box-shadow: 0 6px 16px rgba(220, 38, 38, 0.65);
+            }
+        }
+        @keyframes comicSparkle {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.9; }
+            50% { transform: scale(1.25) rotate(15deg); opacity: 1; }
+        }
+        .animate-comic-bubble {
+            animation: comicPopPulse 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        .animate-comic-sparkle {
+            animation: comicSparkle 1.6s ease-in-out infinite;
+            display: inline-block;
+        }
     </style>
     <script type="application/ld+json">
     {

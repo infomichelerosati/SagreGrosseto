@@ -71,6 +71,27 @@ html_template = """<!DOCTYPE html>
     <style>
         body {{ font-family: 'Plus Jakarta Sans', sans-serif; }}
         h1, h2, h3 {{ font-family: 'Playfair Display', serif; }}
+        @keyframes comicPopPulse {{
+            0%, 100% {{
+                transform: scale(1) rotate(-3deg);
+                box-shadow: 0 4px 10px rgba(234, 88, 12, 0.45);
+            }}
+            50% {{
+                transform: scale(1.08) rotate(-1deg);
+                box-shadow: 0 6px 16px rgba(220, 38, 38, 0.65);
+            }}
+        }}
+        @keyframes comicSparkle {{
+            0%, 100% {{ transform: scale(1) rotate(0deg); opacity: 0.9; }}
+            50% {{ transform: scale(1.25) rotate(15deg); opacity: 1; }}
+        }}
+        .animate-comic-bubble {{
+            animation: comicPopPulse 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }}
+        .animate-comic-sparkle {{
+            animation: comicSparkle 1.6s ease-in-out infinite;
+            display: inline-block;
+        }}
     </style>
     <script type="application/ld+json">
     {json_ld}
@@ -275,7 +296,7 @@ for idx, ev in enumerate(events):
     }}"""
 
     is_new = ev.get("Novità", "").strip().upper() in ["NEW", "SI", "SÌ"]
-    new_badge_header = """<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-500 text-white text-xs font-black tracking-wider uppercase shadow-md border-2 border-white transform -rotate-2 my-2 select-none"><i class="fa-solid fa-bolt text-yellow-200 text-xs animate-pulse"></i><span>NOVITÀ / NEW • Ultima sagra inserita</span></div>""" if is_new else ""
+    new_badge_header = """<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-400 text-white text-xs font-black tracking-wider uppercase shadow-md border-2 border-white select-none animate-comic-bubble my-2"><i class="fa-solid fa-bolt text-yellow-200 text-xs animate-comic-sparkle"></i><span>NOVITÀ / NEW • Ultima sagra inserita</span></div>""" if is_new else ""
 
     full_html = html_template.format(
         title=page_title,
@@ -398,20 +419,18 @@ for ev in upcoming_for_ssr:
     luogo = ev.get("Luogo Esatto", "") or c
     s = ev.get("slug", "")
     is_new = ev.get("Novità", "").strip().upper() in ["NEW", "SI", "SÌ"]
-    new_badge_ssr = """<span class="relative inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-500 text-white font-black text-[9px] tracking-wider uppercase shadow-xs border border-white transform -rotate-2 select-none"><i class="fa-solid fa-bolt text-yellow-200 text-[8px]"></i> NEW!</span>""" if is_new else ""
+    new_badge_ssr = """<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-400 text-white font-black text-[10px] tracking-wider uppercase shadow-xs border border-white select-none animate-comic-bubble"><i class="fa-solid fa-bolt text-yellow-200 text-[8px] animate-comic-sparkle"></i> NEW!</span>""" if is_new else ""
     date_label = d_start if d_start == d_end else f"{d_start} - {d_end}"
     border_class = "border-orange-300 ring-2 ring-orange-400/20 shadow-orange-500/10" if is_new else "border-slate-100"
     ssr_cards.append(f"""            <article class="bg-white rounded-2xl border {border_class} shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>{date_label}</span>
-                            {new_badge_ssr}
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>{date_label}</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>{c}</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/{s}.html" class="hover:text-maremma-600 transition-colors">{n}</a>
+                        {new_badge_ssr}
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">{desc}</p>
                 </div>

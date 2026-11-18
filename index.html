@@ -191,6 +191,30 @@
             letter-spacing: 0.5px;
             text-transform: uppercase;
         }
+
+        /* Comic Pop NEW Bubble Animations */
+        @keyframes comicPopPulse {
+            0%, 100% {
+                transform: scale(1) rotate(-3deg);
+                box-shadow: 0 4px 10px rgba(234, 88, 12, 0.45);
+            }
+            50% {
+                transform: scale(1.08) rotate(-1deg);
+                box-shadow: 0 6px 16px rgba(220, 38, 38, 0.65);
+            }
+        }
+        @keyframes comicSparkle {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.9; }
+            50% { transform: scale(1.25) rotate(15deg); opacity: 1; }
+        }
+        .animate-comic-bubble {
+            animation: comicPopPulse 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            will-change: transform, box-shadow;
+        }
+        .animate-comic-sparkle {
+            animation: comicSparkle 1.6s ease-in-out infinite;
+            display: inline-block;
+        }
     </style>
 </head>
 <body class="bg-maremma-50 text-slate-800 font-sans min-h-screen selection:bg-maremma-200 overflow-x-hidden">
@@ -456,14 +480,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>19/10/2026 - 18/11/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>19/10/2026 - 18/11/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Grosseto</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/un-viaggio-nel-gusto-grosseto.html" class="hover:text-maremma-600 transition-colors">Un Viaggio nel Gusto</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Rassegna enogastronomica autunnale itinerante sulle storiche mura della città. Appuntamenti fissi di street food, degustazioni e prodotti artigianali della Maremma.</p>
                 </div>
@@ -475,14 +497,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>13/11/2026 - 22/11/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>13/11/2026 - 22/11/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Manciano (Fraz. Marsiliana)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/festa-dellolio-novo-di-marsiliana-manciano-fraz-marsiliana.html" class="hover:text-maremma-600 transition-colors">Festa dell'Olio Novo di Marsiliana</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Tradizionale festa paesana per celebrare l'olio extravergine d'oliva della nuova annata (19ª Edizione). Stand gastronomici coperti con bruschette calde all'olio novo, piatti tipici maremmani, carne alla brace, vino novello, caldarroste, mercatino dell'artigianato e musica popolare.</p>
                 </div>
@@ -494,14 +514,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>24/11/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>24/11/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Roccalbegna (Fraz. Santa Caterina)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/focarazza-di-santa-caterina-rito-del-fuoco-e-palio-dello-stollo-roccalbegna-fraz-santa-caterina.html" class="hover:text-maremma-600 transition-colors">Focarazza di Santa Caterina (Rito del Fuoco e Palio dello Stollo)</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Antichissimo e spettacolare rito del fuoco alla vigilia della patrona: accensione della monumentale catasta di fascine con al centro lo 'stollo' di cerro, seguita dall'acceso Palio dello Stollo tra le contrade per aggiudicarsi il tronco incandescente. Stand gastronomici con salsicce alla brace, fegatelli, dolci locali e vino caldo.</p>
                 </div>
@@ -513,14 +531,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>27/11/2026 - 29/11/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>27/11/2026 - 29/11/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Seggiano</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/festa-dellolio-seggiano.html" class="hover:text-maremma-600 transition-colors">Festa dell'Olio</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Celebrazione della rinomata 'Olivastra Seggianese', la pregiata cultivar di olivo locale, con degustazioni di olio nuovo, bruschette e visite ai frantoi.</p>
                 </div>
@@ -532,14 +548,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>28/11/2026 - 29/11/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>28/11/2026 - 29/11/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Gavorrano (Fraz. Giuncarico)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/olea-festa-dellolio-novo-di-giuncarico-gavorrano-fraz-giuncarico.html" class="hover:text-maremma-600 transition-colors">ÒLEA - Festa dell'Olio Novo di Giuncarico</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Rassegna autunnale che valorizza l'oro verde della Maremma con degustazioni guidate di olio extravergine d'oliva appena franto, stand enogastronomici a km zero (bruschette calde, zuppe toscane), mercatini dell'olio, trekking tra gli oliveti e concerti nei vicoli.</p>
                 </div>
@@ -551,14 +565,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>28/11/2026 - 29/11/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>28/11/2026 - 29/11/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Magliano in Toscana (Fraz. Pereta)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/olionovo-a-pereta-magliano-in-toscana-fraz-pereta.html" class="hover:text-maremma-600 transition-colors">Olionovo a Pereta</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Rassegna enogastronomica dedicata all'olio extravergine d'oliva delle colline maglianesi con concorso per il miglior olio. Stand gastronomici con bruschette, salsicce alla brace, porchetta, caldarroste e vin brulé nel cuore del borgo medievale.</p>
                 </div>
@@ -570,14 +582,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>04/12/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>04/12/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Massa Marittima (Fraz. Niccioleta)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/festa-di-santa-barbara-tradizione-dei-minatori-massa-marittima-fraz-niccioleta.html" class="hover:text-maremma-600 transition-colors">Festa di Santa Barbara (Tradizione dei Minatori)</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Celebrazione identitaria della protettrice dei minatori nello storico villaggio operaio di Niccioleta. Dopo la cerimonia e la processione della memoria, la comunità allestisce stand gastronomici conviviali con polenta calda, cinghiale in umido, caldarroste e vin brulé, rievocando i canti e le tradizioni del mondo minerario delle Colline Metallifere.</p>
                 </div>
@@ -589,14 +599,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>05/12/2026 - 08/12/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>05/12/2026 - 08/12/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Capalbio (Fraz. Borgo Carige)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/sagra-della-bruscagna-capalbio-fraz-borgo-carige.html" class="hover:text-maremma-600 transition-colors">Sagra della Bruscagna</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Tradizionale sagra invernale organizzata in una grande struttura coperta e riscaldata dall'ASD Capalbio Calcio. Dedicata alla 'bruscagna' (la castagna nel dialetto capalbiese) e alla cucina maremmana: polenta calda al sugo di cinghiale, zuppa di funghi e castagne, carni alla brace, caldarroste, bruschette con l'olio nuovo, vin brulé e musica dal vivo tutte le sere.</p>
                 </div>
@@ -608,14 +616,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>05/12/2026 - 24/12/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>05/12/2026 - 24/12/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Pitigliano</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/mercatini-di-natale-nel-borgo-pitigliano.html" class="hover:text-maremma-600 transition-colors">Mercatini di Natale nel Borgo</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">La 'Piccola Gerusalemme' scavata nel tufo si veste a festa. Casette di legno con artigianato locale, prodotti tipici (Sfratto di Pitigliano), street food maremmano invernale e musica a tema per le vie del centro.</p>
                 </div>
@@ -627,14 +633,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>05/12/2026 - 24/12/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>05/12/2026 - 24/12/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Massa Marittima</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/natale-a-massa-marittima-e-mercatini-nel-chiostro-massa-marittima.html" class="hover:text-maremma-600 transition-colors">Natale a Massa Marittima e Mercatini nel Chiostro</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Rassegna natalizia nel cuore delle Colline Metallifere. Il suggestivo Chiostro di Sant'Agostino ospita i mercatini di Natale con artigianato, prodotti tipici locali e degustazioni di vino Monteregio DOC, caldarroste fumanti e dolci toscani (panforte, cavallucci, ricciarelli). In Piazza Garibaldi pista di pattinaggio sul ghiaccio e Casina di Babbo Natale.</p>
                 </div>
@@ -646,14 +650,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>05/12/2026 - 06/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>05/12/2026 - 06/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Arcidosso</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/natale-di-luce-ad-arcidosso-arcidosso.html" class="hover:text-maremma-600 transition-colors">Natale di Luce ad Arcidosso</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">La grande kermesse natalizia del Monte Amiata. Mercatini nelle caratteristiche casette in legno con eccellenze agroalimentari locali (castagne e farina dolce amiatina, necci caldi con ricotta fresca, vin brulé speziato, salumi di cinta senese e pecorini toscani), Villaggio di Babbo Natale, grande pista di pattinaggio sul ghiaccio e rassegna di presepi artistici.</p>
                 </div>
@@ -665,14 +667,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>13/11/2026 - 06/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>13/11/2026 - 06/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Grosseto</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/natale-a-grosseto-e-mercatini-nelle-mura-medicee-grosseto.html" class="hover:text-maremma-600 transition-colors">Natale a Grosseto e Mercatini nelle Mura Medicee</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">La grande kermesse natalizia del capoluogo maremmano. Apertura straordinaria già da venerdì 13 novembre con l'accensione del grande Albero in Piazza Duomo e la riapertura del Cassero Senese con la Casa di Babbo Natale. Nel cuore del centro storico i tradizionali chalet in legno con creazioni artigianali, addobbi e stand enogastronomici (dolci toscani, cioccolata calda, vin brulé); all'interno delle Mura Medicee villaggio natalizio con pista di pattinaggio sul ghiaccio e videomapping.</p>
                 </div>
@@ -684,14 +684,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>05/12/2026 - 06/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>05/12/2026 - 06/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Monte Argentario (Fraz. Porto Santo Stefano)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/natale-a-porto-santo-stefano-mercatino-sul-mare-monte-argentario-fraz-porto-santo-stefano.html" class="hover:text-maremma-600 transition-colors">Natale a Porto Santo Stefano (Mercatino sul Mare)</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Tradizionale rassegna natalizia marina allestita nel Piazzale dei Rioni a due passi dal mare. Casette e stand in legno con artigianato artistico, decorazioni fatte a mano, prodotti enogastronomici tipici delle festività e punti ristoro con frittura di paranza espressa, caldarroste, vin brulè e dolci dell'Argentario, allietati da luminarie sul porto e spettacoli per famiglie.</p>
                 </div>
@@ -703,14 +701,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>06/12/2026 - 08/12/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>06/12/2026 - 08/12/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Castel del Piano</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/luci-e-sapori-dinverno-castel-del-piano.html" class="hover:text-maremma-600 transition-colors">Luci e Sapori d'Inverno</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Rassegna enogastronomica e folcloristica che inaugura le festività sul Monte Amiata. Degustazioni itineranti nel borgo dei sapori della montagna (polenta, formaggi, salumi tipici, caldarroste, necci con ricotta fresca e vin brulé), show cooking, trekking del gusto e apertura dei mercatini di Natale con la Casa di Babbo Natale.</p>
                 </div>
@@ -722,14 +718,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>26/12/2026 - 06/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>26/12/2026 - 06/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Monte Argentario (Fraz. Porto Ercole)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/presepe-vivente-di-porto-ercole-monte-argentario-fraz-porto-ercole.html" class="hover:text-maremma-600 transition-colors">Presepe Vivente di Porto Ercole</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Suggestiva rappresentazione storica nei vicoli del borgo vecchio di Porto Ercole. Centinaia di figuranti in costume, antiche botteghe artigiane riaperte e il percorso che conduce alla Grotta della Natività sotto la rocca aldobrandesca.</p>
                 </div>
@@ -741,14 +735,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>26/12/2026 - 06/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>26/12/2026 - 06/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Pitigliano</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/presepe-vivente-di-pitigliano-pitigliano.html" class="hover:text-maremma-600 transition-colors">Presepe Vivente di Pitigliano</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Una delle più suggestive rappresentazioni storiche e religiose della Toscana, ambientata nello scenario rupestre dell'antico rione Capisotto. Oltre 80 figuranti in costume animano vicoli, cantine e grotte scavate nel tufo rievocando gli antichi mestieri artigiani, accompagnati da punti ristoro con cibi poveri della tradizione maremmana, formaggi, bruschette all'olio nuovo e vino caldo speziato.</p>
                 </div>
@@ -760,14 +752,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>26/12/2026 - 06/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>26/12/2026 - 06/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Castiglione della Pescaia</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/presepe-vivente-di-castiglione-della-pescaia-castiglione-della-pescaia.html" class="hover:text-maremma-600 transition-colors">Presepe Vivente di Castiglione della Pescaia</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Rievocazione storica della Natività che si inerpica lungo i vicoli acciottolati del borgo fortificato affacciato sul mare fino alla Rocca. Scene di vita quotidiana e antichi mestieri contadini e marinari con figuranti in costume, botteghe con degustazione di dolci tradizionali toscani, frittelle calde, ciambelline e vin brulé.</p>
                 </div>
@@ -779,14 +769,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>30/12/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>30/12/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Santa Fiora</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/fiaccolata-di-santa-fiora-notte-delle-fiaccole-e-delle-frasche-santa-fiora.html" class="hover:text-maremma-600 transition-colors">Fiaccolata di Santa Fiora (Notte delle Fiaccole e delle Frasche)</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Magica e millenaria festa del fuoco che accende la notte di fine anno con le monumentali 'carboniere' (grandi piramidi di legna accese dai minatori), processione con le torce e apertura delle 'frasche' (caratteristici punti ristoro) con zuppe calde amiatine, grigliate di carne, dolci della tradizione e vin brulé.</p>
                 </div>
@@ -798,14 +786,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>30/12/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>30/12/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Sorano</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/notte-della-luce-rito-del-fuoco-sorano.html" class="hover:text-maremma-600 transition-colors">Notte della Luce (Rito del Fuoco)</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Antichissimo e suggestivo rito del fuoco nel borgo tufaceo alla vigilia di fine anno. Accensione al tramonto della monumentale pira (grande falò comunitario) che rievoca l'antica usanza contadina di ritrovo e buon auspicio, accompagnata da stand di street food locale (zuppe calde contadine, salsicce alla brace, bruschette, vin brulé), musica itinerante con zampognari e lancio beneaugurale delle lanterne volanti.</p>
                 </div>
@@ -817,14 +803,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>31/12/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>31/12/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Manciano (Fraz. Saturnia)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/focarazza-di-san-silvestro-manciano-fraz-saturnia.html" class="hover:text-maremma-600 transition-colors">Focarazza di San Silvestro</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Tradizionale e suggestiva festa popolare della notte di Capodanno con accensione del grande falò conico purificatore al centro della piazza alle ore 22:00. Stand con bruschette maremmane, salsicce alla brace, dolci tipici e vin brulé, seguiti da musica dal vivo, DJ set e brindisi di mezzanotte sotto le stelle.</p>
                 </div>
@@ -836,14 +820,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>31/12/2026 - 01/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>31/12/2026 - 01/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Grosseto</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/capodanno-in-piazza-grosseto.html" class="hover:text-maremma-600 transition-colors">Capodanno in Piazza</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Il grande evento gratuito di fine anno nel capoluogo. Concerto dal vivo in piazza, brindisi di mezzanotte, DJ set e stand enogastronomici aperti fino a tarda notte per festeggiare l'arrivo del nuovo anno nel cuore della città.</p>
                 </div>
@@ -855,14 +837,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>05/01/2027 - 06/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>05/01/2027 - 06/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Varie località (Sorano, Pitigliano, Manciano, Braccagni, Grosseto)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/la-tradizionale-befanata-maremmana-canto-della-befana-e-fuochi-dellepifania-varie-localita-sorano-pitigliano-manciano-braccagni-grosseto.html" class="hover:text-maremma-600 transition-colors">La Tradizionale Befanata Maremmana (Canto della Befana e Fuochi dell'Epifania)</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Antichissimo rito identitario della Maremma rurale. Nella notte tra il 5 e il 6 gennaio le tradizionali squadre dei 'Befani' in abiti contadini d'epoca girano di casa in casa con fisarmoniche, chitarre e canti di questua augurale; la festa culmina attorno ai grandi falò propiziatori accesi nelle piazze con grigliate di salsiccia maremmana, bruschette calde, cenci fritti, vin brulè e distribuzione di calze e dolciumi ai bambini.</p>
                 </div>
@@ -874,14 +854,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>17/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>17/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Manciano (Fraz. Marsiliana)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/festa-di-santantonio-abate-e-benedizione-degli-animali-manciano-fraz-marsiliana.html" class="hover:text-maremma-600 transition-colors">Festa di Sant'Antonio Abate e Benedizione degli Animali</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Antica tradizione contadina e religiosa maremmana dedicata a Sant'Antonio Abate. Grande corteo con carrozze, cavalli e animali domestici per la solenne benedizione sul sagrato, seguito dal tradizionale pranzo comunitario all'aperto con bruschette, salsicce, porchetta, dolci tipici e vino locale.</p>
                 </div>
@@ -893,14 +871,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>17/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>17/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Grosseto (Fraz. Alberese)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/festa-di-santantonio-abate-dei-butteri-grosseto-fraz-alberese.html" class="hover:text-maremma-600 transition-colors">Festa di Sant'Antonio Abate dei Butteri</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Celebrazione identitaria dell'anima buttera della Maremma alle porte del Parco Naturale. Solenne benedizione degli animali domestici e dei magnifici cavalli e vacche maremmane, sfilata e carosello dei butteri in sella con bardature tradizionali, seguita da stand gastronomici con salsiccia maremmana alla brace, bruschette calde con l'olio nuovo appena franto, dolci tipici e vino rosso locale.</p>
                 </div>
@@ -912,14 +888,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>07/02/2027 - 16/02/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>07/02/2027 - 16/02/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Pitigliano</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/carnevale-di-pitigliano-pitigliano.html" class="hover:text-maremma-600 transition-colors">Carnevale di Pitigliano</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Sentita festa popolare che anima le monumentali vie del borgo del tufo. Grandi sfilate di carri allegorici artigianali e cortei mascherati, musica dal vivo e chioschi gastronomici dedicati ai dolci della tradizione di carnevale (cenci fritti spolverati di zucchero a velo, frittelle di riso dolci di San Giuseppe e castagnole calde), accompagnati da brindisi con i rinomati vini bianchi e rossi delle cantine locali.</p>
                 </div>
@@ -931,14 +905,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>07/02/2027 - 28/02/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>07/02/2027 - 28/02/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Follonica</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/carnevale-follonichese-60-edizione-follonica.html" class="hover:text-maremma-600 transition-colors">Carnevale Follonichese (60ª Edizione)</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Lo storico carnevale del golfo giunge all'importante traguardo della 60ª edizione. Grandi sfilate sul mare dei maestosi carri allegorici in cartapesta realizzati dagli 8 rioni cittadini, mascherate, musica, street food e stand gastronomici dedicati ai tradizionali dolci di carnevale (frittelle di riso, cenci maremmani e bomboloni caldi).</p>
                 </div>
@@ -950,14 +922,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>07/02/2027 - 28/02/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>07/02/2027 - 28/02/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Orbetello</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/carnevaletto-da-3-soldi-56-edizione-orbetello.html" class="hover:text-maremma-600 transition-colors">Carnevaletto da 3 Soldi (56ª Edizione)</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">[CARNEVALE/FOLCLORE] Lo storico carnevale lagunare che anima le domeniche di febbraio con grandi sfilate di carri allegorici in cartapesta, maschere a tema, corpi bandistici e il corteo trionfale di Re Carnevale. Stand gastronomici e chioschi con i dolci tradizionali della festa (frittelle di riso maremmane, cenci fritti caldi e castagnole), musica dal vivo in piazza e festa notturna finale con la proclamazione del 'Carrissimo'.</p>
                 </div>
@@ -969,14 +939,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>19/03/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>19/03/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Pitigliano</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/torciata-di-san-giuseppe-pitigliano.html" class="hover:text-maremma-600 transition-colors">Torciata di San Giuseppe</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Uno dei più affascinanti e antichi riti del fuoco della Toscana. Corteo storico in costume con i torciatori incappucciati che trasportano fasci di canne accese fino alla piazza, dove danno fuoco all'"Invernacciu" (fantoccio propiziatorio che segna la fine dell'inverno). Stand con le tipiche e fragranti frittelle di San Giuseppe dolci, ciambelle e vino delle cantine tufacee.</p>
                 </div>
@@ -988,14 +956,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>27/03/2027 - 29/03/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>27/03/2027 - 29/03/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Manciano (Fraz. San Martino sul Fiora)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/sagra-dellagnello-e-del-buglione-maremmano-manciano-fraz-san-martino-sul-fiora.html" class="hover:text-maremma-600 transition-colors">Sagra dell'Agnello e del Buglione Maremmano</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Una delle rassegne enogastronomiche pasquali più antiche della Maremma. Protagonista assoluto il tradizionale "buglione d'agnello" cotto a fuoco lento con pane casereccio toscano, agnello fritto e alla brace. Fiera paesana, benedizione pasquale, concerti di bande e orchestre liscio per tutta la giornata di Pasquetta.</p>
                 </div>
@@ -1007,14 +973,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>08/05/2027 - 09/05/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>08/05/2027 - 09/05/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Montieri</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/sui-sentieri-del-prugnolo-festa-al-prugnolo-montieri.html" class="hover:text-maremma-600 transition-colors">Sui Sentieri del Prugnolo (Festa al Prugnolo)</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Celebrazione primaverile dedicata al ricercatissimo e profumato fungo prugnolo (Tricholoma georgii) delle Colline Metallifere. Stand gastronomici con primi piatti e specialità a base di prugnolo fresco, escursioni micologiche guidate nei boschi circostanti, mercatino biologico e dell'artigianato, show cooking e intrattenimento per le vie del borgo.</p>
                 </div>
@@ -1026,14 +990,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>28/05/2027 - 30/05/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>28/05/2027 - 30/05/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Manciano (Fraz. Poggio Murella)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/sagra-della-lumaca-riganella-manciano-fraz-poggio-murella.html" class="hover:text-maremma-600 transition-colors">Sagra della Lumaca Riganella</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Tradizionale festa organizzata dalla storica Filarmonica 'P. Mascagni'. La protagonista è la 'lumaca riganella', cucinata secondo un'antica e laboriosa ricetta locale a base di erbe aromatiche e spezie, affiancata dai celebri 'lunghini' (pasta fresca rustica tirata a mano), acquacotta maremmana, carni alla brace, ballo liscio e orchestre dal vivo.</p>
                 </div>
@@ -1045,14 +1007,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>02/07/2027 - 01/08/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>02/07/2027 - 01/08/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Grosseto (Fraz. Rispescia)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/festa-dello-sport-e-del-cinghiale-alla-cacciatora-grosseto-fraz-rispescia.html" class="hover:text-maremma-600 transition-colors">Festa dello Sport e del Cinghiale alla Cacciatora</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Storica sagra estiva alle porte del Parco Naturale della Maremma. Protagonista assoluto il cinghiale cucinato alla cacciatora secondo la ricetta tradizionale dei cacciatori maremmani, insieme a tortelli fatti a mano, panzanella fresca, acquacotta e brace mista, con serate danzanti, orchestre e animazione per famiglie.</p>
                 </div>
@@ -1064,14 +1024,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>23/07/2027 - 01/08/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>23/07/2027 - 01/08/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Orbetello (Fraz. Talamone)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/sagra-del-moscardino-e-del-polpetto-orbetello-fraz-talamone.html" class="hover:text-maremma-600 transition-colors">Sagra del Moscardino e del Polpetto</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Tradizionale appuntamento con la cucina marinara nella splendida baia sotto la rocca di Talamone. Specialità assoluta il prelibato 'polpetto alla talamonese' in umido, frittura croccante di moscardini e paranza, insalate di mare fresche e primi piatti ai profumi del Tirreno, con musica dal vivo e serate sotto le stelle.</p>
                 </div>
@@ -1083,14 +1041,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>29/07/2027 - 08/08/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>29/07/2027 - 08/08/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Magliano in Toscana (Fraz. Sant'Andrea)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/sagra-del-baccala-magliano-in-toscana-fraz-santandrea.html" class="hover:text-maremma-600 transition-colors">Sagra del Baccalà</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Una delle sagre più attese e longeve dell'estate maremmana (giunta a oltre 35 edizioni), curata dall'A.S.D. Magliano Sant'Andrea. Il baccalà è servito in innumerevoli varianti d'eccellenza: fritto dorato, in umido con ceci, alla brace, in insalata e come ripieno o condimento di tortelli fatti a mano, accompagnato dai grandi vini delle colline maglianesi e musica dal vivo tutte le sere.</p>
                 </div>
@@ -1102,14 +1058,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>05/12/2026 - 06/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>05/12/2026 - 06/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Follonica</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/villaggio-di-babbo-natale-e-mercatini-di-follonica-follonica.html" class="hover:text-maremma-600 transition-colors">Villaggio di Babbo Natale e Mercatini di Follonica</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Il magico appuntamento natalizio sul golfo di Follonica. Nell'incantevole cornice dell'ex Casello Idraulico e del Giardino di via Roma viene allestito il Villaggio di Babbo Natale con caratteristiche casette in legno, mercatini di artigianato e solidarietà, stand gastronomici con dolci natalizi, crepes calde, caldarroste e vin brulè. Per i più piccoli la Casa di Babbo Natale con elfi e animazione, spettacoli itineranti e il gran finale con la Befana il 6 gennaio.</p>
                 </div>
@@ -1121,14 +1075,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>20/12/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>20/12/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Grosseto (Fraz. Roselle)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/presepe-vivente-di-roselle-grosseto-fraz-roselle.html" class="hover:text-maremma-600 transition-colors">Presepe Vivente di Roselle</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Rappresentazione natalizia della Natività che coinvolge l'intera comunità della frazione di Roselle a pochi passi dagli scavi etrusco-romani. Scenografie all'aperto ricche di dettagli, con decine di figuranti in costume, botteghe artigiane (fornaio, ceramista, fabbro, tessitrice), accampamento dei soldati romani e la capanna della Natività. Musiche pastorali dal vivo e stand con bruschette, dolci natalizi e bevande calde.</p>
                 </div>
@@ -1140,14 +1092,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>28/12/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>28/12/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Castel del Piano</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/presepe-vivente-di-castel-del-piano-castel-del-piano.html" class="hover:text-maremma-600 transition-colors">Presepe Vivente di Castel del Piano</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Suggestiva rievocazione storica della Natività all'interno del borgo medievale di Castel del Piano sulle pendici del Monte Amiata. Oltre 100 figuranti in costumi d'epoca rianimano le antiche piazzette e le cantine in pietra riproducendo i mestieri tradizionali amiatini (scalpellini, fabbri, tessitrici, fornai e boscaioli). Lungo il percorso corteo dei pastori e dei Re Magi verso la Grotta, accompagnato da zampogne e punti ristoro con prodotti tipici e vin brulè.</p>
                 </div>
@@ -1159,14 +1109,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>06/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>06/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Grosseto</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/la-befana-sul-fiume-ombrone-e-in-piazza-dante-grosseto.html" class="hover:text-maremma-600 transition-colors">La Befana sul Fiume Ombrone e in Piazza Dante</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">La spettacolare e tradizionale festa dell'Epifania nel capoluogo maremmano. Nel primo pomeriggio l'emozionante arrivo della Befana che discende le acque del fiume Ombrone a bordo di gommoni da rafting con la scorta dei Vigili del Fuoco e delle guide fluviali. A seguire la festa si sposta nel cuore della città in Piazza Dante per la sfilata, la distribuzione gratuita di calze, dolciumi e caramelle a tutti i bambini, spettacoli di giocoleria e intrattenimento musicale.</p>
                 </div>
@@ -1178,14 +1126,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>06/12/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>06/12/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Grosseto (Fraz. Roselle)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/domenica-al-museo-ingresso-gratuito-a-roselle-e-siti-statali-grosseto-fraz-roselle.html" class="hover:text-maremma-600 transition-colors">Domenica al Museo - Ingresso Gratuito a Roselle e Siti Statali</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">[EVENTO CULTURALE] L'appuntamento con l'iniziativa nazionale del Ministero della Cultura «Domenica al Museo»: ingresso gratuito ogni prima domenica del mese nei parchi archeologici e musei statali della Maremma grossetana, con protagonista il Parco Archeologico di Roselle. Un'occasione per visitare l'anfiteatro, le domus, le terme e le mura ciclopiche etrusco-romane immerse nella macchia mediterranea.</p>
                 </div>
@@ -1197,14 +1143,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>19/12/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>19/12/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Grosseto</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/langolo-del-collezionista-mercatino-di-antiquariato-e-vintage-grosseto.html" class="hover:text-maremma-600 transition-colors">L'Angolo del Collezionista - Mercatino di Antiquariato e Vintage</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">[MERCATINO & ANTIQUARIATO] Il tradizionale e storico appuntamento mensile con l'antiquariato, il modernariato e il collezionismo nel cuore di Grosseto. Decine di espositori e bancarelle animano Piazza De Maria con mobili antichi, oggettistica vintage, vinili da collezione, stampe d'epoca, libri rari, numismatica, ceramiche e creazioni artigianali. In piena atmosfera pre-natalizia, un'occasione ideale per trovare regali unici e passeggiare nel centro storico.</p>
                 </div>
@@ -1216,14 +1160,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>08/12/2026 - 06/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>08/12/2026 - 06/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Grosseto (Fraz. Batignano)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/batignano-e-i-suoi-presepi-mostra-dei-presepi-nelle-cantine-grosseto-fraz-batignano.html" class="hover:text-maremma-600 transition-colors">Batignano e i suoi Presepi - Mostra dei Presepi nelle Cantine</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">[TRADIZIONE NATALIZIA] La celebre manifestazione natalizia che trasforma il borgo medievale di Batignano in un suggestivo paese-presepe. Oltre 100 presepi artistici e originali realizzati a mano vengono allestiti nelle caratteristiche cantine in pietra aperte per l'occasione, nelle nicchie e lungo i vicoli del paese. Nei fine settimana e festivi atmosfera magica con canti natalizi, mercatino dell'artigianato e stand gastronomici con necci con ricotta, caldarroste dell'Amiata, dolci tipici e vin brulè fumante.</p>
                 </div>
@@ -1235,14 +1177,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>06/12/2026 - 06/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>06/12/2026 - 06/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Castiglione della Pescaia</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/christmas-time-e-mercatini-a-castiglione-della-pescaia-castiglione-della-pescaia.html" class="hover:text-maremma-600 transition-colors">Christmas Time e Mercatini a Castiglione della Pescaia</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Il grande programma delle festività natalizie sul mare di Castiglione della Pescaia. Nel cuore del borgo marinaro mercatino artigianale diffuso con decorazioni natalizie e idee regalo, casette in legno con golosità dolci e salate (cioccolata calda, crepes, vin brulè e frittelle), la magica Casa di Babbo Natale per i più piccoli con laboratori creativi e spettacoli itineranti. La kermesse culmina con il Capodanno in piazza con musica dal vivo e l'arrivo della Befana nelle frazioni.</p>
                 </div>
@@ -1254,14 +1194,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>01/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>01/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Follonica</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/il-tradizionale-tuffo-di-capodanno-a-follonica-follonica.html" class="hover:text-maremma-600 transition-colors">Il Tradizionale Tuffo di Capodanno a Follonica</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">La storica e festosa tradizione del 1° gennaio nel Golfo di Follonica per inaugurare il nuovo anno. Centinaia di coraggiosi bagnanti (molti con parrucche, maschere e costumi pittoreschi di Carnevale) si radunano sulla spiaggia libera di Piazza a Mare per il tradizionale tuffo collettivo di mezzogiorno nelle acque del Tirreno. Evento a partecipazione libera e gratuita per partecipanti e spettatori, con brindisi augurale, tè caldo e pandoro per tutti.</p>
                 </div>
@@ -1273,14 +1211,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>08/12/2026 - 06/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>08/12/2026 - 06/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Campagnatico (Fraz. Montorsaio)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/montorsaio-il-paese-dei-100-presepi-campagnatico-fraz-montorsaio.html" class="hover:text-maremma-600 transition-colors">Montorsaio - Il Paese dei 100 Presepi</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Storica esposizione natalizia a cielo aperto nata nel 1985. Oltre 100 presepi artistici realizzati a mano popolano vicoli, cantine storiche, davanzali e cortili, con il monumentale presepe in terracotta in Piazza della Cisterna, mercatini artigianali, donzelle fritte e vin brulè. Ingresso gratuito.</p>
                 </div>
@@ -1292,14 +1228,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>08/12/2026 - 06/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>08/12/2026 - 06/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Scansano</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/natale-a-scansano-e-presepe-vivente-nel-borgo-scansano.html" class="hover:text-maremma-600 transition-colors">Natale a Scansano e Presepe Vivente nel Borgo</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Mercatini di Natale con artigianato locale ed eccellenze enogastronomiche, mostra dei presepi artistici, animazione per bambini e suggestivo Presepe Vivente lungo le antiche vie in pietra del paese, con schiaccine fritte, vin brulè e calici di Morellino di Scansano. Ingresso gratuito.</p>
                 </div>
@@ -1311,14 +1245,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>13/12/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>13/12/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Gavorrano</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/natale-a-gavorrano-e-presepe-vivente-nel-centro-storico-gavorrano.html" class="hover:text-maremma-600 transition-colors">Natale a Gavorrano e Presepe Vivente nel Centro Storico</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Suggestiva giornata di festa nel borgo minerario con mercatini dell'artigianato natalizio, villaggio e casa di Babbo Natale per i bambini, musica itinerante e affascinante rievocazione del Presepe Vivente tra i vicoli del paese, con stand di ciaccini, castagne, dolci e vin brulè. Ingresso gratuito.</p>
                 </div>
@@ -1330,14 +1262,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>27/12/2026 - 06/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>27/12/2026 - 06/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Sorano (Fraz. Montebuono)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/presepe-vivente-di-montebuono-segui-la-stella-sorano-fraz-montebuono.html" class="hover:text-maremma-600 transition-colors">Presepe Vivente di Montebuono - Segui la Stella</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Emozionante rappresentazione storica della Natività ambientata nel cuore dei borghi del tufo. Decine di figuranti in abiti d'epoca fanno rivivere gli antichi mestieri della civiltà contadina (fabbri, fornai, falegnami) tra vicoli illuminati da torce, con degustazioni di prodotti tipici locali e vin brulè. Ingresso gratuito.</p>
                 </div>
@@ -1349,14 +1279,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>23/12/2026 - 27/12/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>23/12/2026 - 27/12/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Orbetello</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/presepe-vivente-rinascimentale-a-orbetello-orbetello.html" class="hover:text-maremma-600 transition-colors">Presepe Vivente Rinascimentale a Orbetello</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Suggestiva rievocazione storica della Natività in chiave rinascimentale a cura dell'Associazione Storico Culturale Duca d'Arcos. Figuranti in splendidi costumi d'epoca, antiche botteghe artigiane riaperte, mestieri tradizionali della laguna e punti ristoro con dolci natalizi tipici, frittelle calde e vin brulè. Ingresso gratuito.</p>
                 </div>
@@ -1368,14 +1296,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>08/12/2026 - 06/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>08/12/2026 - 06/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Magliano in Toscana</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/natale-nel-borgo-e-presepi-a-magliano-in-toscana-magliano-in-toscana.html" class="hover:text-maremma-600 transition-colors">Natale nel Borgo e Presepi a Magliano in Toscana</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Rassegna natalizia nel borgo medievale cinto da mura. Mercatini con artigianato ed eccellenze enogastronomiche locali, presepi artistici allestiti lungo le mura e nelle piazzette, concerti corali dei Madrigalisti di Magliano, spettacoli per famiglie e stand gastronomici con caldarroste, dolci tipici e vin brulè. Ingresso gratuito.</p>
                 </div>
@@ -1387,14 +1313,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>08/12/2026 - 06/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>08/12/2026 - 06/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Montieri (Fraz. Gerfalco)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/aria-di-natale-a-montieri-e-presepi-nel-borgo-di-gerfalco-montieri-fraz-gerfalco.html" class="hover:text-maremma-600 transition-colors">Aria di Natale a Montieri e Presepi nel Borgo di Gerfalco</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Festa delle tradizioni d'alta Maremma tra i boschi delle Colline Metallifere. Mercatini di prodotti tipici (farina dolce di castagne, miele, formaggi e salumi locali), itinerario artistico dei presepi allestiti dagli abitanti nei vicoli di Gerfalco, concerti gospel, canti popolari e stand con caldarroste e vin brulè. Ingresso gratuito.</p>
                 </div>
@@ -1406,14 +1330,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>13/12/2026 - 20/12/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>13/12/2026 - 20/12/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Grosseto</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/mercati-straordinari-di-natale-a-grosseto-grosseto.html" class="hover:text-maremma-600 transition-colors">Mercati Straordinari di Natale a Grosseto</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">I tradizionali mercati prenatalizi nel centro cittadino istituiti dal Comune di Grosseto. Decine di banchi con artigianato tipico toscano, idee regalo, dolciumi delle feste (panforte, brigidini, croccanti caldi), prodotti enogastronomici del territorio e street food per lo shopping natalizio.</p>
                 </div>
@@ -1425,14 +1347,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>08/12/2026 - 06/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>08/12/2026 - 06/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Cinigiano (Fraz. Sasso d'Ombrone e Monticello Amiata)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/presepi-nel-borgo-e-torneo-del-panforte-a-cinigiano-cinigiano-fraz-sasso-dombrone-e-monticello-amiata.html" class="hover:text-maremma-600 transition-colors">Presepi nel Borgo e Torneo del Panforte a Cinigiano</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Rassegna natalizia diffusa nei suggestivi borghi di Cinigiano. Include la suggestiva installazione "Illumina il Sasso" con presepi d'autore all'aperto tra vicoli e cantine, il presepe monumentale di Monticello Amiata, concerti gospel nelle pievi e le tradizionali sfide popolari al gioco del Panforte amiatino con degustazioni di caldarroste e vino locale.</p>
                 </div>
@@ -1444,14 +1364,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>08/12/2026 - 06/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>08/12/2026 - 06/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Scarlino</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/natale-a-scarlino-e-borgo-in-festa-scarlino.html" class="hover:text-maremma-600 transition-colors">Natale a Scarlino e Borgo in Festa</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Il borgo medievale arroccato sulla rocca si veste a festa con mercatini dell'artigianato locale, l'accensione delle luminarie scenografiche in Piazza Garibaldi, letture animate "Novelle sotto l'Albero", la Casa di Babbo Natale, stand di dolci natalizi, ciambelle calde e vin brulé della Pro Loco.</p>
                 </div>
@@ -1463,14 +1381,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>08/12/2026 - 06/01/2027</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>08/12/2026 - 06/01/2027</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Isola del Giglio (Fraz. Giglio Castello, Giglio Campese e Giglio Porto)</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/natale-allisola-del-giglio-e-antica-nenia-di-capodanno-isola-del-giglio-fraz-giglio-castello-giglio-campese-e-giglio-porto.html" class="hover:text-maremma-600 transition-colors">Natale all'Isola del Giglio e Antica Nenia di Capodanno</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">La suggestiva atmosfera natalizia dell'isola lontano dal turismo estivo. Include il celebre Presepe subacqueo allestito nelle acque cristalline della baia di Campese, il presepe nella torre medicea del porto, i vicoli illuminati di Giglio Castello e l'antichissima "Nenia di Capodanno" (tradizione del Settecento in cui i suonatori locali passano casa per casa la notte di San Silvestro intonando canti augurali), accompagnata da degustazioni del tipico Panficato gigliese e vino Ansonica.</p>
                 </div>
@@ -1482,14 +1398,12 @@
             <article class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>29/11/2026 - 08/12/2026</span>
-                            
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>29/11/2026 - 08/12/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Suvereto</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/sagra-del-cinghiale-di-suvereto-58-edizione-suvereto.html" class="hover:text-maremma-600 transition-colors">Sagra del Cinghiale di Suvereto (58ª Edizione)</a>
+                        
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">La storica e celebre sagra gastronomica della Val di Cornia giunta alla 58ª edizione. Stand gastronomici d'eccellenza con piatti a base di cinghiale (cinghiale in umido con olive, pappardelle al ragù di cinghiale, grigliate miste), mercatini di artigianato locale, rievocazioni storiche medievali, raduni sportivi cicloturistici e podistici, spettacoli di strada e degustazioni dei grandi vini DOC Suvereto e Val di Cornia.</p>
                 </div>
@@ -1501,14 +1415,12 @@
             <article class="bg-white rounded-2xl border border-orange-300 ring-2 ring-orange-400/20 shadow-orange-500/10 shadow-sm p-5 flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between text-xs text-maremma-700 font-semibold mb-2">
-                        <div class="flex items-center gap-1.5 flex-wrap">
-                            <span><i class="fa-regular fa-calendar mr-1"></i>05/12/2026 - 06/12/2026</span>
-                            <span class="relative inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-500 text-white font-black text-[9px] tracking-wider uppercase shadow-xs border border-white transform -rotate-2 select-none"><i class="fa-solid fa-bolt text-yellow-200 text-[8px]"></i> NEW!</span>
-                        </div>
+                        <span><i class="fa-regular fa-calendar mr-1"></i>05/12/2026 - 06/12/2026</span>
                         <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>Castell'Azzara</span>
                     </div>
-                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2">
+                    <h3 class="text-lg font-bold font-serif text-slate-800 mb-2 flex items-center gap-2 flex-wrap">
                         <a href="eventi/zaragustando-castellazzara.html" class="hover:text-maremma-600 transition-colors">ZaraGustando</a>
+                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-400 text-white font-black text-[10px] tracking-wider uppercase shadow-xs border border-white select-none animate-comic-bubble"><i class="fa-solid fa-bolt text-yellow-200 text-[8px] animate-comic-sparkle"></i> NEW!</span>
                     </h3>
                     <p class="text-xs text-slate-600 leading-relaxed line-clamp-3 mb-3">Suggestivo percorso enogastronomico tra le vie, le piazzette e le caratteristiche cantine del borgo medievale amiatino. Stand con piatti tipici della tradizione montanara (specialità al tartufo amiatino, funghi porcini, polenta calda al ragù di cinghiale, acquacotta, caldarroste e dolci tipici), mercatino di artigianato locale con idee regalo natalizie, musica dal vivo e spettacoli itineranti.</p>
                 </div>
@@ -1769,10 +1681,10 @@
                 <div class="relative z-10 text-white">
                     <div class="flex items-center gap-2 flex-wrap mb-1">
                         <span id="modalCategoryBadge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/20 border border-white/30 backdrop-blur-sm">Sagra</span>
-                        <span id="modalNewBadge" class="hidden relative inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-500 text-white font-black text-[10px] tracking-wider uppercase shadow-md border-2 border-white transform -rotate-3 select-none">
-                            <i class="fa-solid fa-bolt text-yellow-200 text-[9px] animate-pulse"></i>
-                            <span>NEW!</span>
-                            <span class="absolute -bottom-1 left-2.5 w-1.5 h-1.5 bg-orange-600 rotate-45 transform pointer-events-none"></span>
+                        <span id="modalNewBadge" class="hidden relative inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-400 text-white font-black text-xs tracking-wider uppercase shadow-md border-2 border-white select-none animate-comic-bubble">
+                            <i class="fa-solid fa-bolt text-yellow-200 text-[10px] animate-comic-sparkle"></i>
+                            <span>NEW! ULTIMA SAGRA INSERITA</span>
+                            <span class="absolute -bottom-1 left-3 w-1.5 h-1.5 bg-orange-600 rotate-45 transform pointer-events-none"></span>
                         </span>
                     </div>
                     <h3 id="modalTitle" class="text-2xl font-bold font-serif drop-shadow-md">Carnevale di Montemerano</h3>
@@ -2956,8 +2868,8 @@
         // Helper: Comic-style Pop Bubble Badge
         function getNewBadgeHtml(extraClasses = "") {
             return `
-            <span class="relative inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-500 text-white font-black text-[10px] tracking-wider uppercase shadow-md shadow-orange-500/30 border-2 border-white transform -rotate-3 hover:rotate-0 transition-transform select-none ${extraClasses}" title="Nuova sagra aggiunta di recente!">
-                <i class="fa-solid fa-bolt text-yellow-200 text-[9px] animate-pulse"></i>
+            <span class="relative inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-400 text-white font-black text-[11px] tracking-wider uppercase shadow-md border-2 border-white select-none animate-comic-bubble transition-transform hover:scale-115 hover:rotate-0 cursor-default ${extraClasses}" title="Nuova sagra aggiunta di recente!">
+                <i class="fa-solid fa-bolt text-yellow-200 text-[10px] animate-comic-sparkle"></i>
                 <span>NEW!</span>
                 <span class="absolute -bottom-1 left-2.5 w-1.5 h-1.5 bg-orange-600 rotate-45 transform pointer-events-none"></span>
             </span>`;
@@ -3015,13 +2927,10 @@
                 <div class="p-5 flex-1 flex flex-col justify-between relative z-10">
                     <div class="min-w-0">
                         <!-- Header Tags Row -->
-                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                            <div class="flex items-center gap-1.5 flex-wrap">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${category.bg} border">
-                                    <i class="fa-solid ${category.icon} mr-1"></i> ${category.label}
-                                </span>
-                                ${newBadge}
-                            </div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${category.bg} border">
+                                <i class="fa-solid ${category.icon} mr-1"></i> ${category.label}
+                            </span>
                             <div class="flex items-center gap-1.5 flex-wrap justify-end">
                                 ${distanceBadge}
                                 ${statusBadge}
@@ -3032,8 +2941,9 @@
                         </div>
 
                         <!-- Sagra Main details -->
-                        <h3 class="text-lg font-bold font-serif text-slate-800 group-hover:text-maremma-700 transition-colors leading-snug break-words">
-                            ${name}
+                        <h3 class="text-lg font-bold font-serif text-slate-800 group-hover:text-maremma-700 transition-colors leading-snug break-words flex items-center gap-2 flex-wrap">
+                            <span>${name}</span>
+                            ${newBadge}
                         </h3>
 
                         <!-- Località  -->

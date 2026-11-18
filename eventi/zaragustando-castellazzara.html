@@ -23,6 +23,27 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        @keyframes comicPopPulse {
+            0%, 100% {
+                transform: scale(1) rotate(-3deg);
+                box-shadow: 0 4px 10px rgba(234, 88, 12, 0.45);
+            }
+            50% {
+                transform: scale(1.08) rotate(-1deg);
+                box-shadow: 0 6px 16px rgba(220, 38, 38, 0.65);
+            }
+        }
+        @keyframes comicSparkle {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.9; }
+            50% { transform: scale(1.25) rotate(15deg); opacity: 1; }
+        }
+        .animate-comic-bubble {
+            animation: comicPopPulse 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        .animate-comic-sparkle {
+            animation: comicSparkle 1.6s ease-in-out infinite;
+            display: inline-block;
+        }
     </style>
     <script type="application/ld+json">
     {
@@ -98,7 +119,7 @@
                 <span>&gt;</span>
                 <span class="text-white font-medium">ZaraGustando</span>
             </nav>
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-500 text-white text-xs font-black tracking-wider uppercase shadow-md border-2 border-white transform -rotate-2 my-2 select-none"><i class="fa-solid fa-bolt text-yellow-200 text-xs animate-pulse"></i><span>NOVITÀ / NEW • Ultima sagra inserita</span></div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-400 text-white text-xs font-black tracking-wider uppercase shadow-md border-2 border-white select-none animate-comic-bubble my-2"><i class="fa-solid fa-bolt text-yellow-200 text-xs animate-comic-sparkle"></i><span>NOVITÀ / NEW • Ultima sagra inserita</span></div>
             <h1 class="text-3xl md:text-4xl font-bold mt-2">ZaraGustando</h1>
             <p class="mt-2 text-[#fbeee6] text-lg">Castell'Azzara</p>
         </div>
